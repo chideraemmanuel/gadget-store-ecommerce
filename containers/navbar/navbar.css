@@ -1,0 +1,35 @@
+.dropdown {
+}
+
+.dropdown__trigger {
+}
+
+.dropdown__trigger svg {
+  transition: 0.3s ease;
+}
+
+.dropdown:hover > .dropdown__menu,
+.dropdown:focus > .dropdown__menu {
+  top: 67%;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s ease;
+}
+
+.dropdown:hover > .dropdown__trigger svg,
+.dropdown:focus > .dropdown__trigger svg {
+  transform: rotate(-180deg);
+}
+
+.dropdown__trigger:focus + .dropdown__menu {
+  top: 67%;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s ease;
+}
+
+.dropdown__menu {
+  top: 60%;
+  opacity: 0;
+  visibility: hidden;
+}
