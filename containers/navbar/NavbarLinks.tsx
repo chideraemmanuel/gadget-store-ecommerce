@@ -17,7 +17,7 @@ interface Props {}
 
 const NavbarLinks: FC<Props> = () => {
   return (
-    <ul className="hidden lg:flex items-center justify-center gap-3 text-sm text-slate-700">
+    <ul className="hidden lg:flex items-center justify-center gap-3 text-sm text-foreground">
       {/* <li className="dropdown">
         <button className="dropdown__trigger flex items-center justify-center gap-[2px] cursor-pointer">
           <span>Categories</span>

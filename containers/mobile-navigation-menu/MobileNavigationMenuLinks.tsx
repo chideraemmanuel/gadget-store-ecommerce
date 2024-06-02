@@ -17,7 +17,7 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="pt-10 pb-5 text-slate-700">
+    <nav className="pt-10 pb-5 text-foreground">
       <ul className="flex flex-col gap-2">
         {/* <MobileDropdown.DropdownMenu>
           <MobileDropdown.DropdownMenuTrigger className="bg-blue-500 inline-flex justify-between w-full p-3">

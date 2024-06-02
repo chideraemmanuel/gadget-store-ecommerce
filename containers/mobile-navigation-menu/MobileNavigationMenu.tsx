@@ -17,7 +17,7 @@ const MobileNavigationMenu: FC<Props> = () => {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="lg:hidden">
+          <Button variant="ghost" size="sm" className="lg:hidden px-1 sm:px-2">
             <MenuIcon />
           </Button>
         </SheetTrigger>
