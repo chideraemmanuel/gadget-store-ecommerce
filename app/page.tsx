@@ -1,4 +1,5 @@
 import { Separator } from '@/components/ui/separator';
+import Brands from '@/containers/brands/Brands';
 import Categories from '@/containers/categories/Categories';
 import Hero from '@/containers/hero/Hero';
 import Navbar from '@/containers/navbar/Navbar';
@@ -18,6 +19,7 @@ export default function Home() {
         <Hero />
         <Categories />
         <ProductsCarousel />
+        <Brands />
       </main>
     </>
   );

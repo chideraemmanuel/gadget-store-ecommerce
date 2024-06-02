@@ -22,7 +22,7 @@ const ProductsCarousel: FC<Props> = () => {
           {array.map((num, index) => (
             <CarouselItem
               key={index}
-              className="basis-[55%] xs:basis-[40%]  md:basis-[30%] lg:basis-[23%]"
+              className="basis-[55%] xs:basis-[40%] md:basis-[30%] lg:basis-[23%]"
             >
               <ProductCard />
             </CarouselItem>
