@@ -24,7 +24,7 @@ const Products: FC<Props> = () => {
           <Button
             size={'lg'}
             variant={'outline'}
-            className="border-primary hover:bg-primary hover:text-primary-foreground"
+            className="border-primary hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
           >
             See more
           </Button>

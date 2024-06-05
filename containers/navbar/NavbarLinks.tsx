@@ -1,7 +1,9 @@
+'use client';
+
 import { Card } from '@/components/ui/card';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import './navbar.css';
 
 import {
@@ -16,6 +18,8 @@ import {
 interface Props {}
 
 const NavbarLinks: FC<Props> = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   return (
     <ul className="hidden lg:flex items-center justify-center gap-3 text-sm text-foreground">
       {/* <li className="dropdown">
@@ -45,8 +49,12 @@ const NavbarLinks: FC<Props> = () => {
           </ul>
         </Card>
       </li> */}
-      <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center justify-center gap-[2px]">
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+        <DropdownMenuTrigger
+          className={`flex items-center justify-center gap-[2px] opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity ${
+            dropdownOpen && 'opacity-100'
+          }`}
+        >
           <span>Categories</span>
           <ChevronDown width={15} />
         </DropdownMenuTrigger>
@@ -57,13 +65,28 @@ const NavbarLinks: FC<Props> = () => {
       </DropdownMenu>
 
       <li>
-        <Link href={'/'}>Deals</Link>
+        <Link
+          href={'/'}
+          className="opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity"
+        >
+          Deals
+        </Link>
       </li>
       <li>
-        <Link href={'/'}>What's New</Link>
+        <Link
+          href={'/'}
+          className="opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity"
+        >
+          What's New
+        </Link>
       </li>
       <li>
-        <Link href={'/'}>Delivery</Link>
+        <Link
+          href={'/'}
+          className="opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity"
+        >
+          Delivery
+        </Link>
       </li>
     </ul>
   );
