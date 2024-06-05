@@ -13,11 +13,6 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <>
-      <header className="bg-background sticky top-0 z-50">
-        <Navbar />
-        <Separator />
-      </header>
-
       <main>
         <Hero />
         <Categories />

@@ -9,7 +9,7 @@ interface Props {}
 const Hero: FC<Props> = () => {
   return (
     <section
-      className="h-[70vh] relative flex justify-center items-center text-center after:content-[''] after:w-full after:h-full after:bg-black after:bg-opacity-70  after:absolute"
+      className="h-[70vh] relative flex justify-center items-center text-center after:content-[''] after:w-full after:h-full after:bg-slate-950 after:bg-opacity-70  after:absolute"
       style={{
         background: `url(${homeHeroImage.src}) no-repeat center center/cover`,
       }}
@@ -31,7 +31,7 @@ const Hero: FC<Props> = () => {
           asChild
           size={'lg'}
           // variant={'secondary'}
-          className="bg-[hsl(217.2_32.6%_17.5%)] text-[hsl(210_40%_98%)] hover:bg-[rgba(29,40,58,0.8)]"
+          className="bg-[hsl(210_40%_98%)] text-[hsl(222.2_47.4%_11.2%)] hover:bg-[rgba(248,250,252,0.8)]"
         >
           <Link
             href={'/'}

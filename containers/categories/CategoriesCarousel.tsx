@@ -26,7 +26,7 @@ const CategoriesCarousel: FC<Props> = () => {
                 style={{
                   background: `url(${image.src}) no-repeat center center/cover`,
                 }}
-                className="p-4 h-32 md:h-40 relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-0 after:bg-black after:bg-opacity-50 overflow-hidden"
+                className="p-4 h-32 md:h-40 relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-0 after:bg-slate-950 after:bg-opacity-50 overflow-hidden"
               >
                 <CardContent className="flex items-center justify-center text-center h-full">
                   <span className="relative z-10 inline-block font-bold text-lg text-[hsl(210_40%_98%)]">
