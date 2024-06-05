@@ -17,7 +17,7 @@ interface Props {}
 
 const ProductCard: FC<Props> = () => {
   return (
-    <Card className="inline-block max-w-[300px]">
+    <Card className="inline-block dark:bg-slate-900">
       <Link href={'#'}>
         <CardHeader>
           <Image src={image.src} alt="product name" width={300} height={300} />
