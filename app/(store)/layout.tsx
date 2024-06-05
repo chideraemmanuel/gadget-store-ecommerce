@@ -6,6 +6,7 @@ import '../globals.css';
 import { ThemeProvider } from '@/decorators/ThemeProvider';
 import Navbar from '@/containers/navbar/Navbar';
 import { Separator } from '@/components/ui/separator';
+import Footer from '@/containers/footer/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,7 @@ interface Props {
 
 const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider defaultTheme="dark">
       <html lang="en">
         <body className={inter.className}>
           <header className="bg-background sticky top-0 z-50">
@@ -29,6 +30,8 @@ const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
           </header>
 
           {children}
+
+          <Footer />
         </body>
       </html>
     </ThemeProvider>

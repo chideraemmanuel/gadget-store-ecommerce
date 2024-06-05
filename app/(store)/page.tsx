@@ -21,8 +21,6 @@ export default function Home() {
         <Products />
         <Services />
       </main>
-
-      <Footer />
     </>
   );
 }
