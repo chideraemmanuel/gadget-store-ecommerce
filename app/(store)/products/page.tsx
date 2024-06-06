@@ -9,6 +9,7 @@ import { Drawer, DrawerTrigger, DrawerContent } from '@/components/ui/drawer';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Bold, Italic, Underline } from 'lucide-react';
 import Filter from '@/components/Filter';
+import ProductsPagination from '@/components/ProductsPagination';
 
 interface Props {}
 
@@ -60,7 +61,11 @@ const ProductsPage: FC<Props> = () => {
           </div>
 
           <div className="">
-            <span>Pagination</span>
+            <ProductsPagination
+              // current_page={1}
+              total_records={100}
+              total_pages={3}
+            />
           </div>
         </div>
       </div>

@@ -23,12 +23,7 @@ const Filter: FC<Props> = ({ label, filterItems, searchParamKey }) => {
 
   //   console.log('filter value in search param', filterValue);
 
-  // const updateSearchParam = (value: string) => {
-  //     return `${searchParamKey}=${value}`
-  // }
-
   const updateSearchParam = (value: string) => {
-    // return `${searchParamKey}=${value}`
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
     // console.log('passed value', value);
@@ -46,8 +41,6 @@ const Filter: FC<Props> = ({ label, filterItems, searchParamKey }) => {
     // console.log('new search params', newSearchParams.get(searchParamKey));
 
     router.replace(`?${newSearchParams}`);
-    // router.replace(`?${newSearchParams}`)
-    // router.replace()
   };
 
   return (
