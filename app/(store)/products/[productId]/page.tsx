@@ -1,3 +1,6 @@
+import ProductDetails from '@/containers/product-details/ProductDetails';
+import ProductsCarousel from '@/containers/products-carousel/ProductsCarousel';
+import Services from '@/containers/services/Services';
 import { FC } from 'react';
 
 interface Props {
@@ -9,7 +12,9 @@ interface Props {
 const ProductDetailsPage: FC<Props> = ({ params: { productId } }) => {
   return (
     <>
-      <span>{productId}</span>
+      <ProductDetails productId={productId} />
+      <ProductsCarousel />
+      <Services />
     </>
   );
 };
