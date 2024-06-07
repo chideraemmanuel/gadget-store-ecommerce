@@ -7,10 +7,10 @@ interface Props {}
 
 const Footer: FC<Props> = () => {
   return (
-    <section className="pt-7">
+    <footer className="pt-7">
       <Separator />
 
-      <footer className="py-5">
+      <div className="py-5">
         <div className="container mx-auto flex justify-between items-center">
           <Logo />
 
@@ -33,8 +33,8 @@ const Footer: FC<Props> = () => {
             <span>&copy; 2024 Gadget Store</span>
           </div>
         </div>
-      </footer>
-    </section>
+      </div>
+    </footer>
   );
 };
 

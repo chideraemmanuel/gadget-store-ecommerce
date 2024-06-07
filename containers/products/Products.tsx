@@ -1,6 +1,7 @@
 import ProductCard from '@/components/ProductCard';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { FC } from 'react';
 
 interface Props {}
@@ -22,11 +23,12 @@ const Products: FC<Props> = () => {
 
         <div className="flex justify-center items-center">
           <Button
+            asChild
             size={'lg'}
             variant={'outline'}
             className="border-primary hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
           >
-            See more
+            <Link href={'/products'}>See more</Link>
           </Button>
         </div>
       </div>

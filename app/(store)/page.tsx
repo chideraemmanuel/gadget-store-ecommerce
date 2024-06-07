@@ -13,14 +13,12 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <>
-      <main>
-        <Hero />
-        <Categories />
-        <ProductsCarousel />
-        <Brands />
-        <Products />
-        <Services />
-      </main>
+      <Hero />
+      <Categories />
+      <ProductsCarousel />
+      <Brands />
+      <Products />
+      <Services />
     </>
   );
 }
