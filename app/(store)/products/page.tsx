@@ -6,17 +6,39 @@ import { Separator } from '@/components/ui/separator';
 import { FC } from 'react';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Drawer, DrawerTrigger, DrawerContent } from '@/components/ui/drawer';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Bold, Italic, Underline } from 'lucide-react';
+import Filter from '@/components/Filter';
 
 interface Props {}
 
 const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+const filterItems = [
+  {
+    _id: '1',
+    name: 'Laptop',
+  },
+  {
+    _id: '2',
+    name: 'Phones',
+  },
+  {
+    _id: '3',
+    name: 'Headphones',
+  },
+];
+
 const ProductsPage: FC<Props> = () => {
   return (
-    <section className="bg-yellow-500">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] bg-green-500 pt-7">
-        <aside className="bg-red-500  self-start sticky top-[70px] md:top-20">
-          <span className="">Filters</span>
+    <section className="">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
+        <aside className="self-start sticky top-[70px] md:top-20 flex flex-col gap-3">
+          <Filter
+            label="Categories"
+            filterItems={filterItems}
+            searchParamKey="category"
+          />
 
           <Drawer>
             <DrawerTrigger className="inline-block md:hidden">

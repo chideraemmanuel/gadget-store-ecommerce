@@ -21,42 +21,6 @@ interface Props {}
 
 const Navbar: FC<Props> = () => {
   return (
-    // <nav className="container mx-auto h-[70px] flex items-center justify-between">
-    //   <MobileNavigationMenu />
-
-    //   <Logo />
-
-    //   <NavbarLinks />
-
-    //   <div className="inline-flex items-center justify-center gap-2 text-accent-foreground">
-    //     <NavbarSearchInput />
-
-    //     <Button asChild variant={'ghost'} size={'sm'} className="px-1 sm:px-2">
-    //       <Link
-    //         href={'/'}
-    //         className="inline-flex items-center justify-center gap-1 text-sm"
-    //       >
-    //         <ShoppingCartIcon // width={20}
-    //           className="w-full md:w-1/2"
-    //         />
-    //         <span className="hidden md:inline-block">Cart</span>
-    //       </Link>
-    //     </Button>
-
-    //     <Button asChild variant={'ghost'} size={'sm'} className="px-1 sm:px-2">
-    //       <Link
-    //         href={'/'}
-    //         className="inline-flex items-center justify-center gap-1 text-sm"
-    //       >
-    //         <User
-    //           // width={20}
-    //           className="w-full md:w-1/2"
-    //         />
-    //         <span className="hidden md:inline-block">Account</span>
-    //       </Link>
-    //     </Button>
-    //   </div>
-    // </nav>
     <>
       <div className="container mx-auto h-[70px] flex items-center justify-between">
         <MobileNavigationMenu />

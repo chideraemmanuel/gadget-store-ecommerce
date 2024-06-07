@@ -29,7 +29,7 @@ const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
             <Separator />
           </header>
 
-          <main className="flex-1 bg-blue-500">{children}</main>
+          <main className="flex-1">{children}</main>
 
           <Footer />
         </body>

@@ -76,8 +76,8 @@ const NavbarLinks: FC<Props> = () => {
     // </ul>
 
     <>
-      <NavigationMenu>
-        <NavigationMenuList className="hidden lg:flex items-center justify-center gap-3 text-sm text-foreground">
+      <NavigationMenu className="hidden lg:block">
+        <NavigationMenuList className="hidden lg:flex items-center justify-center gap-1 text-sm text-foreground">
           <NavigationMenuItem>
             <NavigationMenuTrigger className="inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2">
               Categories
