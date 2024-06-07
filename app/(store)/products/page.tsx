@@ -7,9 +7,10 @@ import { FC } from 'react';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Drawer, DrawerTrigger, DrawerContent } from '@/components/ui/drawer';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Bold, Italic, Underline } from 'lucide-react';
+import { Bold, FilterIcon, Italic, Underline } from 'lucide-react';
 import Filter from '@/components/Filter';
 import ProductsPagination from '@/components/ProductsPagination';
+import { Button } from '@/components/ui/button';
 
 interface Props {}
 
@@ -34,25 +35,37 @@ const ProductsPage: FC<Props> = () => {
   return (
     <section className="">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
-        <aside className="self-start sticky top-[70px] md:top-20 flex flex-col gap-3">
+        <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
           <Filter
             label="Categories"
             filterItems={filterItems}
             searchParamKey="category"
           />
-
-          <Drawer>
-            <DrawerTrigger className="inline-block md:hidden">
-              Open Drawer
-            </DrawerTrigger>
-            <DrawerContent>
-              <span>Drawer Content!</span>
-            </DrawerContent>
-          </Drawer>
         </aside>
 
         <div className="px-0 md:px-2 md:border-l">
-          <SectionHeader>Products</SectionHeader>
+          <div className="flex items-start justify-between">
+            <SectionHeader>Products</SectionHeader>
+
+            {/* show drawer only on mobile */}
+            <Drawer>
+              <DrawerTrigger asChild className="inline-block md:hidden">
+                <Button variant={'outline'} className="flex items-center gap-1">
+                  <FilterIcon className="w-1/2" />
+                  <span>Filter</span>
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <div className="p-5 flex flex-col gap-3 max-h-[80vh]">
+                  <Filter
+                    label="Categories"
+                    filterItems={filterItems}
+                    searchParamKey="category"
+                  />
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 pb-7">
             {array.map((num, index) => (
@@ -74,6 +87,8 @@ const ProductsPage: FC<Props> = () => {
 };
 
 export default ProductsPage;
+
+// TODO: Customize scroll on aside
 
 // <RadioGroup defaultValue="option-one">
 //   <div className="flex items-center space-x-2">
