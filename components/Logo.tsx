@@ -7,8 +7,10 @@ interface Props {}
 const Logo: FC<Props> = () => {
   return (
     <Link href={'/'} className="inline-flex items-center justify-center gap-1">
-      <LaptopIcon className="text-foreground" />
-      <span className="text-foreground font-medium">Gadget Store</span>
+      {/* <LaptopIcon className="text-foreground" />
+      <span className="text-foreground font-medium">Gadget Store</span> */}
+      <LaptopIcon className="" />
+      <span className="font-medium">Gadget Store</span>
     </Link>
   );
 };
