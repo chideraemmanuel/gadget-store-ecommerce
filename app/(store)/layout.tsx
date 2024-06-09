@@ -21,7 +21,7 @@ interface Props {
 
 const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider defaultTheme="dark">
       <html lang="en">
         <body className={`${inter.className} flex flex-col min-h-screen`}>
           <header className="bg-background sticky top-0 z-50">

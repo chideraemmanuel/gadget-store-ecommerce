@@ -22,7 +22,7 @@ interface Props {}
 const Navbar: FC<Props> = () => {
   return (
     <>
-      <div className="container mx-auto h-[70px] flex items-center justify-between">
+      <div className="container mx-auto relative h-[70px] flex items-center justify-between">
         <MobileNavigationMenu />
 
         <Logo />
@@ -32,6 +32,7 @@ const Navbar: FC<Props> = () => {
         <div className="inline-flex items-center justify-center gap-2 text-accent-foreground">
           <NavbarSearchInput />
 
+          {/* <div className="relative border"> */}
           <Button
             asChild
             variant={'ghost'}
@@ -48,6 +49,11 @@ const Navbar: FC<Props> = () => {
               <span className="hidden md:inline-block">Cart</span>
             </Link>
           </Button>
+
+          {/* <span className="inline-block absolute right-0 top-0 translate-x-1/2 translate-y-1/2 bg-red-500 rounded-full p-1 text-xs text-white">
+              10000000000
+            </span>
+          </div> */}
 
           <Button
             asChild
