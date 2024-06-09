@@ -88,11 +88,11 @@ const NavbarLinks: FC<Props> = () => {
               */}
               {/* <ul className="p-3 grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]"> */}
               <ul className="grid grid-cols-2 gap-2 p-3 w-[300px]">
-                <ListItem href={'/'}>Laptops</ListItem>
-                <ListItem href={'/'}>Phones</ListItem>
-                <ListItem href={'/'}>Chargers</ListItem>
-                <ListItem href={'/'}>Headphones</ListItem>
-                <ListItem href={'/'}>Mouses</ListItem>
+                <ListItem href={'/products/category/1'}>Laptops</ListItem>
+                <ListItem href={'/products/category/1'}>Phones</ListItem>
+                <ListItem href={'/products/category/1'}>Chargers</ListItem>
+                <ListItem href={'/products/category/1'}>Headphones</ListItem>
+                <ListItem href={'/products/category/1'}>Mouses</ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>

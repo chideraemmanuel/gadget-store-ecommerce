@@ -11,6 +11,7 @@ import { Bold, FilterIcon, Italic, Underline } from 'lucide-react';
 import Filter from '@/components/Filter';
 import ProductsPagination from '@/components/ProductsPagination';
 import { Button } from '@/components/ui/button';
+import ProductsPagination2 from '@/components/ProductsPagination2';
 
 interface Props {}
 
@@ -56,7 +57,7 @@ const ProductsPage: FC<Props> = () => {
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
-                <div className="p-5 flex flex-col gap-3 max-h-[80vh]">
+                <div className="p-5 flex flex-col gap-3 min-h-[40vh] max-h-[80vh]">
                   <Filter
                     label="Categories"
                     filterItems={filterItems}
@@ -74,11 +75,12 @@ const ProductsPage: FC<Props> = () => {
           </div>
 
           <div className="">
-            <ProductsPagination
+            {/* <ProductsPagination
               // current_page={1}
               total_records={100}
               total_pages={3}
-            />
+            /> */}
+            <ProductsPagination2 totalPages={10} />
           </div>
         </div>
       </div>
