@@ -1,11 +1,11 @@
-import { FC } from 'react';
-import UserRegistrationForm from '@/containers/user-registration-form/UserRegistrationForm';
 import { Button } from '@/components/ui/button';
+import UserPasswordResetInitiationForm from '@/containers/user-password-reset-initiation-form/UserPasswordResetInitiationForm';
 import Link from 'next/link';
+import { FC } from 'react';
 
 interface Props {}
 
-const UserRegistrationPage: FC<Props> = () => {
+const UserPasswordResetInitiationPage: FC<Props> = () => {
   return (
     <>
       <Button
@@ -17,10 +17,10 @@ const UserRegistrationPage: FC<Props> = () => {
       </Button>
 
       <div className="relative z-10 w-[min(90%,_600px)] pt-20">
-        <UserRegistrationForm />
+        <UserPasswordResetInitiationForm />
       </div>
     </>
   );
 };
 
-export default UserRegistrationPage;
+export default UserPasswordResetInitiationPage;

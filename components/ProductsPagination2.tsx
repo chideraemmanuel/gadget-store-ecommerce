@@ -55,18 +55,24 @@ const ProductsPagination2: FC<Props> = ({
 
     // console.log('passed value', value);
 
-    if (value !== '') {
-      newSearchParams.set('page', value);
-    } else if (isNaN(+value)) {
-      //   console.log('delete 1');
-      newSearchParams.delete('page');
-    } else if (value === '') {
-      //   console.log('delete 2');
+    if (value === '' || isNaN(+value)) {
       newSearchParams.delete('page');
     } else {
-      //   console.log('delete 3');
-      newSearchParams.delete('page');
+      newSearchParams.set('page', value);
     }
+
+    // if (value !== '') {
+    //   newSearchParams.set('page', value);
+    // } else if (isNaN(+value)) {
+    //   //   console.log('delete 1');
+    //   newSearchParams.delete('page');
+    // } else if (value === '') {
+    //   //   console.log('delete 2');
+    //   newSearchParams.delete('page');
+    // } else {
+    //   //   console.log('delete 3');
+    //   newSearchParams.delete('page');
+    // }
 
     // console.log('new search params', newSearchParams.get(searchParamKey));
 

@@ -43,6 +43,16 @@ const UserLoginForm: FC<Props> = () => {
               <div>
                 <Label htmlFor="password">Password</Label>
                 <Input placeholder="Enter your password" id="password" />
+                <Button
+                  type="button"
+                  variant={'link'}
+                  asChild
+                  className="flex justify-end h-auto px-0 py-0 pt-2 text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Link href={'/auth/reset-password/initiate'}>
+                    Forgot password?
+                  </Link>
+                </Button>
               </div>
 
               <Button className="w-full">Login</Button>
@@ -64,7 +74,7 @@ const UserLoginForm: FC<Props> = () => {
           </Button>
         </CardContent>
 
-        <CardFooter className="text-center w-[90%] md:w-[80%] lg:w-[70%] mx-auto">
+        {/* <CardFooter className="text-center w-[90%] md:w-[80%] lg:w-[70%] mx-auto">
           <p className="text-muted-foreground text-sm w-full">
             By clicking continue, you agree to our{' '}
             <Link href={'/'} className="underline">
@@ -75,7 +85,7 @@ const UserLoginForm: FC<Props> = () => {
               Privacy policy
             </Link>
           </p>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
       {/* </Form> */}
     </>
