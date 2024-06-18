@@ -115,7 +115,7 @@ const NavbarLinks: FC<Props> = () => {
 
                 {isFetchingCategories &&
                   [1, 2, 3, 4].map((number) => (
-                    <Skeleton className="h-2" key={number} />
+                    <Skeleton className="h-8" key={number} />
                   ))}
 
                 {categories &&

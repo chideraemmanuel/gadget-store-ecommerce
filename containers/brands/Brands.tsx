@@ -32,7 +32,7 @@ const Brands: FC<Props> = () => {
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(170px,_1fr))] gap-3">
           {isLoading &&
             array.map((number, index) => (
-              <Skeleton className="h-8" key={index} />
+              <Skeleton className="h-16" key={index} />
             ))}
 
           {brands?.map((brand) => (

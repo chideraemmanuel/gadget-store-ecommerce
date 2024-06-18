@@ -97,6 +97,13 @@ export interface CartReturnTypes {
   cart_items: CartTypes[];
 }
 
+export interface RegistrationCredentialsTypes {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+}
+
 export interface LoginCredentialsTypes {
   email: string;
   password: string;

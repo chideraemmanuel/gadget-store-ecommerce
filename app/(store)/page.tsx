@@ -1,5 +1,6 @@
 'use client';
 
+import SplashScreen from '@/components/SplashScreen';
 import { Separator } from '@/components/ui/separator';
 import Brands from '@/containers/brands/Brands';
 import Categories from '@/containers/categories/Categories';
@@ -13,12 +14,14 @@ import useGetHomeBillboard from '@/lib/hooks/useGetHomeBillboard';
 import useGetProducts from '@/lib/hooks/useGetProducts';
 import { LaptopIcon } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 export default function Home() {
   const {
     data: homeBillboard,
     isLoading: isFetchingHomeBillboard,
     isError: isErrorFetchingHomeBillboard,
+    error: errorFetchingHomeBillboard,
   } = useGetHomeBillboard();
 
   const {
@@ -32,8 +35,38 @@ export default function Home() {
     data: products,
     isLoading: isFetchingProducts,
     isError: isErrorFetchingNProducts,
-    error: errorFetchingNProducts,
+    error: errorFetchingProducts,
   } = useGetProducts({ pege: '2' });
+
+  useEffect(() => {
+    if (
+      errorFetchingHomeBillboard ||
+      errorFetchingNewProducts ||
+      errorFetchingProducts
+    ) {
+      // WILL BE CAUGHT BY ERROR.TSX IN SEGMENT
+      const error =
+        errorFetchingHomeBillboard ||
+        errorFetchingNewProducts ||
+        errorFetchingProducts;
+
+      throw new Error(
+        // @ts-ignore
+        error?.message?.data?.error ||
+          // @ts-ignore
+          error?.message ||
+          'An error occured'
+      );
+    }
+  }, [
+    errorFetchingHomeBillboard,
+    errorFetchingNewProducts,
+    errorFetchingProducts,
+  ]);
+
+  if (isFetchingNewProducts || isFetchingProducts || isFetchingHomeBillboard) {
+    return <SplashScreen />;
+  }
 
   return (
     <>

@@ -14,7 +14,9 @@ const useGetBrands = () => {
   return useQuery({
     queryKey: ['get brands'],
     queryFn: getBrands,
-    retry: false,
+    // retry: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 };
 

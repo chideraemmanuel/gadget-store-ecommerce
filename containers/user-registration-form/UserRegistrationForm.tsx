@@ -1,3 +1,6 @@
+'use client';
+
+import FormInput from '@/components/FormInput';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,16 +13,40 @@ import {
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Github } from 'lucide-react';
+import useRegisterUser from '@/lib/hooks/auth/useRegisterUser';
+import { RegistrationCredentialsTypes } from '@/types';
 import Link from 'next/link';
 import { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 // import { DevTool } from '@hookform/devtools';
+import { FcGoogle } from 'react-icons/fc';
 
 interface Props {}
 
 const UserRegistrationForm: FC<Props> = () => {
-  // const form = useForm()
+  const { mutate: registerUser, isLoading, isError, error } = useRegisterUser();
+
+  const form = useForm<
+    RegistrationCredentialsTypes & { confirm_password: string }
+  >();
+
+  const {
+    register,
+    formState: { errors },
+    control,
+    handleSubmit,
+    getValues,
+  } = form;
+
+  const emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
+
+  const onSubmit: SubmitHandler<RegistrationCredentialsTypes> = (data) => {
+    console.log('submitted data', data);
+    registerUser({
+      credentials: data,
+      redirectPath: '/auth/user/verify',
+    });
+  };
 
   return (
     <>
@@ -34,33 +61,97 @@ const UserRegistrationForm: FC<Props> = () => {
         </CardHeader>
 
         <CardContent className="flex flex-col gap-3">
-          <form action="" className="">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className=" flex flex-col gap-3">
               <div className="flex flex-col sm:flex-row sm:items-start gap-3">
-                <div className="w-full">
-                  <Label htmlFor="first_name">First name</Label>
-                  <Input placeholder="e.g John" id="first_name" />
-                </div>
-                <div className="w-full">
-                  <Label htmlFor="last_name">Last name</Label>
-                  <Input placeholder="e.g Doe" id="last_name" />
-                </div>
+                {/* FIRST NAME */}
+                <FormInput
+                  label="First name"
+                  error={errors.first_name?.message}
+                  placeholder="e.g John"
+                  id="first_name"
+                  {...register('first_name', {
+                    required: 'Please enter your first name',
+                  })}
+                  disabled={isLoading}
+                />
+
+                {/* LAST NAME */}
+                <FormInput
+                  label="Last name"
+                  error={errors.last_name?.message}
+                  placeholder="e.g Doe"
+                  id="last_name"
+                  {...register('last_name', {
+                    required: {
+                      value: true,
+                      message: 'Please enter your last name',
+                    },
+                  })}
+                  disabled={isLoading}
+                />
               </div>
 
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input placeholder="e.g johndoe@email.com" id="email" />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input placeholder="Enter password" id="password" />
-              </div>
-              <div>
-                <Label htmlFor="confirm_password">Confirm password</Label>
-                <Input placeholder="Confirm password" id="confirm_password" />
-              </div>
+              {/* EMAIL */}
+              <FormInput
+                label="Email"
+                error={errors.email?.message}
+                placeholder="e.g johndoe@email.com"
+                id="email"
+                {...register('email', {
+                  required: {
+                    value: true,
+                    message: 'Please enter an email',
+                  },
+                  pattern: {
+                    value: emailRegex,
+                    message: 'Invalid email format',
+                  },
+                })}
+                disabled={isLoading}
+              />
 
-              <Button className="w-full">Create account</Button>
+              {/* PASSWORD */}
+              <FormInput
+                label="Password"
+                type="password"
+                error={errors.password?.message}
+                placeholder="Enter password"
+                id="password"
+                {...register('password', {
+                  required: {
+                    value: true,
+                    message: 'Please enter a password',
+                  },
+                })}
+                disabled={isLoading}
+              />
+
+              {/* CONFIRM PASSWORD */}
+              <FormInput
+                label="Confirm password"
+                type="password"
+                error={errors.confirm_password?.message}
+                placeholder="Confirm password"
+                id="confirm_password"
+                {...register('confirm_password', {
+                  required: {
+                    value: true,
+                    message: 'Please confirm your password',
+                  },
+                  validate: (fieldValue) => {
+                    return (
+                      fieldValue === getValues('password') ||
+                      'Passwords do not match'
+                    );
+                  },
+                })}
+                disabled={isLoading}
+              />
+
+              <Button disabled={isLoading} className="w-full">
+                Create account
+              </Button>
             </div>
           </form>
 
@@ -72,8 +163,7 @@ const UserRegistrationForm: FC<Props> = () => {
               href={'/'}
               className="flex items-center gap-2"
             >
-              {/* <FcGoogle /> */}
-              <Github />
+              <FcGoogle />
               <span>Sign in with google</span>
             </Link>
           </Button>
@@ -108,5 +198,3 @@ const FormBreak: FC = () => {
     </div>
   );
 };
-
-// TODO: update password fields to use type password
