@@ -16,10 +16,16 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import NavbarCartLink from '@/components/NavbarCartLink';
+import NavbarAccountButton from '@/components/NavbarAccountButton';
+import useGetCategories from '@/lib/hooks/useGetCategories';
 
 interface Props {}
 
 const Navbar: FC<Props> = () => {
+  const { data: categories, isLoading: isFetchingCategories } =
+    useGetCategories();
+
   return (
     <>
       <div className="container mx-auto relative h-[70px] flex items-center justify-between">
@@ -32,46 +38,9 @@ const Navbar: FC<Props> = () => {
         <div className="inline-flex items-center justify-center gap-2 text-accent-foreground">
           <NavbarSearchInput />
 
-          {/* <div className="relative border"> */}
-          <Button
-            asChild
-            variant={'ghost'}
-            size={'sm'}
-            className="px-1 sm:px-2"
-          >
-            <Link
-              href={'/'}
-              className="inline-flex items-center justify-center gap-1 text-sm"
-            >
-              <ShoppingCartIcon // width={20}
-                className="w-full md:w-1/2"
-              />
-              <span className="hidden md:inline-block">Cart</span>
-            </Link>
-          </Button>
+          <NavbarCartLink />
 
-          {/* <span className="inline-block absolute right-0 top-0 translate-x-1/2 translate-y-1/2 bg-red-500 rounded-full p-1 text-xs text-white">
-              10000000000
-            </span>
-          </div> */}
-
-          <Button
-            asChild
-            variant={'ghost'}
-            size={'sm'}
-            className="px-1 sm:px-2"
-          >
-            <Link
-              href={'/'}
-              className="inline-flex items-center justify-center gap-1 text-sm"
-            >
-              <User
-                // width={20}
-                className="w-full md:w-1/2"
-              />
-              <span className="hidden md:inline-block">Account</span>
-            </Link>
-          </Button>
+          <NavbarAccountButton />
         </div>
       </div>
     </>

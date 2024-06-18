@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/decorators/ThemeProvider';
 import Navbar from '@/containers/navbar/Navbar';
 import { Separator } from '@/components/ui/separator';
 import Footer from '@/containers/footer/Footer';
+import ReactQueryProvider from '@/decorators/ReactQueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,18 +23,20 @@ interface Props {
 const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
   return (
     <ThemeProvider defaultTheme="dark">
-      <html lang="en">
-        <body className={`${inter.className} flex flex-col min-h-screen`}>
-          <header className="bg-background sticky top-0 z-50">
-            <Navbar />
-            <Separator />
-          </header>
+      <ReactQueryProvider>
+        <html lang="en">
+          <body className={`${inter.className} flex flex-col min-h-screen`}>
+            <header className="bg-background sticky top-0 z-50">
+              <Navbar />
+              <Separator />
+            </header>
 
-          <main className="flex-1">{children}</main>
+            <main className="flex-1">{children}</main>
 
-          <Footer />
-        </body>
-      </html>
+            <Footer />
+          </body>
+        </html>
+      </ReactQueryProvider>
     </ThemeProvider>
   );
 };

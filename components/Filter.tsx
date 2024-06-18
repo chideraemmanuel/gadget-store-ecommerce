@@ -3,15 +3,11 @@
 import { FC } from 'react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-interface FilterItem {
-  _id: string;
-  name: string;
-}
+import { BrandTypes, CategoryTypes } from '@/types';
 
 interface Props {
   label: string;
-  filterItems: FilterItem[];
+  filterItems: CategoryTypes[] | BrandTypes[];
   searchParamKey: string;
 }
 

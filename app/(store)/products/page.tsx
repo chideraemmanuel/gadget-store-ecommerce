@@ -12,37 +12,64 @@ import Filter from '@/components/Filter';
 import ProductsPagination from '@/components/ProductsPagination';
 import { Button } from '@/components/ui/button';
 import ProductsPagination2 from '@/components/ProductsPagination2';
+import useGetCategories from '@/lib/hooks/useGetCategories';
+import useGetBrands from '@/lib/hooks/useGetBrands';
+import useGetProducts from '@/lib/hooks/useGetProducts';
+import { Skeleton } from '@/components/ui/skeleton';
+import { SearchParams } from '@/types';
 
-interface Props {}
+interface Props {
+  searchParams: SearchParams;
+}
 
-const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const array = [1, 2, 3, 4, 5, 6];
 
-const filterItems = [
-  {
-    _id: '1',
-    name: 'Laptop',
-  },
-  {
-    _id: '2',
-    name: 'Phones',
-  },
-  {
-    _id: '3',
-    name: 'Headphones',
-  },
-];
+// const filterItems = [
+//   {
+//     _id: '1',
+//     name: 'Laptop',
+//   },
+//   {
+//     _id: '2',
+//     name: 'Phones',
+//   },
+//   {
+//     _id: '3',
+//     name: 'Headphones',
+//   },
+// ];
 
-const ProductsPage: FC<Props> = () => {
+const ProductsPage: FC<Props> = ({ searchParams }) => {
+  const { data: products, isLoading: isFetchingproducts } =
+    useGetProducts(searchParams);
+
+  const { data: categories, isLoading: isFetchingCategories } =
+    useGetCategories();
+  const { data: brands, isLoading: isFetchingBrands } = useGetBrands();
+
   return (
     <section className="">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
-        <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
-          <Filter
-            label="Categories"
-            filterItems={filterItems}
-            searchParamKey="category"
-          />
-        </aside>
+        {(isFetchingCategories || isFetchingBrands) && (
+          <div className="flex items-center justify-center">
+            <span className="text-muted-foreground">Loading filters...</span>
+          </div>
+        )}
+
+        {categories && brands && (
+          <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
+            <Filter
+              label="Categories"
+              filterItems={categories}
+              searchParamKey="category"
+            />
+            <Filter
+              label="Brands"
+              filterItems={brands}
+              searchParamKey="brand"
+            />
+          </aside>
+        )}
 
         <div className="px-0 md:px-2 md:border-l">
           <div className="flex items-start justify-between">
@@ -57,20 +84,43 @@ const ProductsPage: FC<Props> = () => {
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
-                <div className="p-5 flex flex-col gap-3 min-h-[40vh] max-h-[80vh]">
-                  <Filter
-                    label="Categories"
-                    filterItems={filterItems}
-                    searchParamKey="category"
-                  />
-                </div>
+                {(isFetchingCategories || isFetchingBrands) && (
+                  <div className="p-5 flex items-center justify-center">
+                    <span className="text-muted-foreground">
+                      Loading filters...
+                    </span>
+                  </div>
+                )}
+
+                {categories && brands && (
+                  <div className="p-5 flex flex-col gap-3 min-h-[40vh] max-h-[80vh]">
+                    <Filter
+                      label="Categories"
+                      filterItems={categories}
+                      searchParamKey="category"
+                    />
+                    <Filter
+                      label="Brands"
+                      filterItems={brands}
+                      searchParamKey="brand"
+                    />
+                  </div>
+                )}
               </DrawerContent>
             </Drawer>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 pb-7">
-            {array.map((num, index) => (
-              <ProductCard key={index} />
+            {isFetchingproducts &&
+              array.map((num, index) => (
+                <Skeleton
+                  className="h-20 sm:h-24 md:h-32 lg:h-40"
+                  key={index}
+                />
+              ))}
+
+            {products?.data?.map((product) => (
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
 
@@ -80,7 +130,11 @@ const ProductsPage: FC<Props> = () => {
               total_records={100}
               total_pages={3}
             /> */}
-            <ProductsPagination2 totalPages={10} />
+            {products && products?.pagination.total_pages > 1 && (
+              <ProductsPagination2
+                totalPages={products?.pagination.total_pages}
+              />
+            )}
           </div>
         </div>
       </div>

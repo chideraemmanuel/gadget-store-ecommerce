@@ -1,3 +1,4 @@
+import ResourceSearch from '@/components/ProductsSearch';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, SearchIcon } from 'lucide-react';
@@ -11,7 +12,11 @@ const NavbarSearchInput: FC<Props> = () => {
   return (
     <>
       <div className="relative hidden md:inline-block">
-        <Input
+        {/* <Input
+          className="hidden md:block rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-2"
+          placeholder="Search products"
+        /> */}
+        <ResourceSearch
           className="hidden md:block rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-2"
           placeholder="Search products"
         />
@@ -34,7 +39,12 @@ const NavbarSearchInput: FC<Props> = () => {
           </Button>
 
           <div className="relative w-full">
-            <Input
+            {/* <Input
+              autoFocus
+              className="block rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-2"
+              placeholder="Search products"
+            /> */}
+            <ResourceSearch
               autoFocus
               className="block rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-2"
               placeholder="Search products"

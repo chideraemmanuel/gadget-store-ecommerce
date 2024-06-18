@@ -2,11 +2,14 @@ import Link from 'next/link';
 import { FC } from 'react';
 import logo from '@/assets/apple-logo.jpg';
 import Image from 'next/image';
+import { BrandTypes } from '@/types';
 // import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
-interface Props {}
+interface Props {
+  brand: BrandTypes;
+}
 
-const BrandCard: FC<Props> = () => {
+const BrandCard: FC<Props> = ({ brand }) => {
   return (
     <Link
       href={'/'}
@@ -19,14 +22,15 @@ const BrandCard: FC<Props> = () => {
 
       <div className="rounded-full p-[2px] inline-block">
         <Image
-          src={logo.src}
-          alt="logo"
+          // src={logo.src}
+          src={brand.brand_logo}
+          alt={`${brand.name}`}
           width={30}
           height={30}
           className=" rounded-[inherit]"
         />
       </div>
-      <span>Brand Name</span>
+      <span>{brand.name}</span>
     </Link>
   );
 };

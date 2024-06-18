@@ -10,11 +10,16 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { Separator } from '@/components/ui/separator';
+import useGetCategories from '@/lib/hooks/useGetCategories';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {}
 
 const MobileNavigationMenuLinks: FC<Props> = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: categories, isLoading: isFetchingCategories } =
+    useGetCategories();
 
   return (
     <nav className="pt-10 pb-5 text-foreground">
@@ -31,6 +36,15 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
           </MobileDropdown.DropdownMenuContent>
         </MobileDropdown.DropdownMenu> */}
 
+        <li>
+          <Link
+            href={'/'}
+            className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            Home
+          </Link>
+        </li>
+
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <li>
             <CollapsibleTrigger
@@ -44,7 +58,7 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
 
             <CollapsibleContent asChild>
               <ul className="flex flex-col gap-2 ml-5 mt-2">
-                <li>
+                {/* <li>
                   <Link
                     href={'/'}
                     className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -62,7 +76,27 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
                   >
                     Phones
                   </Link>
-                </li>
+                </li> */}
+
+                {isFetchingCategories &&
+                  [1, 2, 3].map((number) => (
+                    <Skeleton className="h-3" key={number} />
+                  ))}
+
+                {categories &&
+                  categories.map((category, index) => (
+                    <div key={category._id}>
+                      <li>
+                        <Link
+                          href={`/products/category/${category._id}`}
+                          className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                          {category.name}
+                        </Link>
+                      </li>
+                      {index !== categories.length - 1 && <Separator />}
+                    </div>
+                  ))}
               </ul>
             </CollapsibleContent>
           </li>
@@ -72,10 +106,10 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
 
         <li>
           <Link
-            href={'/'}
+            href={'/products'}
             className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
           >
-            Deals
+            Store
           </Link>
         </li>
 
@@ -83,23 +117,23 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
 
         <li>
           <Link
-            href={'/'}
+            href={'#'}
             className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             What's New
           </Link>
         </li>
 
-        <Separator />
+        {/* <Separator /> */}
 
-        <li>
+        {/* <li>
           <Link
             href={'/'}
             className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             Delivery
           </Link>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

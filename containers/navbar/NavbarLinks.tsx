@@ -24,13 +24,18 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import useGetCategories from '@/lib/hooks/useGetCategories';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {}
 
 // block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground
 
 const NavbarLinks: FC<Props> = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { data: categories, isLoading: isFetchingCategories } =
+    useGetCategories();
 
   return (
     // <ul className="hidden lg:flex items-center justify-center gap-3 text-sm text-foreground">
@@ -79,6 +84,20 @@ const NavbarLinks: FC<Props> = () => {
       <NavigationMenu className="hidden lg:block">
         <NavigationMenuList className="hidden lg:flex items-center justify-center gap-1 text-sm text-foreground">
           <NavigationMenuItem>
+            <Link href="/" legacyBehavior passHref>
+              {/* <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  'inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2'
+                )}
+              >
+                Home
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
             <NavigationMenuTrigger className="inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2">
               Categories
             </NavigationMenuTrigger>
@@ -88,35 +107,50 @@ const NavbarLinks: FC<Props> = () => {
               */}
               {/* <ul className="p-3 grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]"> */}
               <ul className="grid grid-cols-2 gap-2 p-3 w-[300px]">
-                <ListItem href={'/products/category/1'}>Laptops</ListItem>
+                {/* <ListItem href={'/products/category/1'}>Laptops</ListItem>
                 <ListItem href={'/products/category/1'}>Phones</ListItem>
                 <ListItem href={'/products/category/1'}>Chargers</ListItem>
                 <ListItem href={'/products/category/1'}>Headphones</ListItem>
-                <ListItem href={'/products/category/1'}>Mouses</ListItem>
+                <ListItem href={'/products/category/1'}>Mouses</ListItem> */}
+
+                {isFetchingCategories &&
+                  [1, 2, 3, 4].map((number) => (
+                    <Skeleton className="h-2" key={number} />
+                  ))}
+
+                {categories &&
+                  categories.map((category) => (
+                    <ListItem
+                      key={category._id}
+                      href={`/products/category/${category._id}`}
+                    >
+                      {category.name}
+                    </ListItem>
+                  ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link href="/docs" legacyBehavior passHref>
+            <Link href="/products" legacyBehavior passHref>
               {/* <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
               <NavigationMenuLink
                 className={cn(
-                  'inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2',
-                  navigationMenuTriggerStyle()
+                  navigationMenuTriggerStyle(),
+                  'inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2'
                 )}
               >
-                Deals
+                Store
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link href="/docs" legacyBehavior passHref>
+            <Link href="#" legacyBehavior passHref>
               <NavigationMenuLink
                 className={cn(
-                  'inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2',
-                  navigationMenuTriggerStyle()
+                  navigationMenuTriggerStyle(),
+                  'inline-flex items-center justify-center gap-1 text-sm px-1 sm:px-2'
                 )}
               >
                 What's New
@@ -124,7 +158,7 @@ const NavbarLinks: FC<Props> = () => {
             </Link>
           </NavigationMenuItem>
 
-          <NavigationMenuItem>
+          {/* <NavigationMenuItem>
             <Link href="/docs" legacyBehavior passHref>
               <NavigationMenuLink
                 className={cn(
@@ -135,7 +169,7 @@ const NavbarLinks: FC<Props> = () => {
                 Delivery
               </NavigationMenuLink>
             </Link>
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
     </>

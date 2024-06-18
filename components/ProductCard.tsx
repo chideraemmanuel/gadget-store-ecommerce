@@ -12,31 +12,40 @@ import Image from 'next/image';
 import image from '@/assets/phone.png';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
+import { ProductTypes } from '@/types';
 
-interface Props {}
+interface Props {
+  product: ProductTypes;
+}
 
-const ProductCard: FC<Props> = () => {
+const ProductCard: FC<Props> = ({ product }) => {
   return (
     <Card className="inline-block shadow-md dark:bg-slate-900">
       <Link href={'/products/1'}>
         <CardHeader>
-          <Image src={image.src} alt="product name" width={300} height={300} />
+          {/* <Image src={image.src} alt="product name" width={300} height={300} /> */}
+          <Image
+            src={product.product_image}
+            alt={`${product.product_name}`}
+            width={300}
+            height={300}
+          />
         </CardHeader>
 
         <Separator />
 
         <CardContent className="flex flex-col gap-2 md:gap-3 p-3 md:p-4 pb-2 md:pb-3">
           <CardTitle className="text-base lg:text-lg line-clamp-2">
-            Product namee Product namee Product namee Product namee
+            {product.product_name}
           </CardTitle>
 
           <CardDescription className="text-xs lg:text-sm line-clamp-2">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consequatur temporibus dolores iure aperiam rem? Quibusdam sint
-            aliquam rerum cumque molestiae?
+            {product.description}
           </CardDescription>
 
-          <span className="font-semibold text-base lg:text-lg">$999.99</span>
+          <span className="font-semibold text-base lg:text-lg">
+            ₦{product.price}
+          </span>
         </CardContent>
       </Link>
 

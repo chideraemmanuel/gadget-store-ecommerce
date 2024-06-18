@@ -1,23 +1,26 @@
 import ProductCard from '@/components/ProductCard';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
+import { ProductTypes } from '@/types';
 import Link from 'next/link';
 import { FC } from 'react';
 
-interface Props {}
+interface Props {
+  products: ProductTypes[];
+}
 
 const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const Products: FC<Props> = () => {
+const Products: FC<Props> = ({ products }) => {
   return (
     <section className="py-7">
       <div className="container mx-auto">
         <SectionHeader>Today's deals for you!</SectionHeader>
-        <span>Products filter goes here</span>
+        {/* <span>Products filter goes here?</span> */}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 pb-7">
-          {array.map((num, index) => (
-            <ProductCard key={index} />
+          {products?.map((product) => (
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
 
