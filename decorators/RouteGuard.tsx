@@ -43,7 +43,7 @@ const RouteGuard: FC<Props> = ({ children }) => {
       router.replace('/auth/login');
     }
 
-    if (!user?.verified) {
+    if (user && !user?.verified) {
       router.replace('/auth/user/verify');
     }
   }, [error, user]);

@@ -1,3 +1,6 @@
+'use client';
+
+import FormInput from '@/components/FormInput';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,16 +13,39 @@ import {
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import useLoginUser from '@/lib/hooks/auth/useLoginUser';
+import { LoginCredentialsTypes } from '@/types';
 import { Github } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FcGoogle } from 'react-icons/fc';
 // import { DevTool } from '@hookform/devtools';
 
 interface Props {}
 
 const UserLoginForm: FC<Props> = () => {
-  // const form = useForm()
+  const { mutate: login, isLoading } = useLoginUser();
+
+  const form = useForm<LoginCredentialsTypes>();
+
+  const {
+    register,
+    formState: { errors },
+    control,
+    handleSubmit,
+  } = form;
+
+  const emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
+
+  const onSubmit: SubmitHandler<LoginCredentialsTypes> = (data) => {
+    console.log('submitted login credentials', data);
+
+    login({
+      credentials: data,
+      redirectPath: '/',
+    });
+  };
 
   return (
     <>
@@ -34,28 +60,47 @@ const UserLoginForm: FC<Props> = () => {
         </CardHeader>
 
         <CardContent className="flex flex-col gap-3">
-          <form action="" className="">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className=" flex flex-col gap-3">
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input placeholder="e.g johndoe@email.com" id="email" />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input placeholder="Enter your password" id="password" />
-                <Button
-                  type="button"
-                  variant={'link'}
-                  asChild
-                  className="flex justify-end h-auto px-0 py-0 pt-2 text-xs text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Link href={'/auth/reset-password/initiate'}>
-                    Forgot password?
-                  </Link>
-                </Button>
-              </div>
+              {/* EMAIL */}
+              <FormInput
+                label="Email"
+                error={errors.email?.message}
+                placeholder="e.g johndoe@email.com"
+                id="email"
+                {...register('email', {
+                  required: {
+                    value: true,
+                    message: 'Please enter an email',
+                  },
+                  pattern: {
+                    value: emailRegex,
+                    message: 'Invalid email format',
+                  },
+                })}
+                disabled={isLoading}
+              />
 
-              <Button className="w-full">Login</Button>
+              {/* PASSWORD */}
+              <FormInput
+                label="Password"
+                type="password"
+                addForgotPassword
+                error={errors.password?.message}
+                placeholder="Enter your password"
+                id="password"
+                {...register('password', {
+                  required: {
+                    value: true,
+                    message: 'Please enter a password',
+                  },
+                })}
+                disabled={isLoading}
+              />
+
+              <Button className="w-full" disabled={isLoading}>
+                Login
+              </Button>
             </div>
           </form>
 
@@ -67,8 +112,7 @@ const UserLoginForm: FC<Props> = () => {
               href={'/'}
               className="flex items-center gap-2"
             >
-              {/* <FcGoogle /> */}
-              <Github />
+              <FcGoogle />
               <span>Login in with google</span>
             </Link>
           </Button>

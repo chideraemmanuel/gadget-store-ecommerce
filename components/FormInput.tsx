@@ -10,16 +10,19 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 interface FormInputProps extends ComponentPropsWithoutRef<typeof Input> {
   label?: string;
   error?: string;
+  addForgotPassword?: boolean;
 }
 
 type FormInputRef = ElementRef<typeof Input>; //HTMLInputElement
 
 const FormInput = React.forwardRef<FormInputRef, FormInputProps>(
-  ({ label, error, id, type, ...props }, ref) => {
+  ({ label, error, id, type, className, addForgotPassword, ...props }, ref) => {
     const [currentType, setCurrentType] = useState(type);
 
     return (
@@ -30,8 +33,9 @@ const FormInput = React.forwardRef<FormInputRef, FormInputProps>(
             <Input
               id={id}
               type={type === 'password' ? currentType : type}
-              {...props}
+              className={cn(`${error && 'border-destructive'}`, className)}
               ref={ref}
+              {...props}
             />
 
             {type === 'password' && (
@@ -54,7 +58,23 @@ const FormInput = React.forwardRef<FormInputRef, FormInputProps>(
               </Button>
             )}
           </div>
-          <span className="text-xs text-destructive">{error}</span>
+
+          <div className="flex items-center justify-between pt-1">
+            <span className="text-xs text-destructive">{error}</span>
+
+            {type === 'password' && addForgotPassword && (
+              <Button
+                type="button"
+                variant={'link'}
+                asChild
+                className="flex justify-end h-fit px-0 py-0 text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Link href={'/auth/reset-password/initiate'}>
+                  Forgot password?
+                </Link>
+              </Button>
+            )}
+          </div>
         </div>
       </>
     );
