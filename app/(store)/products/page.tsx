@@ -3,7 +3,7 @@
 import ProductCard from '@/components/ProductCard';
 import SectionHeader from '@/components/SectionHeader';
 import { Separator } from '@/components/ui/separator';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Drawer, DrawerTrigger, DrawerContent } from '@/components/ui/drawer';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
@@ -17,6 +17,7 @@ import useGetBrands from '@/lib/hooks/useGetBrands';
 import useGetProducts from '@/lib/hooks/useGetProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SearchParams } from '@/types';
+import ProductsFilters from '@/components/ProductsFilters';
 
 interface Props {
   searchParams: SearchParams;
@@ -24,41 +25,86 @@ interface Props {
 
 const array = [1, 2, 3, 4, 5, 6];
 
-// const filterItems = [
-//   {
-//     _id: '1',
-//     name: 'Laptop',
-//   },
-//   {
-//     _id: '2',
-//     name: 'Phones',
-//   },
-//   {
-//     _id: '3',
-//     name: 'Headphones',
-//   },
-// ];
-
 const ProductsPage: FC<Props> = ({ searchParams }) => {
-  const { data: products, isLoading: isFetchingproducts } =
-    useGetProducts(searchParams);
+  const {
+    data: products,
+    isLoading: isFetchingproducts,
+    isError: isErrorFetchingProducts,
+    error: errorFetchingProducts,
+  } = useGetProducts(searchParams);
 
-  const { data: categories, isLoading: isFetchingCategories } =
-    useGetCategories();
-  const { data: brands, isLoading: isFetchingBrands } = useGetBrands();
+  const {
+    data: categories,
+    isLoading: isFetchingCategories,
+    isError: isErrorFetchingCategories,
+    error: errorFetchingCategories,
+  } = useGetCategories();
+
+  const {
+    data: brands,
+    isLoading: isFetchingBrands,
+    isError: isErrorFetchingBrands,
+    error: errorFetchingBrands,
+  } = useGetBrands();
+
+  useEffect(() => {
+    if (
+      isErrorFetchingProducts ||
+      isErrorFetchingCategories ||
+      isErrorFetchingBrands
+    ) {
+      const error =
+        errorFetchingProducts || errorFetchingCategories || errorFetchingBrands;
+
+      throw new Error(
+        // @ts-ignore
+        error?.message?.data?.error ||
+          // @ts-ignore
+          error?.message ||
+          'An error occured while loading page'
+      );
+    }
+  }, [
+    isErrorFetchingProducts,
+    isErrorFetchingCategories,
+    isErrorFetchingBrands,
+  ]);
 
   return (
     <section className="">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
-        {(isFetchingCategories || isFetchingBrands) && (
-          <div className="flex items-center justify-center">
-            <span className="text-muted-foreground">Loading filters...</span>
-          </div>
-        )}
+        <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
+          {(isFetchingCategories || isFetchingBrands) && (
+            <div className="flex items-center justify-center">
+              <span className="text-muted-foreground">Loading filters...</span>
+            </div>
+          )}
 
-        {categories && brands && (
-          <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
-            <Filter
+          {/* {(isErrorFetchingCategories || isErrorFetchingBrands) && (
+            <div className="flex items-center justify-center">
+              <span className="text-muted-foreground">
+                An error occured while loading filters
+              </span>
+            </div>
+          )} */}
+
+          {categories && brands && (
+            <ProductsFilters
+              filters={[
+                {
+                  label: 'Categories',
+                  filterItems: categories,
+                  searchParamKey: 'category',
+                },
+                {
+                  label: 'Brands',
+                  filterItems: brands,
+                  searchParamKey: 'brand',
+                },
+              ]}
+            />
+          )}
+          {/* <Filter
               label="Categories"
               filterItems={categories}
               searchParamKey="category"
@@ -67,9 +113,8 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
               label="Brands"
               filterItems={brands}
               searchParamKey="brand"
-            />
-          </aside>
-        )}
+            /> */}
+        </aside>
 
         <div className="px-0 md:px-2 md:border-l">
           <div className="flex items-start justify-between">
@@ -92,20 +137,24 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
                   </div>
                 )}
 
-                {categories && brands && (
-                  <div className="p-5 flex flex-col gap-3 min-h-[40vh] max-h-[80vh]">
-                    <Filter
-                      label="Categories"
-                      filterItems={categories}
-                      searchParamKey="category"
+                <div className="p-5 flex flex-col gap-3 min-h-[40vh] max-h-[80vh]">
+                  {categories && brands && (
+                    <ProductsFilters
+                      filters={[
+                        {
+                          label: 'Categories',
+                          filterItems: categories,
+                          searchParamKey: 'category',
+                        },
+                        {
+                          label: 'Brands',
+                          filterItems: brands,
+                          searchParamKey: 'brand',
+                        },
+                      ]}
                     />
-                    <Filter
-                      label="Brands"
-                      filterItems={brands}
-                      searchParamKey="brand"
-                    />
-                  </div>
-                )}
+                  )}
+                </div>
               </DrawerContent>
             </Drawer>
           </div>
@@ -119,17 +168,20 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
                 />
               ))}
 
-            {products?.data?.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+            {!isFetchingproducts && products && products.data.length > 0 ? (
+              products?.data?.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            ) : (
+              <div className="flex items-center justify-center h-full p-5">
+                <span className="text-muted-foreground">
+                  No products to display
+                </span>
+              </div>
+            )}
           </div>
 
-          <div className="">
-            {/* <ProductsPagination
-              // current_page={1}
-              total_records={100}
-              total_pages={3}
-            /> */}
+          <div>
             {products && products?.pagination.total_pages > 1 && (
               <ProductsPagination2
                 totalPages={products?.pagination.total_pages}
@@ -146,86 +198,4 @@ export default ProductsPage;
 
 // TODO: Customize scroll on aside
 
-// <RadioGroup defaultValue="option-one">
-//   <div className="flex items-center space-x-2">
-//     <RadioGroupItem value="option-one" id="option-one" />
-//     <Label htmlFor="option-one">Option One</Label>
-//   </div>
-//   <div className="flex items-center space-x-2">
-//     <RadioGroupItem value="option-two" id="option-two" />
-//     <Label htmlFor="option-two">Option Two</Label>
-//   </div>
-// </RadioGroup>;
-
-// ****************************
-// ****************************
-// ****************************
-
-// import { Bold, Italic, Underline } from 'lucide-react';
-
-// import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-
-// export function ToggleGroupDemo() {
-//   return (
-//     <ToggleGroup type="single">
-//       <ToggleGroupItem value="bold" aria-label="Toggle bold">
-//         <Bold className="h-4 w-4" />
-//       </ToggleGroupItem>
-//       <ToggleGroupItem value="italic" aria-label="Toggle italic">
-//         <Italic className="h-4 w-4" />
-//       </ToggleGroupItem>
-//       <ToggleGroupItem value="underline" aria-label="Toggle underline">
-//         <Underline className="h-4 w-4" />
-//       </ToggleGroupItem>
-//     </ToggleGroup>
-//   );
-// }
-
-// ****************************
-// ****************************
-// ****************************
-
 // [&:checked+label]:bg-[#bfb]
-
-// ****************************
-// ****************************
-// ****************************
-
-// import {
-//   Pagination,
-//   PaginationContent,
-//   PaginationEllipsis,
-//   PaginationItem,
-//   PaginationLink,
-//   PaginationNext,
-//   PaginationPrevious,
-// } from "@/components/ui/pagination"
-
-// export function PaginationDemo() {
-//   return (
-//     <Pagination>
-//       <PaginationContent>
-//         <PaginationItem>
-//           <PaginationPrevious href="#" />
-//         </PaginationItem>
-//         <PaginationItem>
-//           <PaginationLink href="#">1</PaginationLink>
-//         </PaginationItem>
-//         <PaginationItem>
-//           <PaginationLink href="#" isActive>
-//             2
-//           </PaginationLink>
-//         </PaginationItem>
-//         <PaginationItem>
-//           <PaginationLink href="#">3</PaginationLink>
-//         </PaginationItem>
-//         <PaginationItem>
-//           <PaginationEllipsis />
-//         </PaginationItem>
-//         <PaginationItem>
-//           <PaginationNext href="#" />
-//         </PaginationItem>
-//       </PaginationContent>
-//     </Pagination>
-//   )
-// }

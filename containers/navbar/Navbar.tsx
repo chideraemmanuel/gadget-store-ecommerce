@@ -35,7 +35,7 @@ const Navbar: FC<Props> = () => {
 
         <NavbarLinks />
 
-        <div className="inline-flex items-center justify-center gap-2 text-accent-foreground">
+        <div className="inline-flex items-center justify-center gap-4 text-accent-foreground">
           <NavbarSearchInput />
 
           <NavbarCartLink />

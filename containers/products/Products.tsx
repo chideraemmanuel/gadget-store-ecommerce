@@ -18,22 +18,32 @@ const Products: FC<Props> = ({ products }) => {
         <SectionHeader>Today's deals for you!</SectionHeader>
         {/* <span>Products filter goes here?</span> */}
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 pb-7">
-          {products?.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 pb-7">
+              {products?.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
 
-        <div className="flex justify-center items-center">
-          <Button
-            asChild
-            size={'lg'}
-            variant={'outline'}
-            className="border-primary hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
-          >
-            <Link href={'/products'}>See more</Link>
-          </Button>
-        </div>
+            <div className="flex justify-center items-center">
+              <Button
+                asChild
+                size={'lg'}
+                variant={'outline'}
+                className="border-primary hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
+              >
+                <Link href={'/products'}>See more</Link>
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center p-6">
+            <span className="text-muted-foreground">
+              No products to display.
+            </span>
+          </div>
+        )}
       </div>
     </section>
   );

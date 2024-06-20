@@ -22,18 +22,26 @@ const ProductsCarousel: FC<Props> = ({ header, products }) => {
       {/* <h2 className="font-bold text-xl md:text-2xl pb-7">Popular Products</h2> */}
       <h2 className="font-bold text-xl md:text-2xl pb-7">{header}</h2>
 
-      <Carousel>
-        <CarouselContent>
-          {products?.map((product) => (
-            <CarouselItem
-              key={product._id}
-              className="basis-[55%] xs:basis-[40%] md:basis-[30%] lg:basis-[23%]"
-            >
-              <ProductCard product={product} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+      {products && products.length > 0 && (
+        <Carousel>
+          <CarouselContent>
+            {products.map((product) => (
+              <CarouselItem
+                key={product._id}
+                className="basis-[55%] xs:basis-[40%] md:basis-[30%] lg:basis-[23%]"
+              >
+                <ProductCard product={product} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      )}
+
+      {products && products.length === 0 && (
+        <div className="text-center p-6">
+          <span className="text-muted-foreground">No product to display.</span>
+        </div>
+      )}
     </div>
   );
 };

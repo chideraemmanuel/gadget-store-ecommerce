@@ -6,7 +6,7 @@ import ServerError from '@/containers/server-error/ServerError';
 import { ErrorPageProps } from '@/types';
 import { FC } from 'react';
 
-const CartPageError: FC<ErrorPageProps> = ({ error, reset }) => {
+const ProductsPageError: FC<ErrorPageProps> = ({ error, reset }) => {
   // CATCHES NETWORK ERROR
   if (error.message === 'Network Error' || error.message === 'failed fetch') {
     return <NetworkError retry={reset} />;
@@ -19,11 +19,11 @@ const CartPageError: FC<ErrorPageProps> = ({ error, reset }) => {
 
   return (
     <>
-      <h2>An error occured while loading cart</h2>
+      <h2>An error occured while fetching products</h2>
       <span>{error.message}</span>
       <Button onClick={() => reset()}>Retry</Button>
     </>
   );
 };
 
-export default CartPageError;
+export default ProductsPageError;

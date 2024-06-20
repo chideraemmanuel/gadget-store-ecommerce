@@ -8,7 +8,7 @@ import ServerError from '@/containers/server-error/ServerError';
 import { ErrorPageProps } from '@/types';
 import { FC } from 'react';
 
-const HomeErrorPage: FC<ErrorPageProps> = ({ error, reset }) => {
+const HomePageError: FC<ErrorPageProps> = ({ error, reset }) => {
   // CATCHES NETWORK ERROR
   if (error.message === 'Network Error' || error.message === 'failed fetch') {
     // return <NetworkError retry={reset} />;
@@ -29,4 +29,4 @@ const HomeErrorPage: FC<ErrorPageProps> = ({ error, reset }) => {
   );
 };
 
-export default HomeErrorPage;
+export default HomePageError;

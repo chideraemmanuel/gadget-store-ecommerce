@@ -17,7 +17,7 @@ const Brands: FC<Props> = () => {
 
   if (isError) {
     return (
-      <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-2 sm:gap-5">
+      <div className="container mx-auto flex flex-col sm:flex-row items-center sm:justify-between gap-2 sm:gap-5">
         <p>An error occured while fetching brands</p>
         <Button onClick={() => refetch()}>Retry</Button>
       </div>
@@ -35,10 +35,16 @@ const Brands: FC<Props> = () => {
               <Skeleton className="h-16" key={index} />
             ))}
 
-          {brands?.map((brand) => (
-            <BrandCard key={brand._id} brand={brand} />
-          ))}
+          {brands &&
+            brands.length > 0 &&
+            brands?.map((brand) => <BrandCard key={brand._id} brand={brand} />)}
         </div>
+
+        {brands && brands.length === 0 && (
+          <div className="text-center p-6">
+            <span className="text-muted-foreground">No brand to display.</span>
+          </div>
+        )}
       </div>
     </section>
   );

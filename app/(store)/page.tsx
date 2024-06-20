@@ -15,6 +15,9 @@ import useGetProducts from '@/lib/hooks/useGetProducts';
 import { LaptopIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import iphoneX from '@/assets/iphone-x.png';
+import iphoneXR from '@/assets/iphone-xr.png';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const {
@@ -25,34 +28,91 @@ export default function Home() {
   } = useGetHomeBillboard();
 
   const {
-    data: newProducts,
-    isLoading: isFetchingNewProducts,
-    isError: isErrorFetchingNewProducts,
-    error: errorFetchingNewProducts,
-  } = useGetProducts();
+    data: featuredProducts,
+    isLoading: isFetchingFeaturedProducts,
+    isError: isErrorFetchingFeaturedProducts,
+    error: errorFetchingFeaturedProducts,
+  } = useGetProducts({ featured: 'true' });
 
   const {
     data: products,
     isLoading: isFetchingProducts,
-    isError: isErrorFetchingNProducts,
+    isError: isErrorFetchingProducts,
     error: errorFetchingProducts,
-  } = useGetProducts({ pege: '2' });
+  } = useGetProducts({ featured: 'false' });
+
+  // const productss = [
+  //   {
+  //     _id: 'hzxis',
+  //     product_name: 'iPhone X',
+  //     brand: {
+  //       _id: 'kodkjid',
+  //       name: 'string',
+  //       brand_logo: '',
+  //     },
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores veritatis eaque, ducimus animi dolores aspernatur id ea quod aut quas exercitationem? Quos quisquam itaque odit iure vero! Sit, velit cumque.',
+  //     price: 746.65,
+  //     category: {
+  //       _id: 'jkxjs',
+  //       name: 'Phones',
+  //       billboard: {
+  //         _id: 'isoijcoi',
+  //         name: 'Phone Billboard',
+  //         head_text: 'Discover the right phone for you',
+  //         paragraph:
+  //           'Lorem ipsurnatur id ea quod aut quas exercitationem? Quos quisquam itaque odit iure vero! Sit, velit cumque.',
+  //         billboard_image: '',
+  //       },
+  //     },
+  //     product_image: iphoneX.src,
+  //     count_in_stock: 3,
+  //     featured: true,
+  //   },
+  //   {
+  //     _id: 'hzxis',
+  //     product_name: 'iPhone XR',
+  //     brand: {
+  //       _id: 'kodkjid',
+  //       name: 'string',
+  //       brand_logo: '',
+  //     },
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores veritatis eaque, ducimus animi dolores aspernatur id ea quod aut quas exercitationem? Quos quisquam itaque odit iure vero! Sit, velit cumque.',
+  //     price: 746.65,
+  //     category: {
+  //       _id: 'jkxjs',
+  //       name: 'Phones',
+  //       billboard: {
+  //         _id: 'isoijcoi',
+  //         name: 'Phone Billboard',
+  //         head_text: 'Discover the right phone for you',
+  //         paragraph:
+  //           'Lorem ipsurnatur id ea quod aut quas exercitationem? Quos quisquam itaque odit iure vero! Sit, velit cumque.',
+  //         billboard_image: '',
+  //       },
+  //     },
+  //     product_image: iphoneXR.src,
+  //     count_in_stock: 2,
+  //     featured: true,
+  //   },
+  // ];
 
   useEffect(() => {
     if (
       errorFetchingHomeBillboard ||
-      errorFetchingNewProducts ||
+      errorFetchingFeaturedProducts ||
       errorFetchingProducts
     ) {
       // WILL BE CAUGHT BY ERROR.TSX IN SEGMENT
       const error =
         errorFetchingHomeBillboard ||
-        errorFetchingNewProducts ||
+        errorFetchingFeaturedProducts ||
         errorFetchingProducts;
 
       throw new Error(
         // @ts-ignore
-        error?.message?.data?.error ||
+        error?.response?.data?.error ||
           // @ts-ignore
           error?.message ||
           'An error occured'
@@ -60,11 +120,15 @@ export default function Home() {
     }
   }, [
     errorFetchingHomeBillboard,
-    errorFetchingNewProducts,
+    errorFetchingFeaturedProducts,
     errorFetchingProducts,
   ]);
 
-  if (isFetchingNewProducts || isFetchingProducts || isFetchingHomeBillboard) {
+  if (
+    isFetchingFeaturedProducts ||
+    isFetchingProducts ||
+    isFetchingHomeBillboard
+  ) {
     return <SplashScreen />;
   }
 
@@ -72,8 +136,11 @@ export default function Home() {
     <>
       {homeBillboard && <Hero {...homeBillboard?.[0]} />}
       <Categories />
-      {newProducts && (
-        <ProductsCarousel header="New Arrivals" products={newProducts.data} />
+      {featuredProducts && (
+        <ProductsCarousel
+          header="New Arrivals"
+          products={featuredProducts.data}
+        />
       )}
       {/* new products? popular products? */}
       <Brands />

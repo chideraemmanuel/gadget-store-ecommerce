@@ -13,7 +13,7 @@ const NavbarCartLink: FC<Props> = () => {
   const { data, isLoading, isError, error } = useGetCurrentUserCart();
 
   if (isLoading) {
-    return <Skeleton className="w-5 h-3" />;
+    return <Skeleton className="w-10 h-10" />;
   }
 
   if (error) {
@@ -21,12 +21,16 @@ const NavbarCartLink: FC<Props> = () => {
       <Button asChild variant={'ghost'} size={'sm'} className="px-1 sm:px-2">
         <Link
           href={'/cart'}
-          className="inline-flex items-center justify-center gap-1 text-sm"
+          className="inline-flex items-center justify-center gap-1 text-sm relative"
         >
           <ShoppingCartIcon // width={20}
             className="w-full md:w-1/2"
           />
           <span className="hidden md:inline-block">Cart</span>
+
+          <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
+            10
+          </span>
         </Link>
       </Button>
     );
@@ -34,9 +38,8 @@ const NavbarCartLink: FC<Props> = () => {
 
   return (
     <>
-      {data && data.cart_items.length > 0 && (
+      {data && (
         <>
-          {/* <div className="relative border"> */}
           <Button
             asChild
             variant={'ghost'}
@@ -45,22 +48,37 @@ const NavbarCartLink: FC<Props> = () => {
           >
             <Link
               href={'/cart'}
-              className="inline-flex items-center justify-center gap-1 text-sm"
+              className="inline-flex items-center justify-center gap-1 text-sm relative"
             >
               <ShoppingCartIcon // width={20}
                 className="w-full md:w-1/2"
               />
               <span className="hidden md:inline-block">Cart</span>
+
+              {data.cart_items.length > 0 && (
+                <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
+                  10
+                </span>
+              )}
             </Link>
           </Button>
-          {/* <span className="inline-block absolute right-0 top-0 translate-x-1/2 translate-y-1/2 bg-red-500 rounded-full p-1 text-xs text-white">
-              10000000000
-            </span>
-          </div> */}
         </>
       )}
 
-      {}
+      {/* {data && data.cart_items.length === 0 && (
+        <Button asChild variant={'ghost'} size={'sm'} className="px-1 sm:px-2">
+          <Link
+            href={'/cart'}
+            className="inline-flex items-center justify-center gap-1 text-sm"
+          >
+            <ShoppingCartIcon // width={20}
+              className="w-full md:w-1/2"
+            />
+
+            <span className="hidden md:inline-block">Cart</span>
+          </Link>
+        </Button>
+      )} */}
     </>
   );
 };

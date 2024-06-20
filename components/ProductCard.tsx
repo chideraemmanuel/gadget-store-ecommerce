@@ -21,7 +21,7 @@ interface Props {
 const ProductCard: FC<Props> = ({ product }) => {
   return (
     <Card className="inline-block shadow-md dark:bg-slate-900">
-      <Link href={'/products/1'}>
+      <Link href={`/products/${product._id}`}>
         <CardHeader>
           {/* <Image src={image.src} alt="product name" width={300} height={300} /> */}
           <Image
@@ -29,6 +29,7 @@ const ProductCard: FC<Props> = ({ product }) => {
             alt={`${product.product_name}`}
             width={300}
             height={300}
+            className="aspect-square max-h-full w-auto"
           />
         </CardHeader>
 

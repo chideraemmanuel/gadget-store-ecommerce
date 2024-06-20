@@ -8,13 +8,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
 import { DollarSign } from 'lucide-react';
+import Link from 'next/link';
 import { FC } from 'react';
 
 interface Props {}
 
 const CartPage: FC<Props> = () => {
+  const { data: cartReturn, isLoading, isError, error } = useGetUserCart();
+
   return (
     <>
       <div className="container mx-auto py-5 grid grid-cols-1 md:grid-cols-[6fr_4fr] lg:grid-cols-[6fr_3fr] gap-5">
@@ -24,20 +29,33 @@ const CartPage: FC<Props> = () => {
           <SectionHeader>Shopping cart</SectionHeader>
 
           <div className="flex flex-col gap-3">
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
+            {isLoading && <Skeleton className="h-20 w-full" />}
+
+            {cartReturn && cartReturn.cart_items.length > 0 ? (
+              cartReturn.cart_items.map((cartItem) => (
+                <CartItem
+                  key={cartItem.product._id}
+                  {...cartItem.product}
+                  quantity={cartItem.quantity}
+                />
+              ))
+            ) : (
+              <div className="flex flex-col gap-3 items-center justify-center h-full p-5">
+                {/* add empty cart image..? */}
+                <span className="text-muted-foreground">No items in cart</span>
+                <Button>
+                  <Link href={'/products'}>Shop now</Link>
+                </Button>
+              </div>
+            )}
           </div>
 
-          <div className="flex items-center gap-3 pt-5">
-            <Button variant={'outline'}>Continue shopping</Button>
-            <Button variant={'destructive'}>Clear cart</Button>
-          </div>
+          {cartReturn && cartReturn.cart_items.length > 0 && (
+            <div className="flex items-center gap-3 pt-5">
+              <Button variant={'outline'}>Continue shopping</Button>
+              <Button variant={'destructive'}>Clear cart</Button>
+            </div>
+          )}
         </Card>
 
         {/* order details */}

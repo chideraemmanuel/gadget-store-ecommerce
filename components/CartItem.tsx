@@ -5,10 +5,18 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { ProductTypes } from '@/types';
 
-interface Props {}
+interface Props extends ProductTypes {
+  quantity: number;
+}
 
-const CartItem: FC<Props> = () => {
+const CartItem: FC<Props> = ({
+  product_name,
+  product_image,
+  price,
+  quantity,
+}) => {
   return (
     <Card className="flex items-center flex-wrap justify-between gap-5 p-2">
       {/* <CardContent> */}
@@ -16,17 +24,17 @@ const CartItem: FC<Props> = () => {
       <div className="flex items-center gap-3">
         <div className="w-20 h-20">
           <Image
-            src={image.src}
-            alt=""
+            src={product_image}
+            alt={product_name}
             width={300}
             height={300}
             className="w-full h-full"
           />
         </div>
 
-        <div className="">
-          <CardTitle className="text-lg">Product name</CardTitle>
-          <span>$799.99</span>
+        <div>
+          <CardTitle className="text-lg">{product_name}</CardTitle>
+          <span>{price}</span>
         </div>
       </div>
 
@@ -65,7 +73,7 @@ const CartItem: FC<Props> = () => {
             <Plus className="w-1/2" />
           </Button>
 
-          <span>1</span>
+          <span>{quantity}</span>
 
           <Button
             size={'icon'}
