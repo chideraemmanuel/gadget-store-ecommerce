@@ -29,7 +29,12 @@ const CartPage: FC<Props> = () => {
           <SectionHeader>Shopping cart</SectionHeader>
 
           <div className="flex flex-col gap-3">
-            {isLoading && <Skeleton className="h-20 w-full" />}
+            {isLoading && (
+              <>
+                <Skeleton className="h-20 w-full" />
+                <Skeleton className="h-20 w-full" />
+              </>
+            )}
 
             {cartReturn && cartReturn.cart_items.length > 0 ? (
               cartReturn.cart_items.map((cartItem) => (
@@ -43,6 +48,7 @@ const CartPage: FC<Props> = () => {
               <div className="flex flex-col gap-3 items-center justify-center h-full p-5">
                 {/* add empty cart image..? */}
                 <span className="text-muted-foreground">No items in cart</span>
+
                 <Button>
                   <Link href={'/products'}>Shop now</Link>
                 </Button>
@@ -61,19 +67,21 @@ const CartPage: FC<Props> = () => {
         {/* order details */}
         <div className="md:sticky md:top-[90px] self-start flex flex-col gap-3 pb-5">
           {/* coupon */}
-          <Card className="p-5">
-            <CardTitle className="pb-1">Coupon Code</CardTitle>
-            <CardDescription>
-              Have a coupon code? Apply it here!
-            </CardDescription>
+          {cartReturn && cartReturn.cart_items.length > 0 && (
+            <Card className="p-5">
+              <CardTitle className="pb-1">Coupon Code</CardTitle>
+              <CardDescription>
+                Have a coupon code? Apply it here!
+              </CardDescription>
 
-            <Separator className="mt-2 mb-3" />
+              <Separator className="mt-2 mb-3" />
 
-            <div className="flex flex-col gap-3">
-              <Input placeholder="Enter coupon code" />
-              <Button>Apply</Button>
-            </div>
-          </Card>
+              <div className="flex flex-col gap-3">
+                <Input placeholder="Enter coupon code" />
+                <Button>Apply</Button>
+              </div>
+            </Card>
+          )}
 
           {/* order summary */}
           <Card className="p-5">

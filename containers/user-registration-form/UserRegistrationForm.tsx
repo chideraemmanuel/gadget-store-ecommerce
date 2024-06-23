@@ -39,6 +39,7 @@ const UserRegistrationForm: FC<Props> = () => {
   } = form;
 
   const emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
+  const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?!.* ).{8,16}$/;
 
   const onSubmit: SubmitHandler<RegistrationCredentialsTypes> = (data) => {
     console.log('submitted data', data);
@@ -122,6 +123,11 @@ const UserRegistrationForm: FC<Props> = () => {
                   required: {
                     value: true,
                     message: 'Please enter a password',
+                  },
+                  pattern: {
+                    value: passwordRegex,
+                    message:
+                      'Password must be 8-16 characters long, and contain at least one numeric digit, and a special character',
                   },
                 })}
                 disabled={isLoading}

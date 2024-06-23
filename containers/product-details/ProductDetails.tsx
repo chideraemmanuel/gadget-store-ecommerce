@@ -34,7 +34,7 @@ const ProductDetails: FC<Props> = ({ product, isLoading, isError, error }) => {
     <section className="py-5">
       {isLoading && (
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="flex justify-center items-center bg-accent p-10 rounded-lg max-h-[40vh] md:max-h-[50vh]">
+          <div className="flex justify-center items-center bg-accent p-10 rounded-lg h-[40vh] md:h-[50vh]">
             <Skeleton className="aspect-square max-h-full w-auto" />
           </div>
 
@@ -42,7 +42,7 @@ const ProductDetails: FC<Props> = ({ product, isLoading, isError, error }) => {
             <div className="flex flex-col gap-5 pb-7">
               <Skeleton className="w-28 h-7" />
 
-              <div>
+              <div className="flex flex-col gap-2">
                 <Skeleton className="w-full h-5" />
                 <Skeleton className="w-full h-5" />
                 <Skeleton className="w-full h-5" />

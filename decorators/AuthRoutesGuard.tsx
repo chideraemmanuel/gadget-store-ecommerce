@@ -1,5 +1,6 @@
 'use client';
 
+import SplashScreen from '@/components/SplashScreen';
 import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect } from 'react';
@@ -49,13 +50,14 @@ const AuthRoutesGuard: FC<Props> = ({ children }) => {
     }
   }, [user, error]);
 
-  // if (isLoading) {
-  //   return <div>Loadingggg</div>;
-  // }
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   // ONLY RENDER AUTH PAGE IF SERVER SENDS BACK ERROR (USER NOT AUTHENTICATED), OR IF THERE'S A USER THAT HASN'T BEEN VERIFIED, AND IS CURRENTLY ON VERIFICATION PAGE... OTHERWISE, PAGE WILL BE REDIRECTED (FROM USE EFFECT)
   return (
     <>
+      {/* {!user && */}
       {(!user ??
         (user && !user?.verified && pathname === '/auth/user/verify')) &&
         !isLoading &&

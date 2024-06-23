@@ -38,7 +38,7 @@ const NavbarSearchInput: FC<Props> = () => {
             <ArrowLeft className="text-accent-foreground" width={20} />
           </Button>
 
-          <div className="relative w-full">
+          <div className="relative w-full z-20">
             {/* <Input
               autoFocus
               className="block rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-2"

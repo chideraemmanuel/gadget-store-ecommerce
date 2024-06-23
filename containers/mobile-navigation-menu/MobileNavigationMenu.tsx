@@ -5,6 +5,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTrigger,
+  SheetClose,
 } from '@/components/ui/sheet';
 import { MenuIcon } from 'lucide-react';
 import Logo from '@/components/Logo';

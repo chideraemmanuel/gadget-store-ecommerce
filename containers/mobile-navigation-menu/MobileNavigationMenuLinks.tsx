@@ -12,6 +12,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import useGetCategories from '@/lib/hooks/useGetCategories';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SheetClose } from '@/components/ui/sheet';
 
 interface Props {}
 
@@ -37,12 +38,14 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
         </MobileDropdown.DropdownMenu> */}
 
         <li>
-          <Link
-            href={'/'}
-            className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-          >
-            Home
-          </Link>
+          <SheetClose asChild>
+            <Link
+              href={'/'}
+              className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              Home
+            </Link>
+          </SheetClose>
         </li>
 
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -87,12 +90,14 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
                   categories.map((category, index) => (
                     <div key={category._id}>
                       <li>
-                        <Link
-                          href={`/products/category/${category._id}`}
-                          className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-                        >
-                          {category.name}
-                        </Link>
+                        <SheetClose asChild>
+                          <Link
+                            href={`/products/category/${category._id}`}
+                            className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                          >
+                            {category.name}
+                          </Link>
+                        </SheetClose>
                       </li>
                       {index !== categories.length - 1 && <Separator />}
                     </div>
@@ -105,23 +110,27 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
         <Separator />
 
         <li>
-          <Link
-            href={'/products'}
-            className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-          >
-            Store
-          </Link>
+          <SheetClose asChild>
+            <Link
+              href={'/products'}
+              className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              Store
+            </Link>
+          </SheetClose>
         </li>
 
         <Separator />
 
         <li>
-          <Link
-            href={'#'}
-            className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-          >
-            What's New
-          </Link>
+          <SheetClose asChild>
+            <Link
+              href={'#'}
+              className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              What's New
+            </Link>
+          </SheetClose>
         </li>
 
         {/* <Separator /> */}

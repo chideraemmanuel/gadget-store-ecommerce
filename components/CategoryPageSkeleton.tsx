@@ -11,17 +11,27 @@ const CategoryPageSkeleton: FC<Props> = () => {
       <Skeleton className="h-[50vh] w-full" />
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
         <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
-          <div className="flex items-center justify-center">
+          {/* <div className="flex items-center justify-center">
             <span className="text-muted-foreground">Loading filters...</span>
+          </div> */}
+
+          {/* filter header */}
+          <Skeleton className="w-20 h-7 mb-2" />
+
+          {/* toggle group */}
+          <div className="flex items-center justify-start flex-wrap gap-1">
+            <Skeleton className="w-16 h-7 rounded-full" />
+            <Skeleton className="w-16 h-7 rounded-full" />
+            <Skeleton className="w-16 h-7 rounded-full" />
           </div>
         </aside>
 
         <div className="px-0 md:px-2 md:border-l">
           <div className="flex items-start justify-between">
             {/* header text */}
-            <Skeleton className="w-60 h-9" />
+            <Skeleton className="w-60 h-9 mb-7" />
             {/* filter drawer button, sho only on mobile */}
-            <Skeleton className="inline-block md:hidden w-10 h-12" />
+            <Skeleton className="inline-block md:hidden w-32 h-12" />
           </div>
 
           {/* product cards grid */}

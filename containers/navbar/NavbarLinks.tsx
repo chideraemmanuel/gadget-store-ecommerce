@@ -215,7 +215,10 @@ const ListItem: FC<ListItemProps> = ({ children, href }) => {
       <Link href={href} legacyBehavior passHref>
         {/* <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
         <NavigationMenuLink
-          className={cn(navigationMenuTriggerStyle(), 'w-full justify-start')}
+          className={cn(
+            navigationMenuTriggerStyle(),
+            'w-full justify-start capitalize'
+          )}
         >
           {children}
         </NavigationMenuLink>

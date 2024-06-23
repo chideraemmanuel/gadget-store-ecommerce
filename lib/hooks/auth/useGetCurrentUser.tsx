@@ -15,8 +15,8 @@ const useGetCurrentUser = () => {
     queryKey: ['get current user'],
     queryFn: getCurrentUser,
     retry: false,
-    // refetchOnMount: false,
-    // refetchOnWindowFocus: false
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 };
 

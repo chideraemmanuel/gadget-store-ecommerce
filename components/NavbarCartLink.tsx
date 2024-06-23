@@ -4,13 +4,14 @@ import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ShoppingCartIcon } from 'lucide-react';
-import useGetCurrentUserCart from '@/lib/hooks/useGetCurrentUserCart';
 import { Skeleton } from '@/components/ui/skeleton';
+import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
+import getNumberOfItemsInCart from '@/lib/helpers/getNumberOfItemsInCart';
 
 interface Props {}
 
 const NavbarCartLink: FC<Props> = () => {
-  const { data, isLoading, isError, error } = useGetCurrentUserCart();
+  const { data: cartReturn, isLoading, isError, error } = useGetUserCart();
 
   if (isLoading) {
     return <Skeleton className="w-10 h-10" />;
@@ -28,9 +29,9 @@ const NavbarCartLink: FC<Props> = () => {
           />
           <span className="hidden md:inline-block">Cart</span>
 
-          <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
+          {/* <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
             10
-          </span>
+          </span> */}
         </Link>
       </Button>
     );
@@ -38,7 +39,7 @@ const NavbarCartLink: FC<Props> = () => {
 
   return (
     <>
-      {data && (
+      {cartReturn && (
         <>
           <Button
             asChild
@@ -55,9 +56,10 @@ const NavbarCartLink: FC<Props> = () => {
               />
               <span className="hidden md:inline-block">Cart</span>
 
-              {data.cart_items.length > 0 && (
+              {cartReturn.cart_items.length > 0 && (
                 <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
-                  10
+                  {/* {cartReturn.cart_items.length} */}
+                  {getNumberOfItemsInCart(cartReturn.cart_items)}
                 </span>
               )}
             </Link>

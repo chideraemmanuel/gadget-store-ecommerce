@@ -66,16 +66,26 @@ const CategoryPageProducts: FC<Props> = ({
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 pb-7">
-              {products.data.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
+              {products.data.length > 0 ? (
+                products.data.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))
+              ) : (
+                <div className="text-center p-6">
+                  <span className="text-muted-foreground">
+                    No products to display.
+                  </span>
+                </div>
+              )}
             </div>
 
-            <div className="">
+            {/* <div className=""> */}
+            {products.pagination.total_pages > 1 && (
               <ProductsPagination2
                 totalPages={products.pagination.total_pages}
               />
-            </div>
+            )}
+            {/* </div> */}
           </div>
         </div>
       </section>
@@ -84,3 +94,5 @@ const CategoryPageProducts: FC<Props> = ({
 };
 
 export default CategoryPageProducts;
+
+// #003420: illustration color

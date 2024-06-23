@@ -59,7 +59,7 @@ const Filter: FC<Props> = ({ label, filterItems, searchParamKey }) => {
               key={filterItem._id}
               value={filterItem._id}
               aria-label={`Toggle ${filterItem.name}`}
-              className="border rounded-full"
+              className="border rounded-full capitalize"
             >
               {/* <Bold className="h-4 w-4" /> */}
               {filterItem.name}

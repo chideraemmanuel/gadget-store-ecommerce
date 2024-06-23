@@ -54,16 +54,18 @@ const NavbarAccountButton: FC<Props> = () => {
         )}
 
         {user && (
-          <DropdownMenuTrigger className="inline-flex items-center justify-center gap-1 text-sm">
+          // <DropdownMenuTrigger className="inline-flex items-center justify-center gap-1 text-sm">
+          <DropdownMenuTrigger className="text-sm">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+              <AvatarImage src="" />
               {/* <AvatarFallback>CN</AvatarFallback> */}
               <AvatarFallback>
                 {getInitials(user?.first_name, user?.last_name)}
               </AvatarFallback>
             </Avatar>
 
-            <span className="hidden md:inline-block">Account</span>
+            {/* <span className="hidden md:inline-block">Account</span> */}
           </DropdownMenuTrigger>
         )}
 

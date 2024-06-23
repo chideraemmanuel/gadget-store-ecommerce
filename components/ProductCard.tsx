@@ -1,3 +1,5 @@
+// 'use client';
+
 import Link from 'next/link';
 import { FC } from 'react';
 import {
@@ -13,12 +15,16 @@ import image from '@/assets/phone.png';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { ProductTypes } from '@/types';
+import AddToCartButton from './AddToCartButton';
+import useAddItemToCart from '@/lib/hooks/cart/useAddItemToCart';
 
 interface Props {
   product: ProductTypes;
 }
 
 const ProductCard: FC<Props> = ({ product }) => {
+  // const { mutate: addToCart } = useAddItemToCart();
+
   return (
     <Card className="inline-block shadow-md dark:bg-slate-900">
       <Link href={`/products/${product._id}`}>
@@ -51,7 +57,10 @@ const ProductCard: FC<Props> = ({ product }) => {
       </Link>
 
       <CardFooter className="px-3 md:px-4 pb-3 md:pb-4">
-        <Button className="w-full">Add to cart</Button>
+        <AddToCartButton product={product} />
+        {/* <Button className="w-full" onClick={() => addToCart(product)}>
+          Add to cart
+        </Button> */}
       </CardFooter>
     </Card>
   );

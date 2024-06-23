@@ -75,9 +75,20 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
         <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
           {(isFetchingCategories || isFetchingBrands) && (
-            <div className="flex items-center justify-center">
-              <span className="text-muted-foreground">Loading filters...</span>
-            </div>
+            // <div className="flex items-center justify-center">
+            //   <span className="text-muted-foreground">Loading filters...</span>
+            // </div>
+            <>
+              {/* filter header */}
+              <Skeleton className="w-20 h-7 mb-2" />
+
+              {/* toggle group */}
+              <div className="flex items-center justify-start flex-wrap gap-1">
+                <Skeleton className="w-16 h-7 rounded-full" />
+                <Skeleton className="w-16 h-7 rounded-full" />
+                <Skeleton className="w-16 h-7 rounded-full" />
+              </div>
+            </>
           )}
 
           {/* {(isErrorFetchingCategories || isErrorFetchingBrands) && (
@@ -163,22 +174,25 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
             {isFetchingproducts &&
               array.map((num, index) => (
                 <Skeleton
-                  className="h-20 sm:h-24 md:h-32 lg:h-40"
+                  // className="h-20 sm:h-24 md:h-32 lg:h-40"
+                  className="min-h-[350px]"
                   key={index}
                 />
               ))}
 
-            {!isFetchingproducts && products && products.data.length > 0 ? (
-              products?.data?.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))
-            ) : (
-              <div className="flex items-center justify-center h-full p-5">
-                <span className="text-muted-foreground">
-                  No products to display
-                </span>
-              </div>
-            )}
+            {!isFetchingproducts &&
+              products &&
+              (products.data.length > 0 ? (
+                products?.data?.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))
+              ) : (
+                <div className="flex items-center justify-center h-full p-5">
+                  <span className="text-muted-foreground">
+                    No products to display
+                  </span>
+                </div>
+              ))}
           </div>
 
           <div>

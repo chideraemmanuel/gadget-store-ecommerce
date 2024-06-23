@@ -17,6 +17,7 @@ import useLoginUser from '@/lib/hooks/auth/useLoginUser';
 import { LoginCredentialsTypes } from '@/types';
 import { Github } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
@@ -25,6 +26,9 @@ import { FcGoogle } from 'react-icons/fc';
 interface Props {}
 
 const UserLoginForm: FC<Props> = () => {
+  const searchParams = useSearchParams();
+  const redirect_to = searchParams.get('redirect_to');
+
   const { mutate: login, isLoading } = useLoginUser();
 
   const form = useForm<LoginCredentialsTypes>();
@@ -43,7 +47,7 @@ const UserLoginForm: FC<Props> = () => {
 
     login({
       credentials: data,
-      redirectPath: '/',
+      redirectPath: redirect_to ?? '/',
     });
   };
 

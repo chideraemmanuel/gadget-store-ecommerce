@@ -14,6 +14,9 @@ const useGetUserCart = () => {
   return useQuery({
     queryKey: ['get user cart'],
     queryFn: getUserCart,
+    retry: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 };
 
