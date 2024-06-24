@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,32 +13,73 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
+import FormInput from '@/components/FormInput';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import useResetPassword from '@/lib/hooks/auth/useResetPassword';
 
 interface Props {}
 
 const UserPasswordResetInitiationForm: FC<Props> = () => {
+  const emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
+
+  const form = useForm<{ email: string }>();
+
+  const { initiate } = useResetPassword();
+  const { mutate: initiatePasswordReset, isLoading: isSendingResetEmail } =
+    initiate();
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = form;
+
+  const onSubmit: SubmitHandler<{ email: string }> = (data) => {
+    console.log('submitted email', data);
+    initiatePasswordReset(data.email);
+  };
+
   return (
     <>
       <Card className="shadow-md lg:shadow-none lg:bg-transparent lg:border-none lg:dark:border-none  lg:dark:bg-transparent dark:bg-slate-900 py-3">
         <CardHeader className="text-center">
           <CardTitle>Reset your password</CardTitle>
           <CardDescription className="text-center w-[90%] md:w-[80%] lg:w-[70%] mx-auto">
-            Please enter the email address associated with your account. We wil
+            Please enter the email address associated with your account. We will
             send you an email with instructions on how to recover your password.
           </CardDescription>
         </CardHeader>
 
         <CardContent className="flex flex-col gap-3">
-          <form action="" className="">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className=" flex flex-col gap-3">
               <div>
                 <Label htmlFor="email" className="sr-only">
                   Email
                 </Label>
-                <Input placeholder="e.g johndoe@gmail.com" id="email" />
+                {/* <Input placeholder="e.g johndoe@gmail.com" id="email" /> */}
+                <FormInput
+                  label="Email"
+                  placeholder="e.g johndoe@gmail.com"
+                  id="email"
+                  disabled={isSendingResetEmail}
+                  {...register('email', {
+                    required: {
+                      value: true,
+                      message: 'Please enter an email address',
+                    },
+                    pattern: {
+                      value: emailRegex,
+                      message: 'Invalid email format',
+                    },
+                  })}
+                  error={errors.email?.message}
+                />
               </div>
 
-              <Button className="w-full">Send reset email</Button>
+              <Button className="w-full" disabled={isSendingResetEmail}>
+                Send reset email
+              </Button>
             </div>
           </form>
         </CardContent>

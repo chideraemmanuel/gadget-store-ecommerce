@@ -87,7 +87,11 @@ const CategoryPageProducts: FC<Props> = ({
               </Drawer>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 pb-7">
+            <div
+              className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 ${
+                products && products?.data.length > 0 && 'pb-7'
+              }`}
+            >
               {isFetchingProducts &&
                 array.map((num, index) => (
                   <Skeleton key={index} className="min-h-[350px]" />
