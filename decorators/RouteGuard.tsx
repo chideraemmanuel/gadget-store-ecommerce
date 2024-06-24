@@ -1,7 +1,7 @@
 'use client';
 
 import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect } from 'react';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 
 const RouteGuard: FC<Props> = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const {
     data: user,
@@ -40,7 +41,7 @@ const RouteGuard: FC<Props> = ({ children }) => {
 
     // NAVIGATE TO LOGIN PAGE IF SERVER SENDS BACK AN ERROR (USER NOT AUTHENTICATED)
     if (error) {
-      router.replace('/auth/login');
+      router.replace(`/auth/login?redirect_to=${pathname}`);
     }
 
     if (user && !user?.verified) {

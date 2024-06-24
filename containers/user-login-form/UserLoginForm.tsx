@@ -29,6 +29,8 @@ const UserLoginForm: FC<Props> = () => {
   const searchParams = useSearchParams();
   const redirect_to = searchParams.get('redirect_to');
 
+  console.log('redirect_to', redirect_to);
+
   const { mutate: login, isLoading } = useLoginUser();
 
   const form = useForm<LoginCredentialsTypes>();

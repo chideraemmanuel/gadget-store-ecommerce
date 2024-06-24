@@ -33,6 +33,7 @@ const useIncrementItemQuantity = () => {
       // SET QUERY DATA ONCE MUTATION IS INITIATED
       queryClient.setQueryData(
         'get user cart',
+        // @ts-ignore
         (oldCartData: CartReturnTypes) => {
           console.log('oldCartData from set query data callback', oldCartData);
 
@@ -45,11 +46,11 @@ const useIncrementItemQuantity = () => {
           const filteredCartItems = oldCartData.cart_items.filter(
             (cartItem) => cartItem.product._id !== incrementedItem._id
           );
-          
+
           console.log('filteredCartItems', filteredCartItems);
 
           return {
-            ...oldCartData,
+            ...oldCartData, // user: ...oldCartData.user (would also work)
             cart_items: [
               // ...oldCartData.cart_items,
               // {

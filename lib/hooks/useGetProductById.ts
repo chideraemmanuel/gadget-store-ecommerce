@@ -21,6 +21,8 @@ const useGetProductById = (productId: string) => {
     queryKey: ['get product by id', productId],
     queryFn: getProductById,
     retry: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 };
 

@@ -25,6 +25,8 @@ const useGetProducts = (searchParamsObject: SearchParams = {}) => {
     queryKey: ['get products', searchParamsObject],
     queryFn: getProducts,
     retry: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 };
 

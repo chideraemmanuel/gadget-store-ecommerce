@@ -11,10 +11,12 @@ const Footer: FC<Props> = () => {
       <Separator />
 
       <div className="py-5">
-        <div className="container mx-auto flex justify-between items-center">
-          <Logo />
+        <div className="container mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+          <div className="self-start">
+            <Logo />
+          </div>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center sm:justify-center gap-4">
             <Link
               href={'/'}
               className="opacity-50 hover:opacity-100 focus:opacity-100 transition-opacity"

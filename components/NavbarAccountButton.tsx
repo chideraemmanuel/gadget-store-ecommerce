@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -13,11 +15,14 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import useLogoutUser from '@/lib/hooks/auth/useLogoutUser';
 
 interface Props {}
 
 const NavbarAccountButton: FC<Props> = () => {
   const { data: user, isLoading, isError, error } = useGetCurrentUser();
+
+  const { mutate: logout, isLoading: isLoggingOut } = useLogoutUser();
 
   const getInitials = (firstName: string, lastName: string) => {
     const firstNameInitial = firstName.charAt(0);
@@ -81,7 +86,7 @@ const NavbarAccountButton: FC<Props> = () => {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center gap-2"
-            // onClick={() => logout()}
+            onClick={() => logout()}
           >
             <LogOut className="h-4 w-4" />
             <span>Logout</span>

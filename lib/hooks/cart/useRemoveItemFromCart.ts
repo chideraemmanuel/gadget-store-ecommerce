@@ -33,6 +33,7 @@ const useRemoveItemFromCart = () => {
       // SET QUERY DATA ONCE MUTATION IS INITIATED
       queryClient.setQueryData(
         'get user cart',
+        // @ts-ignore
         (oldCartData: CartReturnTypes) => {
           console.log('oldCartData from set query data callback', oldCartData);
 
@@ -43,7 +44,7 @@ const useRemoveItemFromCart = () => {
           console.log('filteredCartItems', filteredCartItems);
 
           return {
-            ...oldCartData,
+            ...oldCartData, // user: ...oldCartData.user (would also work)
             cart_items: [...filteredCartItems],
           };
         }

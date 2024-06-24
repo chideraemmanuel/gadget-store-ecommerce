@@ -48,6 +48,8 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
           </SheetClose>
         </li>
 
+        <Separator />
+
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <li>
             <CollapsibleTrigger
@@ -93,7 +95,7 @@ const MobileNavigationMenuLinks: FC<Props> = () => {
                         <SheetClose asChild>
                           <Link
                             href={`/products/category/${category._id}`}
-                            className="inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                            className="capitalize inline-block w-full p-2 rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors"
                           >
                             {category.name}
                           </Link>

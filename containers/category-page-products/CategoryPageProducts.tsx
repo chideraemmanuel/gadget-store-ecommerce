@@ -6,45 +6,62 @@ import ProductsPagination2 from '@/components/ProductsPagination2';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import { BrandTypes, ProductsReturnTypes } from '@/types';
+import { Skeleton } from '@/components/ui/skeleton';
+import { BrandTypes, CategoryTypes, ProductsReturnTypes } from '@/types';
 import { FilterIcon } from 'lucide-react';
 import { FC } from 'react';
 
 interface Props {
-  products: ProductsReturnTypes;
+  isFetchingFilters: boolean;
   filters: [
     {
       label: string;
-      filterItems: BrandTypes[];
+      filterItems: BrandTypes[] | CategoryTypes[] | undefined;
       searchParamKey: string;
     }
   ];
-  categoryName: string;
+  isFetchingCategory: boolean;
+  category: CategoryTypes | undefined;
+  isFetchingProducts: boolean;
+  products: ProductsReturnTypes | undefined;
 }
 
 const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const CategoryPageProducts: FC<Props> = ({
-  products,
+  isFetchingFilters,
   filters,
-  categoryName,
+  isFetchingCategory,
+  category,
+  isFetchingProducts,
+  products,
 }) => {
   return (
     <>
       <section>
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-[2fr,_5fr] pt-7">
           <aside className="self-start sticky md:top-20 hidden md:flex md:flex-col md:gap-3 max-h-[80vh]">
-            {filters && <ProductsFilters filters={filters} />}
+            {/* {!isFetchingFilters && filters && ( */}
+            <ProductsFilters
+              filters={filters}
+              isFetchingFilters={isFetchingFilters}
+            />
+            {/* )} */}
           </aside>
 
           <div className="px-0 md:px-2 md:border-l">
             <div className="flex items-start justify-between">
-              <SectionHeader>
-                {`${categoryName.charAt(0).toUpperCase()}${categoryName.slice(
-                  1
-                )}`}{' '}
-                for you!
-              </SectionHeader>
+              {/* header text skeleton */}
+              {isFetchingCategory && <Skeleton className="w-60 h-9 mb-7" />}
+
+              {!isFetchingCategory && category && (
+                <SectionHeader>
+                  {`${category.name
+                    .charAt(0)
+                    .toUpperCase()}${category.name.slice(1)}`}{' '}
+                  for you!
+                </SectionHeader>
+              )}
 
               {/* show drawer only on mobile */}
               <Drawer>
@@ -58,31 +75,43 @@ const CategoryPageProducts: FC<Props> = ({
                   </Button>
                 </DrawerTrigger>
                 <DrawerContent>
-                  <div className="p-5 flex flex-col gap-3 max-h-[80vh]">
-                    {filters && <ProductsFilters filters={filters} />}
+                  <div className="p-5 max-h-[80vh]">
+                    {/* {!isFetchingFilters && filters && ( */}
+                    <ProductsFilters
+                      filters={filters}
+                      isFetchingFilters={isFetchingFilters}
+                    />
+                    {/* )} */}
                   </div>
                 </DrawerContent>
               </Drawer>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 pb-7">
-              {products.data.length > 0 ? (
+              {isFetchingProducts &&
+                array.map((num, index) => (
+                  <Skeleton key={index} className="min-h-[350px]" />
+                ))}
+
+              {products &&
+                products.data.length > 0 &&
                 products.data.map((product) => (
                   <ProductCard key={product._id} product={product} />
-                ))
-              ) : (
-                <div className="text-center p-6">
-                  <span className="text-muted-foreground">
-                    No products to display.
-                  </span>
-                </div>
-              )}
+                ))}
             </div>
 
+            {!isFetchingProducts && products?.data.length === 0 && (
+              <div className="flex items-center justify-center h-full p-5 w-full col-span-full">
+                <span className="text-muted-foreground">
+                  No products to display
+                </span>
+              </div>
+            )}
+
             {/* <div className=""> */}
-            {products.pagination.total_pages > 1 && (
+            {products && products?.pagination?.total_pages > 1 && (
               <ProductsPagination2
-                totalPages={products.pagination.total_pages}
+                totalPages={products?.pagination?.total_pages}
               />
             )}
             {/* </div> */}

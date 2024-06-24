@@ -99,22 +99,23 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
             </div>
           )} */}
 
-          {categories && brands && (
-            <ProductsFilters
-              filters={[
-                {
-                  label: 'Categories',
-                  filterItems: categories,
-                  searchParamKey: 'category',
-                },
-                {
-                  label: 'Brands',
-                  filterItems: brands,
-                  searchParamKey: 'brand',
-                },
-              ]}
-            />
-          )}
+          {/* {categories && brands && ( */}
+          <ProductsFilters
+            isFetchingFilters={isFetchingBrands || isFetchingCategories}
+            filters={[
+              {
+                label: 'Categories',
+                filterItems: categories,
+                searchParamKey: 'category',
+              },
+              {
+                label: 'Brands',
+                filterItems: brands,
+                searchParamKey: 'brand',
+              },
+            ]}
+          />
+          {/* )} */}
           {/* <Filter
               label="Categories"
               filterItems={categories}
@@ -170,7 +171,11 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
             </Drawer>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 pb-7">
+          <div
+            className={`grid grid-cols-1 2xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 ${
+              products && products?.pagination.total_pages > 1 && 'pb-7'
+            }`}
+          >
             {isFetchingproducts &&
               array.map((num, index) => (
                 <Skeleton
@@ -182,18 +187,19 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
 
             {!isFetchingproducts &&
               products &&
-              (products.data.length > 0 ? (
-                products?.data?.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))
-              ) : (
-                <div className="flex items-center justify-center h-full p-5">
-                  <span className="text-muted-foreground">
-                    No products to display
-                  </span>
-                </div>
+              products.data.length > 0 &&
+              products?.data?.map((product) => (
+                <ProductCard key={product._id} product={product} />
               ))}
           </div>
+
+          {products && products.data.length === 0 && (
+            <div className="text-center p-6 w-full">
+              <span className="text-muted-foreground">
+                No products to display.
+              </span>
+            </div>
+          )}
 
           <div>
             {products && products?.pagination.total_pages > 1 && (

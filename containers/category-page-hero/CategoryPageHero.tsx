@@ -8,22 +8,22 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   category?: CategoryTypes;
-  // isLoading: boolean;
+  isFetchingCategory: boolean;
   // isError: boolean;
   // error: unknown;
 }
 
 const CategoryPageHero: FC<Props> = ({
   category,
-  // isLoading,
+  isFetchingCategory,
   // isError,
   // error,
 }) => {
   return (
     <>
-      {/* {isLoading && <Skeleton className="h-[50vh] w-full" />} */}
+      {isFetchingCategory && <Skeleton className="h-[50vh] w-full" />}
 
-      {category && (
+      {!isFetchingCategory && category && (
         <section
           className="h-[50vh] relative flex justify-center items-center text-center after:content-[''] after:w-full after:h-full after:bg-slate-950 after:bg-opacity-70  after:absolute"
           style={{

@@ -26,7 +26,7 @@ const ProductCard: FC<Props> = ({ product }) => {
   // const { mutate: addToCart } = useAddItemToCart();
 
   return (
-    <Card className="inline-block shadow-md dark:bg-slate-900">
+    <Card className="inline-block shadow-md dark:bg-slate-900 [@media_(min-width:_375px)]:max-h-fit max-h-[50vh]">
       <Link href={`/products/${product._id}`}>
         <CardHeader>
           {/* <Image src={image.src} alt="product name" width={300} height={300} /> */}

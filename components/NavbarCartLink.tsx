@@ -29,7 +29,7 @@ const NavbarCartLink: FC<Props> = () => {
           />
           <span className="hidden md:inline-block">Cart</span>
 
-          {/* <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
+          {/* <span className="absolute bg-destructive text-destructive-foreground rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
             10
           </span> */}
         </Link>
@@ -57,7 +57,7 @@ const NavbarCartLink: FC<Props> = () => {
               <span className="hidden md:inline-block">Cart</span>
 
               {cartReturn.cart_items.length > 0 && (
-                <span className="absolute bg-red-500 rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
+                <span className="absolute bg-destructive text-destructive-foreground rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
                   {/* {cartReturn.cart_items.length} */}
                   {getNumberOfItemsInCart(cartReturn.cart_items)}
                 </span>

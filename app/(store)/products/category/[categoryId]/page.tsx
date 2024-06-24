@@ -1,6 +1,7 @@
 'use client';
 
 import CategoryPageSkeleton from '@/components/CategoryPageSkeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import CategoryPageHero from '@/containers/category-page-hero/CategoryPageHero';
 import CategoryPageProducts from '@/containers/category-page-products/CategoryPageProducts';
 import useGetBrands from '@/lib/hooks/useGetBrands';
@@ -59,31 +60,38 @@ const CategoryPage: FC<Props> = ({ params: { categoryId }, searchParams }) => {
 
   return (
     <>
-      {(isFetchingCategory || isFetchingProducts || isFetchingBrands) && (
-        <CategoryPageSkeleton />
-      )}
+      {/* banner skeleton */}
+      {/* {isFetchingCategory && <Skeleton className="h-[50vh] w-full" />} */}
 
-      {category && products && brands && (
-        <>
-          <CategoryPageHero
-            category={category}
-            // isLoading={isFetchingCategory}
-            // isError={isErrorFetchingCategory}
-            // error={errorFetchingCategory}
-          />
-          <CategoryPageProducts
-            products={products}
-            filters={[
-              {
-                label: 'Brands',
-                filterItems: brands,
-                searchParamKey: 'brand',
-              },
-            ]}
-            categoryName={category.name}
-          />
-        </>
-      )}
+      {/* {(isFetchingProducts || isFetchingBrands) && <CategoryPageSkeleton />} */}
+
+      {/* {category && ( */}
+      <CategoryPageHero
+        category={category}
+        isFetchingCategory={isFetchingCategory}
+        // isError={isErrorFetchingCategory}
+        // error={errorFetchingCategory}
+      />
+      {/* )} */}
+
+      {/* {category && ( */}
+      <>
+        <CategoryPageProducts
+          isFetchingProducts={isFetchingProducts}
+          products={products}
+          isFetchingCategory={isFetchingCategory}
+          category={category}
+          isFetchingFilters={isFetchingBrands}
+          filters={[
+            {
+              label: 'Brands',
+              filterItems: brands,
+              searchParamKey: 'brand',
+            },
+          ]}
+        />
+      </>
+      {/* )} */}
     </>
   );
 };

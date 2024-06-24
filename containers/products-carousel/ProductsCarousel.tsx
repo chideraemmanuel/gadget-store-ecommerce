@@ -38,8 +38,8 @@ const ProductsCarousel: FC<Props> = ({ header, products }) => {
       )}
 
       {products && products.length === 0 && (
-        <div className="text-center p-6">
-          <span className="text-muted-foreground">No product to display.</span>
+        <div className="text-center p-6 w-full">
+          <span className="text-muted-foreground">No products to display.</span>
         </div>
       )}
     </div>

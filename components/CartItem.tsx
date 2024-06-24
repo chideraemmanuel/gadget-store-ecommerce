@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import image from '@/assets/phone.png';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
@@ -6,17 +8,25 @@ import { Button } from '@/components/ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { ProductTypes } from '@/types';
+import useIncrementItemQuantity from '@/lib/hooks/cart/useIncrementItemQuantity';
+import useDecrementItemQuantity from '@/lib/hooks/cart/useDecrementItemQuantity';
+import useRemoveItemFromCart from '@/lib/hooks/cart/useRemoveItemFromCart';
+import useClearCart from '@/lib/hooks/cart/useClearCart';
 
-interface Props extends ProductTypes {
+interface Props {
+  product: ProductTypes;
   quantity: number;
 }
 
-const CartItem: FC<Props> = ({
-  product_name,
-  product_image,
-  price,
-  quantity,
-}) => {
+const CartItem: FC<Props> = ({ product, quantity }) => {
+  const { product_name, product_image, price } = product;
+
+  const { mutate: incrementQuantity } = useIncrementItemQuantity();
+
+  const { mutate: decrementQuantity } = useDecrementItemQuantity();
+
+  const { mutate: removeItem } = useRemoveItemFromCart();
+
   return (
     <Card className="flex items-center flex-wrap justify-between gap-5 p-2">
       {/* <CardContent> */}
@@ -69,8 +79,15 @@ const CartItem: FC<Props> = ({
             size={'icon'}
             variant={'secondary'}
             className="p-1 h-auto w-auto"
+            onClick={() => {
+              if (quantity === 1) {
+                removeItem(product);
+              } else {
+                decrementQuantity(product);
+              }
+            }}
           >
-            <Plus className="w-1/2" />
+            <Minus className="w-1/2" />
           </Button>
 
           <span>{quantity}</span>
@@ -79,8 +96,9 @@ const CartItem: FC<Props> = ({
             size={'icon'}
             variant={'secondary'}
             className="p-1 h-auto w-auto"
+            onClick={() => incrementQuantity(product)}
           >
-            <Minus className="w-1/2" />
+            <Plus className="w-1/2" />
           </Button>
         </div>
 
@@ -90,6 +108,7 @@ const CartItem: FC<Props> = ({
           size={'icon'}
           variant={'ghost'}
           className="p-1 h-auto w-auto hover:bg-destructive hover:text-destructive-foreground"
+          onClick={() => removeItem(product)}
         >
           <Trash2 />
         </Button>

@@ -7,7 +7,7 @@ import { BrandTypes, CategoryTypes } from '@/types';
 
 interface Props {
   label: string;
-  filterItems: CategoryTypes[] | BrandTypes[];
+  filterItems: CategoryTypes[] | BrandTypes[] | undefined;
   searchParamKey: string;
 }
 
@@ -54,17 +54,18 @@ const Filter: FC<Props> = ({ label, filterItems, searchParamKey }) => {
           //   onValueChange={(value) => console.log(value)}
           onValueChange={(value) => updateSearchParam(value)}
         >
-          {filterItems.map((filterItem) => (
-            <ToggleGroupItem
-              key={filterItem._id}
-              value={filterItem._id}
-              aria-label={`Toggle ${filterItem.name}`}
-              className="border rounded-full capitalize"
-            >
-              {/* <Bold className="h-4 w-4" /> */}
-              {filterItem.name}
-            </ToggleGroupItem>
-          ))}
+          {filterItems &&
+            filterItems.map((filterItem) => (
+              <ToggleGroupItem
+                key={filterItem._id}
+                value={filterItem._id}
+                aria-label={`Toggle ${filterItem.name}`}
+                className="border rounded-full capitalize"
+              >
+                {/* <Bold className="h-4 w-4" /> */}
+                {filterItem.name}
+              </ToggleGroupItem>
+            ))}
         </ToggleGroup>
       </div>
     </>

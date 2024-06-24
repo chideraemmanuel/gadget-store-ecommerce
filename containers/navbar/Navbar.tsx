@@ -28,14 +28,14 @@ const Navbar: FC<Props> = () => {
 
   return (
     <>
-      <div className="container mx-auto relative h-[70px] flex items-center justify-between">
+      <div className="xs:container px-3 mx-auto relative h-[70px] flex items-center justify-between">
         <MobileNavigationMenu />
 
         <Logo />
 
         <NavbarLinks />
 
-        <div className="inline-flex items-center justify-center gap-4 text-accent-foreground">
+        <div className="inline-flex items-center justify-center gap-2 xs:gap-4 text-accent-foreground">
           <NavbarSearchInput />
 
           <NavbarCartLink />

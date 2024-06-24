@@ -2,7 +2,7 @@ import { useToast } from '@/components/ui/use-toast';
 import axios from '@/config/axios';
 import { LoginCredentialsTypes } from '@/types';
 import { useRouter } from 'next/navigation';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 interface Params {
   credentials: LoginCredentialsTypes;
@@ -20,18 +20,25 @@ const login = async ({ credentials, redirectPath }: Params) => {
 const useLoginUser = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: ['login user'],
     mutationFn: login,
     onSuccess: (data) => {
+      queryClient.invalidateQueries('get current user');
+      queryClient.invalidateQueries('get user cart');
+
       const redirectPath = data.redirectPath ?? '/';
+
+      console.log('data redirect path', data.redirectPath);
+      console.log('redirect path', redirectPath);
 
       toast({
         description: 'Login Successful!',
       });
 
-      router.replace(redirectPath);
+      router.replace(redirectPath, { scroll: false });
     },
     onError: (error: any) => {
       toast({

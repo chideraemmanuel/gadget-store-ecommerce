@@ -38,9 +38,9 @@ const Products: FC<Props> = ({ products }) => {
             </div>
           </>
         ) : (
-          <div className="text-center p-6">
+          <div className="flex items-center justify-center h-full p-5 w-full col-span-full">
             <span className="text-muted-foreground">
-              No products to display.
+              No products to display
             </span>
           </div>
         )}

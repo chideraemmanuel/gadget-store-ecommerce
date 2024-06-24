@@ -3,7 +3,7 @@
 import { FC, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import useAddItemToCart from '@/lib/hooks/cart/useAddItemToCart';
 import useIncrementItemQuantity from '@/lib/hooks/cart/useIncrementItemQuantity';
@@ -75,31 +75,42 @@ const AddToCartButton: FC<Props> = ({ product }) => {
     <>
       {cartReturn &&
         (itemIsInCart && itemIsInCart.quantity > 0 ? (
-          <div className="flex items-center justify-between gap-3 w-full">
+          <div className="flex items-center gap-2 md:gap-3 w-full">
+            <div className="flex-1 flex items-center justify-between gap-2 md:gap-3">
+              <Button
+                size={'icon'}
+                variant={'secondary'}
+                className="p-1 h-auto w-auto"
+                onClick={() => {
+                  if (itemIsInCart.quantity === 1) {
+                    removeItem(product);
+                  } else {
+                    decrementQuantity(product);
+                  }
+                }}
+              >
+                <Minus className="w-1/2" />
+              </Button>
+
+              <span>{itemIsInCart.quantity}</span>
+
+              <Button
+                size={'icon'}
+                variant={'secondary'}
+                className="p-1 h-auto w-auto"
+                onClick={() => incrementQuantity(product)}
+              >
+                <Plus className="w-1/2" />
+              </Button>
+            </div>
+
             <Button
               size={'icon'}
-              variant={'secondary'}
-              className="p-1 h-auto w-auto"
-              onClick={() => {
-                if (itemIsInCart.quantity === 1) {
-                  removeItem(product);
-                } else {
-                  decrementQuantity(product);
-                }
-              }}
+              variant={'ghost'}
+              className="p-1 h-auto w-auto hover:bg-destructive hover:text-destructive-foreground"
+              onClick={() => removeItem(product)}
             >
-              <Minus className="w-1/2" />
-            </Button>
-
-            <span>{itemIsInCart.quantity}</span>
-
-            <Button
-              size={'icon'}
-              variant={'secondary'}
-              className="p-1 h-auto w-auto"
-              onClick={() => incrementQuantity(product)}
-            >
-              <Plus className="w-1/2" />
+              <Trash2 className="md:w-2/3" />
             </Button>
           </div>
         ) : (
