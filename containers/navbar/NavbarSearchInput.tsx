@@ -28,7 +28,7 @@ const NavbarSearchInput: FC<Props> = () => {
 
       {/* mobile search */}
       {mobileSearchActive && (
-        <div className="flex md:hidden items-center gap-2 absolute px-8 left-0 top-0 w-full h-full bg-background">
+        <div className="flex md:hidden items-center gap-2 absolute px-3 xs:px-8 left-0 right-0 top-0 w-full h-full bg-background">
           <Button
             variant={'ghost'}
             size={'sm'}

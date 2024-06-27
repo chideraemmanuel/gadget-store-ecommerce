@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { CartReturnTypes } from '@/types';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -17,12 +18,14 @@ const useClearCart = () => {
     mutationKey: ['clear cart'],
     mutationFn: clearCart,
     onMutate: async () => {
-      await queryClient.cancelQueries('get user cart');
+      await queryClient.cancelQueries(SERVER_QUERY_KEYS['get-user-cart']);
 
-      const oldCartData = queryClient.getQueryData('get user cart');
+      const oldCartData = queryClient.getQueryData(
+        SERVER_QUERY_KEYS['get-user-cart']
+      );
 
       queryClient.setQueryData(
-        'get user cart',
+        SERVER_QUERY_KEYS['get-user-cart'],
         // @ts-ignore
         (oldCartData: CartReturnTypes) => {
           return {
@@ -35,10 +38,13 @@ const useClearCart = () => {
       return { oldCartData };
     },
     onError: (_error, _, context) => {
-      queryClient.setQueryData('get user cart', context?.oldCartData);
+      queryClient.setQueryData(
+        SERVER_QUERY_KEYS['get-user-cart'],
+        context?.oldCartData
+      );
     },
     onSettled: () => {
-      queryClient.invalidateQueries('get user cart');
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-user-cart']);
     },
   });
 };

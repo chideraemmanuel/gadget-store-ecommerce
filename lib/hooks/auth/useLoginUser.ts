@@ -1,5 +1,6 @@
 import { useToast } from '@/components/ui/use-toast';
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { LoginCredentialsTypes } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from 'react-query';
@@ -26,8 +27,8 @@ const useLoginUser = () => {
     mutationKey: ['login user'],
     mutationFn: login,
     onSuccess: (data) => {
-      queryClient.invalidateQueries('get current user');
-      queryClient.invalidateQueries('get user cart');
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-current-user']);
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-user-cart']);
 
       const redirectPath = data.redirectPath ?? '/';
 

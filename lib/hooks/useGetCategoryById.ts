@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { CategoryTypes } from '@/types';
 import { useQuery } from 'react-query';
 
@@ -18,7 +19,7 @@ const getCategoryById = async ({ queryKey }: { queryKey: any[] }) => {
 
 const useGetCategoryById = (categoryId: string) => {
   return useQuery({
-    queryKey: ['get category by id', categoryId],
+    queryKey: [SERVER_QUERY_KEYS['get-category-by-id'], categoryId],
     queryFn: getCategoryById,
     retry: false,
   });

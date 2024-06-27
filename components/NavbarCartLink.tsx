@@ -7,6 +7,7 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
 import getNumberOfItemsInCart from '@/lib/helpers/getNumberOfItemsInCart';
+import { Badge } from './ui/badge';
 
 interface Props {}
 
@@ -57,10 +58,14 @@ const NavbarCartLink: FC<Props> = () => {
               <span className="hidden md:inline-block">Cart</span>
 
               {cartReturn.cart_items.length > 0 && (
-                <span className="absolute bg-destructive text-destructive-foreground rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
-                  {/* {cartReturn.cart_items.length} */}
+                // <span className="absolute bg-destructive text-destructive-foreground rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
+                //   {/* {cartReturn.cart_items.length} */}
+                //   {getNumberOfItemsInCart(cartReturn.cart_items)}
+                // </span>
+
+                <Badge className="absolute bg-destructive text-destructive-foreground -top-[25%] -right-[15%] flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {getNumberOfItemsInCart(cartReturn.cart_items)}
-                </span>
+                </Badge>
               )}
             </Link>
           </Button>

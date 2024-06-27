@@ -1,5 +1,6 @@
 import { useToast } from '@/components/ui/use-toast';
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -25,7 +26,7 @@ const useVerifyUser = () => {
         description: 'Email Verified Successfully',
       });
 
-      queryClient.invalidateQueries('get current user');
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-current-user']);
 
       router.replace('/');
     },

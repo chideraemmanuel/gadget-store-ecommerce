@@ -2,6 +2,7 @@ import { CategoryTypes, SearchParams } from '@/types';
 import { useQuery } from 'react-query';
 import createSearchParams from '../helpers/createSearchParam';
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 
 // const getCategories = async ({ queryKey: [_, searchParamsObject] }: { queryKey: any[]}) => {
 const getCategories = async () => {
@@ -30,7 +31,7 @@ const getCategories = async () => {
 const useGetCategories = () => {
   return useQuery({
     // queryKey: ['get categories', searchParamsObject],
-    queryKey: ['get categories'],
+    queryKey: [SERVER_QUERY_KEYS['get-categories']],
     queryFn: getCategories,
     // retry: false,
     refetchOnMount: false,

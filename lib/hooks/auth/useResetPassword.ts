@@ -11,7 +11,7 @@ const initiate = () => {
     mutationFn: async (email: string) => {
       const response = await axios.post('auth/reset-password/initiate', {
         email,
-        redirect_url: 'http://localhost:3000/auth/reset-password',
+        redirect_url: `${process.env.NEXT_PUBLIC_PROJECT_BASE_URL}/auth/reset-password`,
       });
 
       console.log('response from initiate password reset hook', response);

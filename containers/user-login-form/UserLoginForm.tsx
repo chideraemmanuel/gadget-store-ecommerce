@@ -13,6 +13,7 @@ import {
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import generateGoogleOauthUrl from '@/lib/helpers/generateGoogleOauthUrl';
 import useLoginUser from '@/lib/hooks/auth/useLoginUser';
 import { LoginCredentialsTypes } from '@/types';
 import { Github } from 'lucide-react';
@@ -56,12 +57,11 @@ const UserLoginForm: FC<Props> = () => {
   return (
     <>
       {/* <Form {...form}> */}
-      <Card className="shadow-md lg:shadow-none lg:bg-transparent lg:border-none lg:dark:border-none  lg:dark:bg-transparent dark:bg-slate-900 py-3">
+      <Card className="shadow-md lg:shadow-none lg:bg-transparent lg:border-none lg:dark:border-none lg:dark:bg-transparent dark:bg-slate-900 py-3">
         <CardHeader className="text-center">
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio
-            a, veritatis rem ratione qui explicabo!
+            Enter your credentials to log in to your account.
           </CardDescription>
         </CardHeader>
 
@@ -104,18 +104,25 @@ const UserLoginForm: FC<Props> = () => {
                 disabled={isLoading}
               />
 
-              <Button className="w-full" disabled={isLoading}>
-                Login
+              <Button
+                className="w-full flex items-center gap-2"
+                disabled={isLoading}
+              >
+                {isLoading && <div className="spinner"></div>}
+                <span>Login</span>
               </Button>
             </div>
           </form>
-
           <FormBreak />
 
-          <Button variant="outline" className="bg-transparent" asChild>
+          <Button
+            variant="outline"
+            className="bg-transparent"
+            disabled={isLoading}
+            asChild
+          >
             <Link
-              // href={generateGoogleOauthUrl()}
-              href={'/'}
+              href={generateGoogleOauthUrl()}
               className="flex items-center gap-2"
             >
               <FcGoogle />

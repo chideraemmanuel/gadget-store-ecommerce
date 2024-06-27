@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { AuthReturnTypes } from '@/types';
 import { useQuery } from 'react-query';
 
@@ -12,7 +13,7 @@ const getCurrentUser = async () => {
 
 const useGetCurrentUser = () => {
   return useQuery({
-    queryKey: ['get current user'],
+    queryKey: [SERVER_QUERY_KEYS['get-current-user']],
     queryFn: getCurrentUser,
     retry: false,
     refetchOnMount: false,

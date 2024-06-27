@@ -108,10 +108,11 @@ const UserVerificationForm: FC<Props> = () => {
               </div>
 
               <Button
-                className="w-full"
+                className="w-full flex items-center gap-2"
                 disabled={!isOtpComplete || isVerifyingUser}
               >
-                Verify OTP
+                {isVerifyingUser && <div className="spinner"></div>}
+                <span>Verify OTP</span>
               </Button>
             </div>
           </form>
@@ -125,7 +126,7 @@ const UserVerificationForm: FC<Props> = () => {
               variant={'link'}
               className="h-auto px-0 py-0 text-xs text-primary "
               onClick={() => resendOtp('chidera@gmail.com')}
-              disabled={isResendingOtp}
+              disabled={isResendingOtp || isVerifyingUser}
             >
               Resend here
             </Button>

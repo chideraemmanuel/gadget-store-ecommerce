@@ -1,5 +1,6 @@
 import { useToast } from '@/components/ui/use-toast';
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { AuthReturnTypes } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from 'react-query';
@@ -22,14 +23,14 @@ const useLogoutUser = () => {
     mutationFn: logout,
     onSuccess: () => {
       queryClient.setQueryData(
-        'get current user',
+        SERVER_QUERY_KEYS['get-current-user'],
         // @ts-ignore
         (oldUserData: AuthReturnTypes) => {
           return null;
         }
       );
       queryClient.setQueryData(
-        'get user cart',
+        SERVER_QUERY_KEYS['get-user-cart'],
         // @ts-ignore
         (oldCartData: AuthReturnTypes) => {
           return null;
@@ -56,8 +57,8 @@ const useLogoutUser = () => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries('get current user');
-      queryClient.invalidateQueries('get user cart');
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-current-user']);
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-user-cart']);
     },
   });
 };

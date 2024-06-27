@@ -77,8 +77,12 @@ const UserPasswordResetInitiationForm: FC<Props> = () => {
                 />
               </div>
 
-              <Button className="w-full" disabled={isSendingResetEmail}>
-                Send reset email
+              <Button
+                className="w-full flex items-center gap-2"
+                disabled={isSendingResetEmail}
+              >
+                {isSendingResetEmail && <div className="spinner"></div>}
+                <span>Send reset email</span>
               </Button>
             </div>
           </form>

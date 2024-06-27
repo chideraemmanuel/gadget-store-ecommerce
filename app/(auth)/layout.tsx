@@ -5,6 +5,12 @@ import { Inter } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/decorators/ThemeProvider';
 import image from '@/assets/home-hero-image.jpg';
+import p1 from '@/assets/p1.webp';
+import p2 from '@/assets/p2.webp';
+import p3 from '@/assets/p3.webp';
+import p4 from '@/assets/p4.webp';
+import p5 from '@/assets/p5.webp';
+import p6 from '@/assets/p6.webp';
 import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -28,7 +34,7 @@ const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
 
       <section className="fixed left-0 w-[50vw] min-h-screen hidden lg:flex items-end after:content-[''] after:w-full after:h-full after:bg-slate-950 after:bg-opacity-70 after:absolute after:top-0">
         <Image
-          src={image.src}
+          src={p3.src}
           alt=""
           width={300}
           height={300}
@@ -46,9 +52,9 @@ const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
       </section>
 
       <section
-        className="relative flex items-center justify-center py-7 min-h-screen after:content-[''] after:inset-0 after:bg-[hsl(210_40%_98%)] lg:after:bg-white dark:after:bg-slate-950 lg:dark:after:bg-slate-950 after:bg-opacity-95 dark:after:bg-opacity-95  after:absolute lg:ml-[50vw]"
+        className="relative flex items-center justify-center py-7 min-h-screen after:content-[''] after:inset-0 after:bg-[hsl(210_40%_98%)] lg:after:bg-white dark:after:bg-slate-950 lg:dark:after:bg-slate-950 after:bg-opacity-70 after:backdrop-blur-md dark:after:bg-opacity-90  after:absolute lg:ml-[50vw]"
         style={{
-          background: `url(${image.src}) no-repeat center center/cover`,
+          background: `url(${p3.src}) no-repeat center center/cover`,
         }}
       >
         {/* <div className="relative z-10 w-[min(90%,_600px)] pt-20"> */}

@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { ProductTypes } from '@/types';
 import { useQuery } from 'react-query';
 
@@ -18,7 +19,7 @@ const getProductById = async ({ queryKey }: { queryKey: any[] }) => {
 
 const useGetProductById = (productId: string) => {
   return useQuery({
-    queryKey: ['get product by id', productId],
+    queryKey: [SERVER_QUERY_KEYS['get-product-by-id'], productId],
     queryFn: getProductById,
     retry: false,
     refetchOnMount: false,

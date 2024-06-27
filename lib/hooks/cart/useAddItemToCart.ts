@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { CartReturnTypes, ProductTypes } from '@/types';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -23,16 +24,18 @@ const useAddItemToCart = () => {
       console.log('addedItem', addedItem);
 
       //  CANCEL QUERIES TO AVOID CONFLICT
-      await queryClient.cancelQueries('get user cart');
+      await queryClient.cancelQueries(SERVER_QUERY_KEYS['get-user-cart']);
 
       // GET PREVIOUS QUERY DATA (TO BE RETURNED IN CASE OF AN ERROR)
-      const oldCartData = queryClient.getQueryData('get user cart');
+      const oldCartData = queryClient.getQueryData(
+        SERVER_QUERY_KEYS['get-user-cart']
+      );
 
       console.log('oldCartData', oldCartData);
 
       // SET QUERY DATA ONCE MUTATION IS INITIATED
       queryClient.setQueryData(
-        'get user cart',
+        SERVER_QUERY_KEYS['get-user-cart'],
         // @ts-ignore
         (oldCartData: CartReturnTypes) => {
           console.log('oldCartData from set query data callback', oldCartData);
@@ -52,11 +55,14 @@ const useAddItemToCart = () => {
     },
     onError: (_error, _addedItem, context) => {
       // ON ERROR, SET QUERY DATA TO THE PREVIOUS DATA (RETURNED FRO, ONMUTATE CALLBACK)
-      queryClient.setQueryData('get user cart', context?.oldCartData);
+      queryClient.setQueryData(
+        SERVER_QUERY_KEYS['get-user-cart'],
+        context?.oldCartData
+      );
     },
     onSettled: () => {
       // INVALIDATE USER CART QUERY WHETHER MUTATION IS SUCCESSFUL OR NOT
-      queryClient.invalidateQueries('get user cart');
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-user-cart']);
     },
   });
 };

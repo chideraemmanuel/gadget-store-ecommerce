@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { BillboardTypes } from '@/types';
 import { useQuery } from 'react-query';
 
@@ -14,7 +15,7 @@ const getHomeBillboard = async () => {
 
 const useGetHomeBillboard = () => {
   return useQuery({
-    queryKey: ['get home billboard'],
+    queryKey: [SERVER_QUERY_KEYS['get-home-billboard']],
     queryFn: getHomeBillboard,
     retry: false,
   });

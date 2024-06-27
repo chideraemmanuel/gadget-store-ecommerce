@@ -1,4 +1,5 @@
 import axios from '@/config/axios';
+import { SERVER_QUERY_KEYS } from '@/constants';
 import { CartReturnTypes } from '@/types';
 import { useQuery } from 'react-query';
 
@@ -12,7 +13,7 @@ const getUserCart = async () => {
 
 const useGetUserCart = () => {
   return useQuery({
-    queryKey: ['get user cart'],
+    queryKey: [SERVER_QUERY_KEYS['get-user-cart']],
     queryFn: getUserCart,
     retry: false,
     refetchOnMount: false,

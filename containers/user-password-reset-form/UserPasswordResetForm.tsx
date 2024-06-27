@@ -119,8 +119,12 @@ const UserPasswordResetForm: FC<Props> = () => {
                 })}
               />
 
-              <Button className="w-full" disabled={isResettingPassword}>
-                Reset password
+              <Button
+                className="w-full flex items-center gap-2"
+                disabled={isResettingPassword}
+              >
+                {isResettingPassword && <div className="spinner"></div>}
+                <span>Reset password</span>
               </Button>
             </div>
           </form>

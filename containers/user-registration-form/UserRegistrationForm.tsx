@@ -13,6 +13,7 @@ import {
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import generateGoogleOauthUrl from '@/lib/helpers/generateGoogleOauthUrl';
 import useRegisterUser from '@/lib/hooks/auth/useRegisterUser';
 import { RegistrationCredentialsTypes } from '@/types';
 import Link from 'next/link';
@@ -56,8 +57,8 @@ const UserRegistrationForm: FC<Props> = () => {
         <CardHeader className="text-center">
           <CardTitle>Create account</CardTitle>
           <CardDescription>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio
-            a, veritatis rem ratione qui explicabo!
+            Fill in the details to create an account. Please enter a valid email
+            address, as you would have to verify your email upon sign up.
           </CardDescription>
         </CardHeader>
 
@@ -155,18 +156,25 @@ const UserRegistrationForm: FC<Props> = () => {
                 disabled={isLoading}
               />
 
-              <Button disabled={isLoading} className="w-full">
-                Create account
+              <Button
+                className="w-full flex items-center gap-2"
+                disabled={isLoading}
+              >
+                {isLoading && <div className="spinner"></div>}
+                <span>Create account</span>
               </Button>
             </div>
           </form>
-
           <FormBreak />
 
-          <Button variant="outline" className="bg-transparent" asChild>
+          <Button
+            variant="outline"
+            className="bg-transparent"
+            disabled={isLoading}
+            asChild
+          >
             <Link
-              // href={generateGoogleOauthUrl()}
-              href={'/'}
+              href={generateGoogleOauthUrl()}
               className="flex items-center gap-2"
             >
               <FcGoogle />
