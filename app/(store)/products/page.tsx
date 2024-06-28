@@ -11,13 +11,16 @@ import { Bold, FilterIcon, Italic, Underline } from 'lucide-react';
 import Filter from '@/components/Filter';
 import ProductsPagination from '@/components/ProductsPagination';
 import { Button } from '@/components/ui/button';
-import ProductsPagination2 from '@/components/ProductsPagination2';
+import ResourcePagination from '@/components/ResourcePagination';
 import useGetCategories from '@/lib/hooks/useGetCategories';
 import useGetBrands from '@/lib/hooks/useGetBrands';
 import useGetProducts from '@/lib/hooks/useGetProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SearchParams } from '@/types';
 import ProductsFilters from '@/components/ProductsFilters';
+import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
+import GlobalServerError from '@/containers/server-error/GlobalServerError';
+import GlobalError from '@/containers/error/GlobalError';
 
 interface Props {
   searchParams: SearchParams;
@@ -47,28 +50,54 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
     error: errorFetchingBrands,
   } = useGetBrands();
 
-  useEffect(() => {
-    if (
-      isErrorFetchingProducts ||
-      isErrorFetchingCategories ||
-      isErrorFetchingBrands
-    ) {
-      const error =
-        errorFetchingProducts || errorFetchingCategories || errorFetchingBrands;
+  // useEffect(() => {
+  //   if (
+  //     isErrorFetchingProducts ||
+  //     isErrorFetchingCategories ||
+  //     isErrorFetchingBrands
+  //   ) {
+  //     const error =
+  //       errorFetchingProducts || errorFetchingCategories || errorFetchingBrands;
 
-      throw new Error(
-        // @ts-ignore
-        error?.message?.data?.error ||
-          // @ts-ignore
-          error?.message ||
-          'An error occured while loading page'
-      );
-    }
-  }, [
-    isErrorFetchingProducts,
-    isErrorFetchingCategories,
-    isErrorFetchingBrands,
-  ]);
+  //     throw new Error(
+  //       // @ts-ignore
+  //       error?.message?.data?.error ||
+  //         // @ts-ignore
+  //         error?.message ||
+  //         'An error occured while loading page'
+  //     );
+  //   }
+  // }, [
+  //   isErrorFetchingProducts,
+  //   isErrorFetchingCategories,
+  //   isErrorFetchingBrands,
+  // ]);
+
+  const error =
+    isErrorFetchingProducts ||
+    isErrorFetchingCategories ||
+    isErrorFetchingBrands;
+
+  // @ts-ignore
+  if (error?.message === 'Network Error') {
+    console.log('network error');
+    return <GlobalNetworkError />;
+  }
+
+  if (
+    // @ts-ignore
+    error?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    error?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <GlobalServerError />;
+  }
+
+  if (error) {
+    // @ts-ignore
+    return <GlobalError message={error?.message} />;
+  }
 
   return (
     <section className="">
@@ -152,6 +181,9 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
                 <div className="p-5 flex flex-col gap-3 min-h-[40vh] max-h-[80vh]">
                   {categories && brands && (
                     <ProductsFilters
+                      isFetchingFilters={
+                        isFetchingBrands || isFetchingCategories
+                      }
                       filters={[
                         {
                           label: 'Categories',
@@ -203,7 +235,7 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
 
           <div>
             {products && products?.pagination.total_pages > 1 && (
-              <ProductsPagination2
+              <ResourcePagination
                 totalPages={products?.pagination.total_pages}
               />
             )}

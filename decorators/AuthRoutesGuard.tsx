@@ -85,7 +85,11 @@ const AuthRoutesGuard: FC<Props> = ({ children }) => {
     return <GlobalServerError />;
   }
 
-  if (error) {
+  if (
+    error &&
+    // @ts-ignore
+    !(error?.response?.status > 400 && error?.response?.status < 500)
+  ) {
     // @ts-ignore
     return <GlobalError message={error?.message} />;
   }

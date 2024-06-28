@@ -19,7 +19,7 @@ interface Props {
   // setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProductsPagination2: FC<Props> = ({
+const ResourcePagination: FC<Props> = ({
   totalPages,
   totalPagesToDisplay = 5,
   // currentPage,
@@ -179,4 +179,4 @@ const ProductsPagination2: FC<Props> = ({
   );
 };
 
-export default ProductsPagination2;
+export default ResourcePagination;

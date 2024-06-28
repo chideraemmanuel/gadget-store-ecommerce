@@ -7,6 +7,7 @@ export const SERVER_QUERY_KEYS = {
   'get-product-by-id': 'get product by id',
   'get-current-user': 'get current user',
   'get-user-cart': 'get user cart',
+  'get-user-orders': 'get user orders',
 };
 
 // export const SERVER_MUTATION_KEYS = {

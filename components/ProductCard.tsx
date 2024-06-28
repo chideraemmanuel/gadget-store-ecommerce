@@ -28,7 +28,7 @@ const ProductCard: FC<Props> = ({ product }) => {
   return (
     <Card className="inline-block shadow-md dark:bg-slate-900 [@media_(min-width:_375px)]:max-h-fit max-h-[50vh]">
       <Link href={`/products/${product._id}`}>
-        <CardHeader>
+        <CardHeader className="p-3 md:p-4">
           {/* <Image src={image.src} alt="product name" width={300} height={300} /> */}
           <Image
             src={product.product_image}

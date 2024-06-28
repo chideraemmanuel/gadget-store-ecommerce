@@ -5,13 +5,13 @@ interface Props {
   children: React.ReactNode;
 }
 
-const CartPageLayout: FC<Props> = ({ children }) => {
+const ProtectedPagesLayout: FC<Props> = ({ children }) => {
   return (
     <>
-      {/* <RouteGuard>{children}</RouteGuard> */}
-      {children}
+      <RouteGuard>{children}</RouteGuard>
+      {/* {children} */}
     </>
   );
 };
 
-export default CartPageLayout;
+export default ProtectedPagesLayout;

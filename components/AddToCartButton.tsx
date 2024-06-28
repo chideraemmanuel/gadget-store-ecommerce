@@ -11,6 +11,9 @@ import useDecrementItemQuantity from '@/lib/hooks/cart/useDecrementItemQuantity'
 import { ProductTypes } from '@/types';
 import { usePathname, useRouter } from 'next/navigation';
 import useRemoveItemFromCart from '@/lib/hooks/cart/useRemoveItemFromCart';
+import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
+import GlobalServerError from '@/containers/server-error/GlobalServerError';
+import GlobalError from '@/containers/error/GlobalError';
 
 interface Props {
   //   productId: string;
@@ -35,24 +38,49 @@ const AddToCartButton: FC<Props> = ({ product }) => {
     (cartItem) => cartItem.product._id === product._id
   );
 
-  useEffect(() => {
-    // IF ERROR IS A NETWORK ERROR, THROW ERROR (WILL BE CAUGHT BY ERROR.TSX IN SEGMENT)
-    // @ts-ignore
-    if (error?.message === 'Network Error') {
-      console.log('network error');
-      throw new Error('Network Error');
-    }
+  // useEffect(() => {
+  //   // IF ERROR IS A NETWORK ERROR, THROW ERROR (WILL BE CAUGHT BY ERROR.TSX IN SEGMENT)
+  //   // @ts-ignore
+  //   if (error?.message === 'Network Error') {
+  //     console.log('network error');
+  //     throw new Error('Network Error');
+  //   }
 
-    if (
-      // @ts-ignore
-      error?.response?.data?.error === 'Internal Server Error' ||
-      // @ts-ignore
-      error?.response?.status === 500
-    ) {
-      console.log('server error');
-      throw new Error('Internal Server Error');
-    }
-  }, [error]);
+  //   if (
+  //     // @ts-ignore
+  //     error?.response?.data?.error === 'Internal Server Error' ||
+  //     // @ts-ignore
+  //     error?.response?.status === 500
+  //   ) {
+  //     console.log('server error');
+  //     throw new Error('Internal Server Error');
+  //   }
+  // }, [error]);
+
+  // @ts-ignore
+  if (error?.message === 'Network Error') {
+    console.log('network error');
+    return <GlobalNetworkError />;
+  }
+
+  if (
+    // @ts-ignore
+    error?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    error?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <GlobalServerError />;
+  }
+
+  if (
+    error &&
+    // @ts-ignore
+    !(error?.response?.status > 400 && error?.response?.status < 500)
+  ) {
+    // @ts-ignore
+    return <GlobalError message={error?.message} />;
+  }
 
   //   IF ERROR IS WITHIN THE 400 RANGE (NO USER IS LOGGED IN)
   // @ts-ignore

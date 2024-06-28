@@ -2,7 +2,7 @@ import Filter from '@/components/Filter';
 import ProductCard from '@/components/ProductCard';
 import ProductsFilters from '@/components/ProductsFilters';
 import ProductsPagination from '@/components/ProductsPagination';
-import ProductsPagination2 from '@/components/ProductsPagination2';
+import ResourcePagination from '@/components/ResourcePagination';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
@@ -114,7 +114,7 @@ const CategoryPageProducts: FC<Props> = ({
 
             {/* <div className=""> */}
             {products && products?.pagination?.total_pages > 1 && (
-              <ProductsPagination2
+              <ResourcePagination
                 totalPages={products?.pagination?.total_pages}
               />
             )}

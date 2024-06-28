@@ -97,6 +97,32 @@ export interface CartReturnTypes {
   cart_items: CartTypes[];
 }
 
+export interface BillingAddressTypes {
+  receipent_name: string;
+  address: string;
+  postal_code: string;
+  city: string;
+  state: string;
+  country: string;
+}
+
+export type OrderItemTypes = CartTypes;
+
+export interface OrderTypes {
+  _id: string;
+  user: string;
+  order_items: OrderItemTypes[];
+  billing_address: BillingAddressTypes;
+  status: 'pending' | 'shipped' | 'delivered';
+  order_date: Date;
+  total_price: number;
+}
+
+export interface OrderReturnTypes {
+  data: OrderTypes[];
+  pagination: PaginationTypes;
+}
+
 export interface RegistrationCredentialsTypes {
   first_name: string;
   last_name: string;

@@ -10,6 +10,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import Error from '@/containers/error/Error';
+import NetworkError from '@/containers/network-error/NetworkError';
+import ServerError from '@/containers/server-error/ServerError';
 import { getSubTotal, getTotal } from '@/lib/helpers/getTotals';
 import useClearCart from '@/lib/hooks/cart/useClearCart';
 import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
@@ -24,6 +27,31 @@ const CartPage: FC<Props> = () => {
   const { data: cartReturn, isLoading, isError, error } = useGetUserCart();
 
   const { mutate: clearCart } = useClearCart();
+
+  // @ts-ignore
+  if (error?.message === 'Network Error') {
+    console.log('network error');
+    return <NetworkError />;
+  }
+
+  if (
+    // @ts-ignore
+    error?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    error?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <ServerError />;
+  }
+
+  if (
+    error &&
+    // @ts-ignore
+    !(error?.response?.status > 400 && error?.response?.status < 500)
+  ) {
+    // @ts-ignore
+    return <Error message={error.message} />;
+  }
 
   return (
     <>

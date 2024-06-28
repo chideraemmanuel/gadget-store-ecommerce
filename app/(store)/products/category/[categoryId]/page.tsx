@@ -4,6 +4,9 @@ import CategoryPageSkeleton from '@/components/CategoryPageSkeleton';
 import { Skeleton } from '@/components/ui/skeleton';
 import CategoryPageHero from '@/containers/category-page-hero/CategoryPageHero';
 import CategoryPageProducts from '@/containers/category-page-products/CategoryPageProducts';
+import GlobalError from '@/containers/error/GlobalError';
+import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
+import GlobalServerError from '@/containers/server-error/GlobalServerError';
 import useGetBrands from '@/lib/hooks/useGetBrands';
 import useGetCategoryById from '@/lib/hooks/useGetCategoryById';
 import useGetProducts from '@/lib/hooks/useGetProducts';
@@ -42,21 +45,45 @@ const CategoryPage: FC<Props> = ({ params: { categoryId }, searchParams }) => {
     error: errorFetchingBrands,
   } = useGetBrands();
 
-  useEffect(() => {
-    if (errorFetchingProducts || errorFetchingCategory || errorFetchingBrands) {
-      // WILL BE CAUGHT BY ERROR.TSX IN SEGMENT
-      const error =
-        errorFetchingCategory || errorFetchingProducts || errorFetchingBrands;
+  // useEffect(() => {
+  //   if (errorFetchingProducts || errorFetchingCategory || errorFetchingBrands) {
+  //     // WILL BE CAUGHT BY ERROR.TSX IN SEGMENT
+  //     const error =
+  //       errorFetchingCategory || errorFetchingProducts || errorFetchingBrands;
 
-      throw new Error(
-        // @ts-ignore
-        error?.response?.data?.error ||
-          // @ts-ignore
-          error?.message ||
-          'An error occured'
-      );
-    }
-  }, [errorFetchingCategory, errorFetchingProducts, errorFetchingBrands]);
+  //     throw new Error(
+  //       // @ts-ignore
+  //       error?.response?.data?.error ||
+  //         // @ts-ignore
+  //         error?.message ||
+  //         'An error occured'
+  //     );
+  //   }
+  // }, [errorFetchingCategory, errorFetchingProducts, errorFetchingBrands]);
+
+  const error =
+    isErrorFetchingProducts || errorFetchingCategory || isErrorFetchingBrands;
+
+  // @ts-ignore
+  if (error?.message === 'Network Error') {
+    console.log('network error');
+    return <GlobalNetworkError />;
+  }
+
+  if (
+    // @ts-ignore
+    error?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    error?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <GlobalServerError />;
+  }
+
+  if (error) {
+    // @ts-ignore
+    return <GlobalError message={error?.message} />;
+  }
 
   return (
     <>

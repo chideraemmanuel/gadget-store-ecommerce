@@ -2,10 +2,14 @@
 
 import FormInput from '@/components/FormInput';
 import SectionHeader from '@/components/SectionHeader';
+import SplashScreen from '@/components/SplashScreen';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { getSubTotal, getTotal } from '@/lib/helpers/getTotals';
+import useCheckout from '@/lib/hooks/cart/useCheckout';
+import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
 import { DollarSignIcon } from 'lucide-react';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -21,22 +25,52 @@ interface FormEntries {
   country: string;
   state: string;
   postal_code: string;
+  city: string;
+  payment_method: string;
 }
 
 const CheckoutPage: FC<Props> = () => {
+  const { data: cartReturn, isLoading, isError, error } = useGetUserCart();
+
+  const {
+    mutate: checkout,
+    isLoading: isCheckingOut,
+    isError: isErrorCheckingOut,
+    error: errorCheckingOut,
+  } = useCheckout();
+
   const form = useForm<FormEntries>();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
+    setError,
+    clearErrors,
   } = form;
 
   const emailRegex = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
 
   const onSubmit: SubmitHandler<FormEntries> = (data) => {
     console.log('submitted data', data);
+
+    checkout({
+      order_items: cartReturn?.cart_items!,
+      billing_address: {
+        receipent_name: `${data.first_name} ${data.last_name}`,
+        address: data.address,
+        city: data.city,
+        postal_code: data.postal_code,
+        state: data.state,
+        country: data.country,
+      },
+    });
   };
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   return (
     <>
@@ -60,6 +94,7 @@ const CheckoutPage: FC<Props> = () => {
                         message: "Receipent's first name is required",
                       },
                     })}
+                    disabled={isCheckingOut}
                     error={errors.first_name?.message}
                   />
                   <FormInput
@@ -71,13 +106,13 @@ const CheckoutPage: FC<Props> = () => {
                         message: "Receipent's last name is required",
                       },
                     })}
+                    disabled={isCheckingOut}
                     error={errors.last_name?.message}
                   />
                 </div>
 
                 <FormInput
                   label="Email"
-                  error={errors.email?.message}
                   placeholder="e.g johndoe@email.com"
                   id="email"
                   {...register('email', {
@@ -90,6 +125,8 @@ const CheckoutPage: FC<Props> = () => {
                       message: 'Invalid email format',
                     },
                   })}
+                  disabled={isCheckingOut}
+                  error={errors.email?.message}
                 />
 
                 <FormInput
@@ -101,20 +138,35 @@ const CheckoutPage: FC<Props> = () => {
                       message: 'Please enter an address to deliver to',
                     },
                   })}
+                  disabled={isCheckingOut}
                   error={errors.address?.message}
+                />
+
+                <FormInput
+                  label="Country"
+                  placeholder="e.g. Nigeria"
+                  {...register('country', {
+                    required: {
+                      value: true,
+                      message: 'Please fill in this field',
+                    },
+                  })}
+                  disabled={isCheckingOut}
+                  error={errors.country?.message}
                 />
 
                 <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-start gap-2">
                   <FormInput
-                    label="Country"
+                    label="City"
                     placeholder="e.g. Nigeria"
-                    {...register('country', {
+                    {...register('city', {
                       required: {
                         value: true,
                         message: 'Please fill in this field',
                       },
                     })}
-                    error={errors.country?.message}
+                    disabled={isCheckingOut}
+                    error={errors.city?.message}
                   />
                   <FormInput
                     label="State"
@@ -125,6 +177,7 @@ const CheckoutPage: FC<Props> = () => {
                         message: 'Please fill in this field',
                       },
                     })}
+                    disabled={isCheckingOut}
                     error={errors.state?.message}
                   />
                   <FormInput
@@ -136,6 +189,7 @@ const CheckoutPage: FC<Props> = () => {
                         message: 'Please fill in this field',
                       },
                     })}
+                    disabled={isCheckingOut}
                     error={errors.country?.message}
                   />
                 </div>
@@ -154,39 +208,72 @@ const CheckoutPage: FC<Props> = () => {
 
               <Separator className="mt-2 mb-3" />
 
-              <ToggleGroup
-                //   className="pb-3 justify-start flex-wrap"
-                className="pb-3 grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] justify-start"
-                type="single"
-                onValueChange={(value) => console.log('value', value)}
-              >
-                <ToggleGroupItem
-                  className="border flex flex-col gap-2 p-3 h-auto"
-                  value="pay-on-delivery"
-                  aria-label="Toggle Pay On Delivery"
-                >
-                  <DollarSignIcon className="" />
-                  <span className="text-xs">Pay on delivery</span>
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  className="border flex flex-col gap-2 p-3 h-auto"
-                  value="paypal"
-                  aria-label="Toggle PayPal"
-                >
-                  <FaPaypal className="" />
-                  <span className="text-xs">PayPal</span>
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  className="border flex flex-col gap-2 p-3 h-auto"
-                  value="debit-mastercard"
-                  aria-label="Toggle Debit Mastercard"
-                >
-                  <FaCcMastercard className="" />
-                  <span className="text-xs">Mastercard</span>
-                </ToggleGroupItem>
-              </ToggleGroup>
+              <div>
+                <ToggleGroup
+                  disabled={isCheckingOut}
+                  {...register('payment_method', {
+                    required: {
+                      value: true,
+                      message: 'Please select a payment method',
+                    },
+                  })}
+                  //   className="pb-3 justify-start flex-wrap"
+                  className={`grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] justify-start p-2 rounded-md border border-transparent ${
+                    errors.payment_method?.message && ' border-destructive'
+                  }`}
+                  type="single"
+                  onValueChange={(value) => {
+                    console.log('value', value);
+                    setValue('payment_method', value);
 
-              <Button className="w-full">Checkout</Button>
+                    if (value === '') {
+                      setError('payment_method', {
+                        message: 'Please select a payment method',
+                      });
+                      return;
+                    }
+
+                    clearErrors('payment_method');
+                  }}
+                >
+                  <ToggleGroupItem
+                    className="border flex flex-col gap-2 p-3 h-auto"
+                    value="pay-on-delivery"
+                    aria-label="Toggle Pay On Delivery"
+                  >
+                    <DollarSignIcon className="" />
+                    <span className="text-xs">Pay on delivery</span>
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    className="border flex flex-col gap-2 p-3 h-auto"
+                    value="paypal"
+                    aria-label="Toggle PayPal"
+                  >
+                    <FaPaypal className="" />
+                    <span className="text-xs">PayPal</span>
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    className="border flex flex-col gap-2 p-3 h-auto"
+                    value="debit-mastercard"
+                    aria-label="Toggle Debit Mastercard"
+                  >
+                    <FaCcMastercard className="" />
+                    <span className="text-xs">Mastercard</span>
+                  </ToggleGroupItem>
+                </ToggleGroup>
+
+                <span className="inline-block pb-3 text-xs text-destructive">
+                  {errors.payment_method?.message}
+                </span>
+              </div>
+
+              <Button
+                className="w-full flex items-center gap-2"
+                disabled={isCheckingOut}
+              >
+                {isCheckingOut && <div className="spinner"></div>}
+                <span>Place Order</span>
+              </Button>
               {/* )} */}
             </div>
           </form>
@@ -219,20 +306,18 @@ const CheckoutPage: FC<Props> = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-3.5">
                 <span className="text-sm">Discount</span>
-                <span className="font-medium">
-                  {/* {cartReturn && cartReturn?.cart_items.length > 0
-                    ? '₦0.00'
-                    : '---'} */}
-                  ₦0.00
-                </span>
+                <span className="font-medium">{/* ₦0.00 */}</span>{' '}
+                {cartReturn && cartReturn?.cart_items.length > 0
+                  ? '₦0.00'
+                  : '---'}
               </div>
               <div className="flex items-center justify-between gap-3">
                 <span className="text-sm">Sub-total</span>
                 <span className="font-medium">
-                  {/* {cartReturn && cartReturn?.cart_items.length > 0
+                  {cartReturn && cartReturn?.cart_items.length > 0
                     ? `₦${getSubTotal(cartReturn.cart_items).toFixed(2)}`
-                    : '---'} */}
-                  ₦0.00
+                    : '---'}
+                  {/* ₦0.00 */}
                 </span>
               </div>
             </div>
@@ -242,10 +327,10 @@ const CheckoutPage: FC<Props> = () => {
             <div className="flex items-center justify-between gap-3">
               <span className="font-medium">Total</span>
               <span className="font-semibold text-lg">
-                {/* {cartReturn && cartReturn?.cart_items.length > 0
+                {cartReturn && cartReturn?.cart_items.length > 0
                   ? `₦${getTotal(cartReturn.cart_items, 0).toFixed(2)}`
-                  : '---'} */}
-                ₦0.00
+                  : '---'}
+                {/* ₦0.00 */}
               </span>
             </div>
           </Card>

@@ -14,6 +14,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import useRemoveItemFromCart from '@/lib/hooks/cart/useRemoveItemFromCart';
 import useIncrementItemQuantity from '@/lib/hooks/cart/useIncrementItemQuantity';
 import useDecrementItemQuantity from '@/lib/hooks/cart/useDecrementItemQuantity';
+import GlobalNetworkError from '../network-error/GlobalNetworkError';
+import GlobalServerError from '../server-error/GlobalServerError';
+import GlobalError from '../error/GlobalError';
+import ServerError from '../server-error/ServerError';
+import Error from '../error/Error';
+import NetworkError from '../network-error/NetworkError';
 
 interface Props {
   // productId: string;
@@ -46,36 +52,67 @@ const ProductDetails: FC<Props> = ({ product, isLoading, isError, error }) => {
     (cartItem) => cartItem.product._id === product?._id
   );
 
-  useEffect(() => {
-    if (isError) {
-      throw new Error(
-        // @ts-ignore
-        error?.response?.data?.error ||
-          // @ts-ignore
-          error?.message ||
-          'Could not get the requested product'
-      );
-    }
-  }, [isError]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     throw new Error(
+  //       // @ts-ignore
+  //       error?.response?.data?.error ||
+  //         // @ts-ignore
+  //         error?.message ||
+  //         'Could not get the requested product'
+  //     );
+  //   }
+  // }, [isError]);
 
-  useEffect(() => {
-    // IF ERROR IS A NETWORK ERROR, THROW ERROR (WILL BE CAUGHT BY ERROR.TSX IN SEGMENT)
+  // useEffect(() => {
+  //   // IF ERROR IS A NETWORK ERROR, THROW ERROR (WILL BE CAUGHT BY ERROR.TSX IN SEGMENT)
+  //   // @ts-ignore
+  //   if (errorGettingCart?.message === 'Network Error') {
+  //     console.log('network error');
+  //     throw new Error('Network Error');
+  //   }
+
+  //   if (
+  //     // @ts-ignore
+  //     errorGettingCart?.response?.data?.error === 'Internal Server Error' ||
+  //     // @ts-ignore
+  //     errorGettingCart?.response?.status === 500
+  //   ) {
+  //     console.log('server error');
+  //     throw new Error('Internal Server Error');
+  //   }
+  // }, [errorGettingCart]);
+
+  // @ts-ignore
+  if (errorGettingCart?.message === 'Network Error') {
+    console.log('network error');
+    return <NetworkError />;
+  }
+
+  if (
     // @ts-ignore
-    if (errorGettingCart?.message === 'Network Error') {
-      console.log('network error');
-      throw new Error('Network Error');
-    }
+    errorGettingCart?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    errorGettingCart?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <ServerError />;
+  }
 
-    if (
+  if (
+    errorGettingCart &&
+    !(
       // @ts-ignore
-      errorGettingCart?.response?.data?.error === 'Internal Server Error' ||
-      // @ts-ignore
-      errorGettingCart?.response?.status === 500
-    ) {
-      console.log('server error');
-      throw new Error('Internal Server Error');
-    }
-  }, [errorGettingCart]);
+      (
+        errorGettingCart?.response?.status > 400 &&
+        // @ts-ignore
+        errorGettingCart?.response?.status < 500
+      )
+    )
+  ) {
+    // @ts-ignore
+    return <Error message={errorGettingCart?.message} />;
+  }
 
   const handleBuyNowClick = () => {
     //   IF ERROR IS WITHIN THE 400 RANGE (NO USER IS LOGGED IN)
