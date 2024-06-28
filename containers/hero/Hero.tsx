@@ -44,7 +44,7 @@ const Hero: FC<Props> = ({
           asChild
           size={'lg'}
           // variant={'secondary'}
-          className="bg-[hsl(210_40%_98%)] text-[hsl(222.2_47.4%_11.2%)] hover:bg-[rgba(248,250,252,0.8)]"
+          // className="bg-[hsl(210_40%_98%)] text-[hsl(222.2_47.4%_11.2%)] hover:bg-[rgba(248,250,252,0.8)]"
         >
           <Link
             href={'/products'}

@@ -39,7 +39,7 @@ const useLoginUser = () => {
         description: 'Login Successful!',
       });
 
-      router.replace(redirectPath, { scroll: false });
+      router.replace(redirectPath, { scroll: false }); // probably won't run because of auth routes guard
     },
     onError: (error: any) => {
       toast({

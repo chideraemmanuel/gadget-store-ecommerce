@@ -3,14 +3,16 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { FC } from 'react';
-import serverErrorImage from '@/assets/server-error.svg';
+import errorImage from '@/assets/no-result.svg';
 import Logo from '@/components/Logo';
 import { useRouter } from 'next/navigation';
 // import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-interface Props {}
+interface Props {
+  message: string;
+}
 
-const GlobalServerError: FC<Props> = () => {
+const GlobalError: FC<Props> = ({ message }) => {
   const router = useRouter();
 
   return (
@@ -22,8 +24,8 @@ const GlobalServerError: FC<Props> = () => {
 
       <div className="max-w-[300px] h-auto">
         <Image
-          src={serverErrorImage}
-          alt="server error illustration"
+          src={errorImage}
+          alt=""
           width={300}
           height={300}
           className="w-full h-full"
@@ -31,12 +33,9 @@ const GlobalServerError: FC<Props> = () => {
       </div>
 
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="font-bold text-2xl md:3xl">Internal Server Error</h2>
+        <h2 className="font-bold text-2xl md:3xl">Oops! An error occured.</h2>
 
-        <p className="text-muted-foreground w-[90%] mx-auto">
-          Oops! It's not you, it's us. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Reprehenderit, voluptas?
-        </p>
+        <p className="text-muted-foreground w-[90%] mx-auto">{message}</p>
 
         <Button onClick={() => router.refresh()} className="w-[200px] mx-auto">
           Retry
@@ -46,4 +45,4 @@ const GlobalServerError: FC<Props> = () => {
   );
 };
 
-export default GlobalServerError;
+export default GlobalError;

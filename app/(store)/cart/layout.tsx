@@ -8,7 +8,8 @@ interface Props {
 const CartPageLayout: FC<Props> = ({ children }) => {
   return (
     <>
-      <RouteGuard>{children}</RouteGuard>
+      {/* <RouteGuard>{children}</RouteGuard> */}
+      {children}
     </>
   );
 };

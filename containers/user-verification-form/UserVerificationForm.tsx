@@ -16,37 +16,24 @@ import { Label } from '@/components/ui/label';
 import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
 import useResendOtp from '@/lib/hooks/auth/useResendOtp';
 import useVerifyUser from '@/lib/hooks/auth/useVerifyUser';
+import { AuthReturnTypes } from '@/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface Props {}
+interface Props {
+  user: AuthReturnTypes;
+}
 
-const UserVerificationForm: FC<Props> = () => {
+const UserVerificationForm: FC<Props> = ({ user }) => {
   const [otp, setOtp] = useState('');
   const [isOtpComplete, setIsOtpComplete] = useState(false);
 
   const router = useRouter();
 
-  const { data: user, isLoading, isError, error } = useGetCurrentUser();
   const { mutate: resendOtp, isLoading: isResendingOtp } = useResendOtp();
   const { mutate: verifyUser, isLoading: isVerifyingUser } = useVerifyUser();
-
-  useEffect(() => {
-    if (user && user.verified) {
-      router.replace('/');
-    }
-
-    if (error) {
-      throw new Error( // @ts-ignore
-        error?.response?.data?.error ||
-          // @ts-ignore
-          error?.message ||
-          'An error occured'
-      );
-    }
-  }, [user, error]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,13 +42,10 @@ const UserVerificationForm: FC<Props> = () => {
     verifyUser({
       // email: 'chidera@gmail.com',
       email: user?.email!,
-      otp: +otp,
+      // otp: +otp,
+      otp: otp,
     });
   };
-
-  if (isLoading) {
-    return <SplashScreen />;
-  }
 
   return (
     <>

@@ -64,8 +64,9 @@ const UserRegistrationForm: FC<Props> = () => {
 
         <CardContent className="flex flex-col gap-3">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className=" flex flex-col gap-3">
-              <div className="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div className="flex flex-col gap-3">
+              {/* <div className="flex flex-col sm:flex-row sm:items-start gap-3"> */}
+              <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] justify-start gap-3">
                 {/* FIRST NAME */}
                 <FormInput
                   label="First name"

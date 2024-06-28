@@ -18,6 +18,8 @@ import { useEffect } from 'react';
 import iphoneX from '@/assets/iphone-x.png';
 import iphoneXR from '@/assets/iphone-xr.png';
 import { Button } from '@/components/ui/button';
+import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
+import GlobalServerError from '@/containers/server-error/GlobalServerError';
 
 export default function Home() {
   const {
@@ -98,31 +100,31 @@ export default function Home() {
   //   },
   // ];
 
-  useEffect(() => {
-    if (
-      errorFetchingHomeBillboard ||
-      errorFetchingFeaturedProducts ||
-      errorFetchingProducts
-    ) {
-      // WILL BE CAUGHT BY ERROR.TSX IN SEGMENT
-      const error =
-        errorFetchingHomeBillboard ||
-        errorFetchingFeaturedProducts ||
-        errorFetchingProducts;
+  // useEffect(() => {
+  //   if (
+  //     errorFetchingHomeBillboard ||
+  //     errorFetchingFeaturedProducts ||
+  //     errorFetchingProducts
+  //   ) {
+  //     // WILL BE CAUGHT BY ERROR.TSX IN SEGMENT
+  //     const error =
+  //       errorFetchingHomeBillboard ||
+  //       errorFetchingFeaturedProducts ||
+  //       errorFetchingProducts;
 
-      throw new Error(
-        // @ts-ignore
-        error?.response?.data?.error ||
-          // @ts-ignore
-          error?.message ||
-          'An error occured'
-      );
-    }
-  }, [
-    errorFetchingHomeBillboard,
-    errorFetchingFeaturedProducts,
-    errorFetchingProducts,
-  ]);
+  //     throw new Error(
+  //       // @ts-ignore
+  //       error?.response?.data?.error ||
+  //         // @ts-ignore
+  //         error?.message ||
+  //         'An error occured'
+  //     );
+  //   }
+  // }, [
+  //   errorFetchingHomeBillboard,
+  //   errorFetchingFeaturedProducts,
+  //   errorFetchingProducts,
+  // ]);
 
   if (
     isFetchingFeaturedProducts ||
@@ -130,6 +132,32 @@ export default function Home() {
     isFetchingHomeBillboard
   ) {
     return <SplashScreen />;
+  }
+
+  const error =
+    errorFetchingHomeBillboard ||
+    errorFetchingFeaturedProducts ||
+    errorFetchingProducts;
+
+  // @ts-ignore
+  if (error?.message === 'Network Error') {
+    console.log('network error');
+    return <GlobalNetworkError />;
+  }
+
+  if (
+    // @ts-ignore
+    error?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    error?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <GlobalServerError />;
+  }
+
+  if (error) {
+    // @ts-ignore
+    return <GlobalError message={error?.message} />;
   }
 
   return (

@@ -1,21 +1,23 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { FC } from 'react';
-import networkErrorImage from '@/assets/no-result.svg';
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import errorImage from '@/assets/no-result.svg';
 import { useRouter } from 'next/navigation';
 
-interface Props {}
+interface Props {
+  message: string;
+}
 
-const NetworkError: FC<Props> = () => {
+const Error: FC<Props> = ({ message }) => {
   const router = useRouter();
 
   return (
     <div className="flex flex-col justify-center items-center gap-7 min-h-[calc(100vh-70px)] container mx-auto p-10">
       <div className="max-w-[300px] h-auto">
         <Image
-          src={networkErrorImage}
+          src={errorImage}
           alt=""
           width={300}
           height={300}
@@ -24,11 +26,9 @@ const NetworkError: FC<Props> = () => {
       </div>
 
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="font-bold text-2xl md:3xl">Network Error</h2>
+        <h2 className="font-bold text-2xl md:3xl">Oops! An Error occured.</h2>
 
-        <p className="text-muted-foreground w-[90%] mx-auto">
-          Please check your internet connection and try again
-        </p>
+        <p className="text-muted-foreground w-[90%] mx-auto">{message}</p>
 
         <Button onClick={() => router.refresh()} className="w-[200px] mx-auto">
           Retry
@@ -38,4 +38,4 @@ const NetworkError: FC<Props> = () => {
   );
 };
 
-export default NetworkError;
+export default Error;

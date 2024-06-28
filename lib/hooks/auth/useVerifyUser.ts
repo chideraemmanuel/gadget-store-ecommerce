@@ -4,7 +4,8 @@ import { SERVER_QUERY_KEYS } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from 'react-query';
 
-const verifyUser = async (credentials: { email: string; otp: number }) => {
+// const verifyUser = async (credentials: { email: string; otp: number }) => {
+const verifyUser = async (credentials: { email: string; otp: string }) => {
   const response = await axios.post('/auth/verify', credentials);
 
   console.log('response from verify user hook', response);

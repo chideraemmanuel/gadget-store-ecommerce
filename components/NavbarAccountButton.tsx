@@ -16,6 +16,7 @@ import {
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import useLogoutUser from '@/lib/hooks/auth/useLogoutUser';
+import FullScreenLoader from './FullScreenLoader';
 
 interface Props {}
 
@@ -31,8 +32,14 @@ const NavbarAccountButton: FC<Props> = () => {
     return `${firstNameInitial}${lastNameInitial}`;
   };
 
+  // if (isLoggingOut) {
+  //   return <FullScreenLoader />;
+  // }
+
   return (
     <>
+      {isLoggingOut && <FullScreenLoader />}
+
       <DropdownMenu>
         {isLoading && (
           <Skeleton className="relative flex shrink-0 h-10 w-10 rounded-full" />

@@ -24,7 +24,6 @@ interface Props {
 
 const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
   return (
-    // <AuthRoutesGuard>
     <main>
       <div className="absolute lg:fixed top-6 left-6 z-50 lg:text-[hsl(210_40%_98%)]">
         <Logo />
@@ -62,7 +61,6 @@ const StoreLayout: FC<Readonly<Props>> = ({ children }) => {
         {/* </div> */}
       </section>
     </main>
-    // </AuthRoutesGuard>
   );
 };
 

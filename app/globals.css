@@ -122,7 +122,7 @@
   }
 }
 
-.spinner {
+/* .spinner {
   width: 20px;
   height: 20px;
   border: 3px solid #fff;
@@ -133,12 +133,59 @@
   animation: rotation 0.5s linear infinite;
 }
 
+.dark .spinner {
+  border: 3px solid hsl(222.2 47.4% 11.2%);
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+} */
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, hsl(210 40% 98%) 94%, #0000)
+      top/3.8px 3.8px no-repeat,
+    conic-gradient(#0000 30%, hsl(210 40% 98%));
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 3.8px),
+    #000 0
+  );
+  animation: spinner 0.6s infinite linear;
+}
+
+/* .dark .spinner {
+  background: radial-gradient(farthest-side, hsl(222.2 47.4% 11.2%) 94%, #0000)
+      top/3.8px 3.8px no-repeat,
+    conic-gradient(#0000 30%, hsl(222.2 47.4% 11.2%));
+} */
+
+/* spinner for full screen loader */
+.spinner-fs {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #2563eb 94%, #0000) top/3.8px 3.8px
+      no-repeat,
+    conic-gradient(#0000 30%, #2563eb);
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 3.8px),
+    #000 0
+  );
+  animation: spinner 0.6s infinite linear;
+}
+
+@keyframes spinner {
+  100% {
+    transform: rotate(1turn);
   }
 }
 
