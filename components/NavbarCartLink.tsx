@@ -33,6 +33,9 @@ const NavbarCartLink: FC<Props> = () => {
           {/* <span className="absolute bg-destructive text-destructive-foreground rounded-[50%] py-[2px] px-[4px] text-xs -top-[25%] -right-[15%]">
             10
           </span> */}
+          {/* <Badge className="absolute bg-destructive text-destructive-foreground -top-[25%] -right-[15%] flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+            10
+          </Badge> */}
         </Link>
       </Button>
     );

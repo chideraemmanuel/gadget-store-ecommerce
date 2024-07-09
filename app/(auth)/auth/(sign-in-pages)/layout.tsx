@@ -8,7 +8,8 @@ interface Props {
 const SignInPagesLayout: FC<Props> = ({ children }) => {
   return (
     <>
-      <AuthRoutesGuard>{children}</AuthRoutesGuard>
+      {/* <AuthRoutesGuard>{children}</AuthRoutesGuard> */}
+      {children}
     </>
   );
 };

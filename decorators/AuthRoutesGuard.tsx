@@ -103,9 +103,8 @@ const AuthRoutesGuard: FC<Props> = ({ children }) => {
         // @ts-ignore
         error?.message !== 'Network Error' &&
         // @ts-ignore
-        error?.response?.data?.error !== 'Internal Server Error' && {
-          children,
-        }}
+        error?.response?.data?.error !== 'Internal Server Error' &&
+        children}
     </>
     // {children}
   );

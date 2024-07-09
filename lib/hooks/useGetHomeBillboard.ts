@@ -17,7 +17,7 @@ const useGetHomeBillboard = () => {
   return useQuery({
     queryKey: [SERVER_QUERY_KEYS['get-home-billboard']],
     queryFn: getHomeBillboard,
-    retry: false,
+    // retry: false,
   });
 };
 

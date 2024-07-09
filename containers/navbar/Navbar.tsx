@@ -23,12 +23,9 @@ import useGetCategories from '@/lib/hooks/useGetCategories';
 interface Props {}
 
 const Navbar: FC<Props> = () => {
-  const { data: categories, isLoading: isFetchingCategories } =
-    useGetCategories();
-
   return (
     <>
-      <div className="xs:container px-3 mx-auto h-[70px] flex items-center justify-between">
+      <div className="xs:container px-3 mx-auto h-[70px] flex items-center justify-between relative">
         <MobileNavigationMenu />
 
         <Logo />

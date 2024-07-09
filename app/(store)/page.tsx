@@ -17,6 +17,8 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import iphoneX from '@/assets/iphone-x.png';
 import iphoneXR from '@/assets/iphone-xr.png';
+import test from '@/assets/test.png';
+import billboard_image from '@/assets/blob-scatter-haikei.svg';
 import { Button } from '@/components/ui/button';
 import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
 import GlobalServerError from '@/containers/server-error/GlobalServerError';
@@ -126,55 +128,92 @@ export default function Home() {
   //   errorFetchingProducts,
   // ]);
 
-  if (
-    isFetchingFeaturedProducts ||
-    isFetchingProducts ||
-    isFetchingHomeBillboard
-  ) {
-    return <SplashScreen />;
-  }
+  // if (
+  //   isFetchingFeaturedProducts ||
+  //   isFetchingProducts ||
+  //   isFetchingHomeBillboard
+  // ) {
+  //   return <SplashScreen />;
+  // }
 
-  const error =
-    errorFetchingHomeBillboard ||
-    errorFetchingFeaturedProducts ||
-    errorFetchingProducts;
+  // const error =
+  //   errorFetchingHomeBillboard ||
+  //   errorFetchingFeaturedProducts ||
+  //   errorFetchingProducts;
 
-  // @ts-ignore
-  if (error?.message === 'Network Error') {
-    console.log('network error');
-    return <GlobalNetworkError />;
-  }
+  // // @ts-ignore
+  // if (error?.message === 'Network Error') {
+  //   console.log('network error');
+  //   return <GlobalNetworkError />;
+  // }
 
-  if (
-    // @ts-ignore
-    error?.response?.data?.error === 'Internal Server Error' ||
-    // @ts-ignore
-    error?.response?.status === 500
-  ) {
-    console.log('server error');
-    return <GlobalServerError />;
-  }
+  // if (
+  //   // @ts-ignore
+  //   error?.response?.data?.error === 'Internal Server Error' ||
+  //   // @ts-ignore
+  //   error?.response?.status === 500
+  // ) {
+  //   console.log('server error');
+  //   return <GlobalServerError />;
+  // }
 
-  if (error) {
-    // @ts-ignore
-    return <GlobalError message={error?.message} />;
-  }
+  // if (error) {
+  //   // @ts-ignore
+  //   return <GlobalError message={error?.message} />;
+  // }
 
   return (
     <>
-      {homeBillboard && <Hero {...homeBillboard?.[0]} />}
+      <Hero
+        billboard={homeBillboard?.[0]}
+        isFetchingBillboard={isFetchingHomeBillboard}
+      />
       <Categories />
       {featuredProducts && (
         <ProductsCarousel
           header="New Arrivals"
           products={featuredProducts.data}
+          isLoading={isFetchingFeaturedProducts}
         />
       )}
       {/* new products? popular products? */}
+      {/* make skeleton */}
       <Brands />
-      {products && <Products products={products.data} />}
+      <Products products={products?.data} isLoading={isFetchingProducts} />
       <Services />
       {/* <Products products={productss} /> */}
+      {/* ************************* */}
+      {/* ************************* */}
+      {/* <section
+        className="bg-accent text-slate-900 py-5"
+        style={{
+          background: `url(${billboard_image.src}) no-repeat center center/cover`,
+        }}
+      >
+        <div className="h-[50vh] container mx-auto flex items-center justify-between gap-7">
+          <div className="flex-1 flex flex-col items-start gap-3">
+            <h1 className="font-bold text-2xl [@media_(min-width:_380px)]:text-3xl">
+              Your one-stop-shop for all your technology needs!
+            </h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta,
+              vero?
+            </p>
+
+            <Button>Shop now</Button>
+          </div>
+
+          <div className="flex-1 h-full hidden sm:flex justify-center">
+            <Image
+              src={test.src}
+              alt=""
+              width={1000}
+              height={1000}
+              className="w-auto h-full"
+            />
+          </div>
+        </div>
+      </section> */}
     </>
   );
 }

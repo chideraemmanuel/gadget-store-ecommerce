@@ -11,8 +11,12 @@ interface Params {
 }
 
 const checkout = async ({ order_items, billing_address }: Params) => {
+  const filteredOrderItems = order_items.map((order_item) => {
+    return { product: order_item.product._id, quantity: order_item.quantity };
+  });
+
   const response = await axios.post<OrderTypes>('/user/place-order', {
-    order_items,
+    order_items: filteredOrderItems,
     billing_address,
   });
 

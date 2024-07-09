@@ -1,3 +1,5 @@
+'use client';
+
 import OrderItem from '@/components/OrderItem';
 import ResourcePagination from '@/components/ResourcePagination';
 import SectionHeader from '@/components/SectionHeader';
