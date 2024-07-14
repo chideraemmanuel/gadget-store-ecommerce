@@ -10,7 +10,7 @@ const getOrderById = async ({ queryKey }: { queryKey: any[] }) => {
 
   console.log('passed product id', orderId);
 
-  const response = await axios.get<OrderTypes>(`/orders/${orderId}`);
+  const response = await axios.get<OrderTypes>(`/user/orders/${orderId}`);
 
   console.log('response from get orders by id hook', response);
 

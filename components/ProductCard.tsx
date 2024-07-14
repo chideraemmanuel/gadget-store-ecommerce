@@ -27,15 +27,15 @@ const ProductCard: FC<Props> = ({ product }) => {
 
   return (
     // <Card className="inline-block shadow-md dark:bg-slate-900 [@media_(min-width:_375px)]:max-h-fit max-h-[50vh]">
-    <Card className="inline-flex flex-col justify-between shadow-md dark:bg-slate-900 [@media_(min-width:_375px)]:max-h-fit max-h-[50vh]">
+    <Card className="inline-flex flex-col justify-between shadow-md dark:bg-slate-900 h-full [@media_(min-width:_375px)]:max-h-fit max-h-[50vh]">
       <Link href={`/products/${product._id}`}>
         <CardHeader className="p-3 md:p-4">
-          {/* <Image src={image.src} alt="product name" width={300} height={300} /> */}
+          {/* <Image src={image.src} alt="product name" width={1000} height={1000} /> */}
           <Image
             src={product.product_image}
             alt={`${product.product_name}`}
-            width={300}
-            height={300}
+            width={1000}
+            height={1000}
             className="aspect-square max-h-full w-auto"
           />
         </CardHeader>

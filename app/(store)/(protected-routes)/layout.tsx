@@ -8,8 +8,8 @@ interface Props {
 const ProtectedPagesLayout: FC<Props> = ({ children }) => {
   return (
     <>
-      {/* <RouteGuard>{children}</RouteGuard> */}
-      {children}
+      <RouteGuard>{children}</RouteGuard>
+      {/* {children} */}
     </>
   );
 };

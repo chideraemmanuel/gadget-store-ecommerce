@@ -1,18 +1,54 @@
-import { CartTypes } from '@/types';
+import { CartItemTypes, OrderItemTypes } from '@/types';
 
-export const getSubTotal = (cartItems: CartTypes[]) => {
+export const getSubTotal = (items: CartItemTypes[] | OrderItemTypes[]) => {
   let subTotal = 0;
 
-  cartItems.forEach((cartItem) => {
-    subTotal = subTotal + cartItem.product.price * cartItem.quantity;
+  items.forEach((item) => {
+    subTotal = subTotal + item.product.price * item.quantity;
   });
 
   return subTotal;
 };
 
-export const getTotal = (cartItems: CartTypes[], discount: number) => {
-  const subTotal = getSubTotal(cartItems);
-  const total = subTotal - discount;
+// export const getTotal = (
+//   items: CartItemTypes[] | OrderItemTypes[],
+//   discount: number = 0,
+//   shipping: number = 0,
+//   tax: number = 0
+// ) => {
+//   const subTotal = getSubTotal(items);
+//   const total = subTotal - discount - shipping - tax;
+
+//   return total;
+// };
+
+// export const getIndividualItemTotal = (
+//   item: CartItemTypes | OrderItemTypes
+// ) => {
+//   return item.product.price * item.quantity;
+// };
+
+interface TotalProps {
+  items: CartItemTypes[] | OrderItemTypes[];
+  discount?: number;
+  shipping?: number;
+  tax?: number;
+}
+
+export const getTotal = ({
+  items,
+  discount = 0,
+  shipping = 0,
+  tax = 0,
+}: TotalProps) => {
+  const subTotal = getSubTotal(items);
+  const total = subTotal - discount - shipping - tax;
 
   return total;
+};
+
+export const getIndividualItemTotal = (
+  item: CartItemTypes | OrderItemTypes
+) => {
+  return item.product.price * item.quantity;
 };

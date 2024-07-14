@@ -1,6 +1,6 @@
-import { CartTypes } from '@/types';
+import { CartItemTypes } from '@/types';
 
-const getNumberOfItemsInCart = (cartItems: CartTypes[]) => {
+const getNumberOfItemsInCart = (cartItems: CartItemTypes[]) => {
   let numberOfItems = 0;
   cartItems.forEach((cartItem) => {
     numberOfItems += cartItem.quantity;

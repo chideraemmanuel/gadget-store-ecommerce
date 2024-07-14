@@ -20,8 +20,8 @@ const AuthErrorPage: FC<Props> = () => {
           <Image
             src={errorImage}
             alt=""
-            width={300}
-            height={300}
+            width={1000}
+            height={1000}
             className="w-full h-full"
           />
         </div>

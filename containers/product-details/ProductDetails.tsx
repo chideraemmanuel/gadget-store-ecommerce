@@ -208,8 +208,8 @@ const ProductDetails: FC<Props> = ({ product, isLoading, isError, error }) => {
             <Image
               src={product.product_image}
               alt={product.product_name}
-              width={300}
-              height={300}
+              width={1000}
+              height={1000}
               className="aspect-square max-h-full w-auto"
             />
           </div>

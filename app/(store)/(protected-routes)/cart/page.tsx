@@ -1,6 +1,7 @@
 'use client';
 
 import CartItem from '@/components/CartItem';
+import EmptyCart from '@/components/EmptyCart';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,7 +28,11 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import Error from '@/containers/error/Error';
 import NetworkError from '@/containers/network-error/NetworkError';
 import ServerError from '@/containers/server-error/ServerError';
-import { getSubTotal, getTotal } from '@/lib/helpers/getTotals';
+import {
+  getIndividualItemTotal,
+  getSubTotal,
+  getTotal,
+} from '@/lib/helpers/getTotals';
 import useClearCart from '@/lib/hooks/cart/useClearCart';
 import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
 import {
@@ -51,30 +56,30 @@ const CartPage: FC<Props> = () => {
 
   const { mutate: clearCart } = useClearCart();
 
-  // // @ts-ignore
-  // if (error?.message === 'Network Error') {
-  //   console.log('network error');
-  //   return <NetworkError />;
-  // }
+  // @ts-ignore
+  if (error?.message === 'Network Error') {
+    console.log('network error');
+    return <NetworkError />;
+  }
 
-  // if (
-  //   // @ts-ignore
-  //   error?.response?.data?.error === 'Internal Server Error' ||
-  //   // @ts-ignore
-  //   error?.response?.status === 500
-  // ) {
-  //   console.log('server error');
-  //   return <ServerError />;
-  // }
+  if (
+    // @ts-ignore
+    error?.response?.data?.error === 'Internal Server Error' ||
+    // @ts-ignore
+    error?.response?.status === 500
+  ) {
+    console.log('server error');
+    return <ServerError />;
+  }
 
-  // if (
-  //   error &&
-  //   // @ts-ignore
-  //   !(error?.response?.status > 400 && error?.response?.status < 500)
-  // ) {
-  //   // @ts-ignore
-  //   return <Error message={error.message} />;
-  // }
+  if (
+    error &&
+    // @ts-ignore
+    !(error?.response?.status > 400 && error?.response?.status < 500)
+  ) {
+    // @ts-ignore
+    return <Error message={error.message} />;
+  }
 
   return (
     <>
@@ -111,13 +116,16 @@ const CartPage: FC<Props> = () => {
                   <div className="flex flex-col gap-3 items-center justify-center h-full p-5">
                     {/* add empty cart image..? */}
                     {/* <span className="text-muted-foreground">No items in cart</span> */}
-                    <span className="text-muted-foreground">
+
+                    {/* <span className="text-muted-foreground">
                       Your cart is currently empty
                     </span>
 
                     <Button asChild>
                       <Link href={'/products'}>Shop now</Link>
-                    </Button>
+                    </Button> */}
+
+                    <EmptyCart />
                   </div>
                 )}
               </>
@@ -238,65 +246,85 @@ const CartPage: FC<Props> = () => {
             </Card>
           )} */}
 
-          <Card className="overflow-hidden">
-            {/* <CardHeader className="flex flex-row items-start bg-muted/50">
+          {cartReturn && (
+            <Card className="overflow-hidden">
+              {/* <CardHeader className="flex flex-row items-start bg-muted/50">
               <CardTitle className="flex items-center gap-2 text-lg">
                 Cart Details
               </CardTitle>
             </CardHeader> */}
 
-            <CardHeader className="py-3 bg-muted/50">
-              <CardTitle className="text-lg">Cart Details</CardTitle>
-            </CardHeader>
-            <CardContent className="p-6 text-sm">
-              <div className="grid gap-3">
-                <div className="font-semibold">Cart Items</div>
-                <ul className="grid gap-3">
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">
-                      Glimmer Lamps x <span>2</span>
-                    </span>
-                    <span>$250.00</span>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">
-                      Aqua Filters x <span>1</span>
-                    </span>
-                    <span>$49.00</span>
-                  </li>
-                </ul>
-                <Separator className="my-2" />
-                <div className="font-semibold">Price</div>
-                <ul className="grid gap-3">
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span>$299.00</span>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span>$5.00</span>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Tax</span>
-                    <span>$25.00</span>
-                  </li>
-                  <li className="flex items-center justify-between font-semibold">
-                    <span className="text-muted-foreground">Total</span>
-                    <span>$329.00</span>
-                  </li>
-                </ul>
-              </div>
-            </CardContent>
-            {/* <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3"> */}
-            <CardFooter className="border-t px-6 py-3">
-              <Button
-                className="w-full"
-                onClick={() => router.push('/cart/checkout')}
-              >
-                Checkout
-              </Button>
-            </CardFooter>
-          </Card>
+              <CardHeader className="py-3 bg-muted/50">
+                <CardTitle className="text-lg">Cart Details</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 text-sm">
+                <div className="grid gap-3">
+                  {cartReturn && cartReturn.cart_items.length > 0 && (
+                    <>
+                      <div className="font-semibold">Cart Items</div>
+                      <ul className="grid gap-3">
+                        {cartReturn?.cart_items?.map((cart_item) => (
+                          <li className="flex items-center justify-between">
+                            <span className="text-muted-foreground">
+                              {cart_item.product.product_name} x{' '}
+                              <span>{cart_item.quantity}</span>
+                            </span>
+                            <span>{`₦${getIndividualItemTotal(cart_item).toFixed(2)}`}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Separator className="my-2" />
+                    </>
+                  )}
+                  <div className="font-semibold">Price</div>
+                  <ul className="grid gap-3">
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span>
+                        {/* {`₦${getSubTotal(cartReturn?.cart_items).toFixed(2)}`} */}
+                        {cartReturn?.cart_items?.length > 0
+                          ? `₦${getSubTotal(cartReturn.cart_items).toFixed(2)}`
+                          : '---'}
+                      </span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Shipping</span>
+                      {/* <span>₦0.00</span> */}
+                      <span>
+                        {cartReturn?.cart_items?.length > 0 ? '₦0.00' : '---'}
+                      </span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Tax</span>
+                      {/* <span>₦0.00</span> */}
+                      <span>
+                        {cartReturn?.cart_items?.length > 0 ? '₦0.00' : '---'}
+                      </span>
+                    </li>
+                    <li className="flex items-center justify-between font-semibold">
+                      <span className="text-muted-foreground">Total</span>
+                      {/* <span>₦0.00</span> */}
+                      <span>
+                        {cartReturn?.cart_items?.length > 0
+                          ? `₦${getTotal({ items: cartReturn.cart_items }).toFixed(2)}`
+                          : '---'}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+              {/* <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3"> */}
+              <CardFooter className="border-t px-6 py-3">
+                <Button
+                  className="w-full"
+                  onClick={() => router.push('/cart/checkout')}
+                  disabled={cartReturn.cart_items.length === 0}
+                >
+                  Checkout
+                </Button>
+              </CardFooter>
+            </Card>
+          )}
         </div>
       </div>
     </>

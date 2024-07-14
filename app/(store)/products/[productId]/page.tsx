@@ -56,6 +56,8 @@ const ProductDetailsPage: FC<Props> = ({ params: { productId } }) => {
 
   return (
     <>
+      <span>Bread crumb goes here</span>
+
       <ProductDetails
         product={product}
         isLoading={isFetchingProduct}

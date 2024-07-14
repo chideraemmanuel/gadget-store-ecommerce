@@ -177,14 +177,14 @@ export default function Home() {
         isFetchingBillboard={isFetchingHomeBillboard}
       />
       <Categories />
-      {featuredProducts && (
-        <ProductsCarousel
-          // header="New Arrivals"
-          header="Featured Products"
-          products={featuredProducts.data}
-          isLoading={isFetchingFeaturedProducts}
-        />
-      )}
+      {/* {featuredProducts && ( */}
+      <ProductsCarousel
+        // header="New Arrivals"
+        header="Featured Products"
+        products={featuredProducts?.data}
+        isLoading={isFetchingFeaturedProducts}
+      />
+      {/* )} */}
       {/* new products? popular products? */}
       {/* make skeleton */}
       <Brands />

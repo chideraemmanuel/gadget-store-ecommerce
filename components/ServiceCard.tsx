@@ -29,8 +29,8 @@ const ServiceCard: FC<Props> = () => {
             <Image
               src={serviceImage.src}
               alt=""
-              width={300}
-              height={300}
+              width={1000}
+              height={1000}
               className="w-full h-full"
             />
           </CardFooter>

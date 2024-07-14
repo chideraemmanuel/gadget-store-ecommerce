@@ -87,14 +87,14 @@ export interface PaginationTypes {
   next_page: number;
 }
 
-export interface CartTypes {
+export interface CartItemTypes {
   product: ProductTypes;
   quantity: number;
 }
 
 export interface CartReturnTypes {
   user: AuthReturnTypes;
-  cart_items: CartTypes[];
+  cart_items: CartItemTypes[];
 }
 
 export interface BillingAddressTypes {
@@ -106,7 +106,7 @@ export interface BillingAddressTypes {
   country: string;
 }
 
-export type OrderItemTypes = CartTypes;
+export type OrderItemTypes = CartItemTypes;
 
 export interface OrderTypes {
   _id: string;

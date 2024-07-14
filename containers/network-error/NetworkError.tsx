@@ -17,8 +17,8 @@ const NetworkError: FC<Props> = () => {
         <Image
           src={networkErrorImage}
           alt=""
-          width={300}
-          height={300}
+          width={1000}
+          height={1000}
           className="w-full h-full"
         />
       </div>
