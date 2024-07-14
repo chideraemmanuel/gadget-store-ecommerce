@@ -1,6 +1,6 @@
 'use client';
 
-import OrderItem from '@/components/OrderItem';
+import OrdersListItem from '@/components/OrdersListItem';
 import ResourcePagination from '@/components/ResourcePagination';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
@@ -66,7 +66,7 @@ const OrdersPage: FC<Props> = () => {
             <>
               {ordersReturn && ordersReturn.data.length > 0 ? (
                 ordersReturn.data.map((orderItem) => (
-                  <OrderItem key={orderItem._id} order={orderItem} />
+                  <OrdersListItem key={orderItem._id} order={orderItem} />
                 ))
               ) : (
                 <div className="flex flex-col gap-3 items-center justify-center h-full p-5">

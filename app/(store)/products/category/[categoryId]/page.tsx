@@ -62,7 +62,7 @@ const CategoryPage: FC<Props> = ({ params: { categoryId }, searchParams }) => {
   // }, [errorFetchingCategory, errorFetchingProducts, errorFetchingBrands]);
 
   const error =
-    isErrorFetchingProducts || errorFetchingCategory || isErrorFetchingBrands;
+    errorFetchingProducts || errorFetchingCategory || errorFetchingBrands;
 
   // @ts-ignore
   if (error?.message === 'Network Error') {

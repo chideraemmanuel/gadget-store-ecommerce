@@ -12,7 +12,7 @@ interface Props {
 const BrandCard: FC<Props> = ({ brand }) => {
   return (
     <Link
-      href={'/'}
+      href={`/products?brand=${brand._id}`}
       className="flex xs:grid flex-col xs:grid-cols-[auto_1fr] items-start xs:items-center gap-3 bg-accent p-3 rounded-md text-accent-foreground border border-accent hover:border-primary transition"
     >
       {/* <Avatar>

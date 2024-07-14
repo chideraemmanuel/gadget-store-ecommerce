@@ -22,6 +22,7 @@ import billboard_image from '@/assets/blob-scatter-haikei.svg';
 import { Button } from '@/components/ui/button';
 import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
 import GlobalServerError from '@/containers/server-error/GlobalServerError';
+import useGetRandomProducts from '@/lib/hooks/useGetRandomProducts';
 
 export default function Home() {
   const {
@@ -38,12 +39,19 @@ export default function Home() {
     error: errorFetchingFeaturedProducts,
   } = useGetProducts({ featured: 'true' });
 
+  // const {
+  //   data: products,
+  //   isLoading: isFetchingProducts,
+  //   isError: isErrorFetchingProducts,
+  //   error: errorFetchingProducts,
+  // } = useGetProducts({ featured: 'false' });
+
   const {
-    data: products,
-    isLoading: isFetchingProducts,
-    isError: isErrorFetchingProducts,
-    error: errorFetchingProducts,
-  } = useGetProducts({ featured: 'false' });
+    data: randomProducts,
+    isLoading: isFetchingRandomProducts,
+    isError: isErrorFetchingRandomProducts,
+    error: errorFetchingRandomProducts,
+  } = useGetRandomProducts({ featured: 'false' });
 
   // const productss = [
   //   {
@@ -171,7 +179,8 @@ export default function Home() {
       <Categories />
       {featuredProducts && (
         <ProductsCarousel
-          header="New Arrivals"
+          // header="New Arrivals"
+          header="Featured Products"
           products={featuredProducts.data}
           isLoading={isFetchingFeaturedProducts}
         />
@@ -179,7 +188,10 @@ export default function Home() {
       {/* new products? popular products? */}
       {/* make skeleton */}
       <Brands />
-      <Products products={products?.data} isLoading={isFetchingProducts} />
+      <Products
+        products={randomProducts}
+        isLoading={isFetchingRandomProducts}
+      />
       <Services />
       {/* <Products products={productss} /> */}
       {/* ************************* */}

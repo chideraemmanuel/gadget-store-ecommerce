@@ -49,10 +49,11 @@ const Hero: FC<Props> = ({ billboard, isFetchingBillboard }) => {
 
       {!isFetchingBillboard && billboard && (
         <section
-          className="bg-accent text-slate-900 py-5"
-          style={{
-            background: `url(${bg.src}) no-repeat center center/cover`,
-          }}
+          // className="bg-accent text-slate-900 py-5"
+          className="bg-accent py-5"
+          // style={{
+          //   background: `url(${bg.src}) no-repeat center center/cover`,
+          // }}
         >
           <div className="h-[50vh] container mx-auto flex items-center justify-between gap-7">
             <div className="flex-1 flex flex-col items-start gap-3">

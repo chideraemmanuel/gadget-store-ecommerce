@@ -3,7 +3,14 @@
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { LogIn, LogOut, User, User2 } from 'lucide-react';
+import {
+  LogIn,
+  LogOut,
+  Package2,
+  PackageIcon,
+  User,
+  User2,
+} from 'lucide-react';
 import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -17,10 +24,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import useLogoutUser from '@/lib/hooks/auth/useLogoutUser';
 import FullScreenLoader from './FullScreenLoader';
+import { useRouter } from 'next/navigation';
 
 interface Props {}
 
 const NavbarAccountButton: FC<Props> = () => {
+  const router = useRouter();
+
   const { data: user, isLoading, isError, error } = useGetCurrentUser();
 
   const { mutate: logout, isLoading: isLoggingOut } = useLogoutUser();
@@ -90,6 +100,13 @@ const NavbarAccountButton: FC<Props> = () => {
           >
             <User2 className="h-4 w-4" />
             <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center gap-2"
+            onClick={() => router.push('/orders')}
+          >
+            <PackageIcon className="h-4 w-4" />
+            <span>Orders</span>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center gap-2"

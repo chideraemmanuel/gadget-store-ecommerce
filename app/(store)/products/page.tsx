@@ -21,6 +21,7 @@ import ProductsFilters from '@/components/ProductsFilters';
 import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
 import GlobalServerError from '@/containers/server-error/GlobalServerError';
 import GlobalError from '@/containers/error/GlobalError';
+import shuffleArray from '@/lib/helpers/shuffleArray';
 
 interface Props {
   searchParams: SearchParams;
@@ -29,6 +30,18 @@ interface Props {
 const array = [1, 2, 3, 4, 5, 6];
 
 const ProductsPage: FC<Props> = ({ searchParams }) => {
+  const renderHeader = () => {
+    if (searchParams?.search_query) {
+      if (Array.isArray(searchParams?.search_query)) {
+        return `Results for ${searchParams?.search_query[0].toUpperCase()}`;
+      } else {
+        return `Results for ${searchParams?.search_query.toUpperCase()}`;
+      }
+    } else {
+      return 'Products';
+    }
+  };
+
   const {
     data: products,
     isLoading: isFetchingproducts,
@@ -74,9 +87,7 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
   // ]);
 
   const error =
-    isErrorFetchingProducts ||
-    isErrorFetchingCategories ||
-    isErrorFetchingBrands;
+    errorFetchingProducts || errorFetchingCategories || errorFetchingBrands;
 
   // @ts-ignore
   if (error?.message === 'Network Error') {
@@ -159,7 +170,10 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
 
         <div className="px-0 md:px-2 md:border-l">
           <div className="flex items-start justify-between">
-            <SectionHeader>Products</SectionHeader>
+            <SectionHeader>
+              {/* {searchParams?.search_query ? 'Results for' : 'Products'} */}
+              {renderHeader()}
+            </SectionHeader>
 
             {/* show drawer only on mobile */}
             <Drawer>
@@ -220,7 +234,7 @@ const ProductsPage: FC<Props> = ({ searchParams }) => {
             {!isFetchingproducts &&
               products &&
               products.data.length > 0 &&
-              products?.data?.map((product) => (
+              shuffleArray(products.data)?.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
           </div>

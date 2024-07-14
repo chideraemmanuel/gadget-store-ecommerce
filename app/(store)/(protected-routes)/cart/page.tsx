@@ -3,7 +3,21 @@
 import CartItem from '@/components/CartItem';
 import SectionHeader from '@/components/SectionHeader';
 import { Button } from '@/components/ui/button';
-import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -16,42 +30,51 @@ import ServerError from '@/containers/server-error/ServerError';
 import { getSubTotal, getTotal } from '@/lib/helpers/getTotals';
 import useClearCart from '@/lib/hooks/cart/useClearCart';
 import useGetUserCart from '@/lib/hooks/cart/useGetUserCart';
-import { DollarSign } from 'lucide-react';
+import {
+  Copy,
+  CreditCard,
+  DollarSign,
+  MoreVertical,
+  Truck,
+} from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { FaPaypal, FaCcMastercard, FaCcPaypal } from 'react-icons/fa';
 
 interface Props {}
 
 const CartPage: FC<Props> = () => {
+  const router = useRouter();
+
   const { data: cartReturn, isLoading, isError, error } = useGetUserCart();
 
   const { mutate: clearCart } = useClearCart();
 
-  // @ts-ignore
-  if (error?.message === 'Network Error') {
-    console.log('network error');
-    return <NetworkError />;
-  }
+  // // @ts-ignore
+  // if (error?.message === 'Network Error') {
+  //   console.log('network error');
+  //   return <NetworkError />;
+  // }
 
-  if (
-    // @ts-ignore
-    error?.response?.data?.error === 'Internal Server Error' ||
-    // @ts-ignore
-    error?.response?.status === 500
-  ) {
-    console.log('server error');
-    return <ServerError />;
-  }
+  // if (
+  //   // @ts-ignore
+  //   error?.response?.data?.error === 'Internal Server Error' ||
+  //   // @ts-ignore
+  //   error?.response?.status === 500
+  // ) {
+  //   console.log('server error');
+  //   return <ServerError />;
+  // }
 
-  if (
-    error &&
-    // @ts-ignore
-    !(error?.response?.status > 400 && error?.response?.status < 500)
-  ) {
-    // @ts-ignore
-    return <Error message={error.message} />;
-  }
+  // if (
+  //   error &&
+  //   // @ts-ignore
+  //   !(error?.response?.status > 400 && error?.response?.status < 500)
+  // ) {
+  //   // @ts-ignore
+  //   return <Error message={error.message} />;
+  // }
 
   return (
     <>
@@ -59,7 +82,11 @@ const CartPage: FC<Props> = () => {
         {/* cart items */}
         {/* <Card className="p-3 max-h-[80vh] overflow-scroll"> */}
         <Card className="px-3 py-7 self-start">
-          <SectionHeader>Shopping cart</SectionHeader>
+          {/* <SectionHeader>Shopping cart</SectionHeader> */}
+          {/* <h2 className="text-lg font-bold pb-3">Shopping Cart</h2> */}
+          <CardHeader className="py-0 px-3">
+            <CardTitle className="text-lg pb-3">Shopping Cart</CardTitle>
+          </CardHeader>
 
           <div className="flex flex-col gap-3">
             {isLoading && (
@@ -112,7 +139,7 @@ const CartPage: FC<Props> = () => {
         {/* order details */}
         <div className="md:sticky md:top-[90px] self-start flex flex-col gap-3 pb-5">
           {/* coupon */}
-          {cartReturn && cartReturn.cart_items.length > 0 && (
+          {/* {cartReturn && cartReturn.cart_items.length > 0 && (
             <Card className="p-5">
               <CardTitle className="pb-1">Coupon Code</CardTitle>
               <CardDescription>
@@ -126,10 +153,10 @@ const CartPage: FC<Props> = () => {
                 <Button>Apply</Button>
               </div>
             </Card>
-          )}
+          )} */}
 
           {/* order summary */}
-          <Card className="p-5">
+          {/* <Card className="p-5">
             <CardTitle className="">Order Summary</CardTitle>
             <Separator className="mt-2 mb-5" />
 
@@ -163,10 +190,10 @@ const CartPage: FC<Props> = () => {
                   : '---'}
               </span>
             </div>
-          </Card>
+          </Card> */}
 
           {/* payment method */}
-          {cartReturn && cartReturn.cart_items.length > 0 && (
+          {/* {cartReturn && cartReturn.cart_items.length > 0 && (
             <Card className="p-5">
               <CardTitle className="pb-1">Payment method</CardTitle>
               <CardDescription>
@@ -205,35 +232,71 @@ const CartPage: FC<Props> = () => {
                   <FaCcMastercard className="" />
                   <span className="text-xs">Mastercard</span>
                 </ToggleGroupItem>
-                {/* <ToggleGroupItem
-                className="border flex flex-col gap-2 p-3 h-auto"
-                value="pay-on-delivery"
-                aria-label="Toggle pay on delivery"
-              >
-                <DollarSign className="" />
-                <span className="text-xs">Pay on delivery</span>
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                className="border flex flex-col gap-2 p-3 h-auto"
-                value="pay-on-delivery"
-                aria-label="Toggle pay on delivery"
-              >
-                <DollarSign className="" />
-                <span className="text-xs">Pay on delivery</span>
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                className="border flex flex-col gap-2 p-3 h-auto"
-                value="pay-on-delivery"
-                aria-label="Toggle pay on delivery"
-              >
-                <DollarSign className="" />
-                <span className="text-xs">Pay on delivery</span>
-              </ToggleGroupItem> */}
               </ToggleGroup>
 
               <Button className="w-full">Checkout</Button>
             </Card>
-          )}
+          )} */}
+
+          <Card className="overflow-hidden">
+            {/* <CardHeader className="flex flex-row items-start bg-muted/50">
+              <CardTitle className="flex items-center gap-2 text-lg">
+                Cart Details
+              </CardTitle>
+            </CardHeader> */}
+
+            <CardHeader className="py-3 bg-muted/50">
+              <CardTitle className="text-lg">Cart Details</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6 text-sm">
+              <div className="grid gap-3">
+                <div className="font-semibold">Cart Items</div>
+                <ul className="grid gap-3">
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Glimmer Lamps x <span>2</span>
+                    </span>
+                    <span>$250.00</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">
+                      Aqua Filters x <span>1</span>
+                    </span>
+                    <span>$49.00</span>
+                  </li>
+                </ul>
+                <Separator className="my-2" />
+                <div className="font-semibold">Price</div>
+                <ul className="grid gap-3">
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span>$299.00</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Shipping</span>
+                    <span>$5.00</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Tax</span>
+                    <span>$25.00</span>
+                  </li>
+                  <li className="flex items-center justify-between font-semibold">
+                    <span className="text-muted-foreground">Total</span>
+                    <span>$329.00</span>
+                  </li>
+                </ul>
+              </div>
+            </CardContent>
+            {/* <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3"> */}
+            <CardFooter className="border-t px-6 py-3">
+              <Button
+                className="w-full"
+                onClick={() => router.push('/cart/checkout')}
+              >
+                Checkout
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </>
