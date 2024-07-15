@@ -41,7 +41,7 @@ const OrdersPage: FC<Props> = () => {
     !(error?.response?.status > 400 && error?.response?.status < 500)
   ) {
     // @ts-ignore
-    return <Error message={error.message} />;
+    return <Error message={error?.response?.data?.error || error.message} />;
   }
 
   return (

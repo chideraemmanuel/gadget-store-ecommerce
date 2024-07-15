@@ -1,7 +1,12 @@
 import { useToast } from '@/components/ui/use-toast';
 import axios from '@/config/axios';
 import { SERVER_QUERY_KEYS } from '@/constants';
-import { BillingAddressTypes, OrderItemTypes, OrderTypes } from '@/types';
+import {
+  BillingAddressTypes,
+  CartReturnTypes,
+  OrderItemTypes,
+  OrderTypes,
+} from '@/types';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -35,6 +40,18 @@ const useCheckout = () => {
     mutationFn: checkout,
     onSuccess: (data) => {
       queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-user-orders']);
+      queryClient.invalidateQueries(SERVER_QUERY_KEYS['get-user-cart']);
+
+      queryClient.setQueryData(
+        SERVER_QUERY_KEYS['get-user-cart'],
+        // @ts-ignore
+        (oldCartData: CartReturnTypes) => {
+          return {
+            ...oldCartData, // user: ...oldCartData.user (would also work)
+            cart_items: [],
+          };
+        }
+      );
 
       toast({
         description: 'Order Placed Successfully!',

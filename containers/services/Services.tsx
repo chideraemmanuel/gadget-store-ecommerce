@@ -1,5 +1,6 @@
 import SectionHeader from '@/components/SectionHeader';
 import ServiceCard from '@/components/ServiceCard';
+import { SERVICES } from '@/constants';
 import { FC } from 'react';
 
 interface Props {}
@@ -13,9 +14,9 @@ const Services: FC<Props> = () => {
         {/* <div className="flex justify-start flex-wrap gap-3"> */}
         {/* <div className="grid grid-cols-[repeat(auto-fill,_minmax(230px,_1fr))] md:flex md:justify-start md:flex-wrap gap-3"> */}
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(230px,_1fr))] gap-3">
-          <ServiceCard />
-          <ServiceCard />
-          <ServiceCard />
+          {SERVICES.map((service) => (
+            <ServiceCard {...service} />
+          ))}
         </div>
       </div>
     </section>

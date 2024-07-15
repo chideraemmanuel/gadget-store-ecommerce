@@ -30,6 +30,7 @@ import {
   getSubTotal,
   getTotal,
 } from '@/lib/helpers/getTotals';
+import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
 import useGetOrderById from '@/lib/hooks/orders/useGetOrderById';
 import { cn } from '@/lib/utils';
 import { Copy, CreditCard, MoreVertical, Truck } from 'lucide-react';
@@ -45,6 +46,7 @@ interface Props {
 const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
   const { toast } = useToast();
 
+  const { data: user } = useGetCurrentUser();
   const { data: order, isLoading, isError, error } = useGetOrderById(orderId);
 
   // @ts-ignore
@@ -69,7 +71,7 @@ const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
     !(error?.response?.status > 400 && error?.response?.status < 500)
   ) {
     // @ts-ignore
-    return <Error message={error.message} />;
+    return <Error message={error?.response?.data?.error || error.message} />;
   }
 
   return (
@@ -124,7 +126,8 @@ const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-3">
                   <div className="font-semibold">Shipping Information</div>
-                  <address className="grid gap-0.5 not-italic text-muted-foreground">
+                  {/* <address className="grid gap-0.5 not-italic text-muted-foreground"> */}
+                  <address className="grid gap-3 not-italic text-muted-foreground">
                     <Skeleton className="w-20 h-4" />
                     <Skeleton className="w-20 h-4" />
                     <Skeleton className="w-20 h-4" />
@@ -197,7 +200,7 @@ const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
                 </CardTitle>
                 {/* <CardDescription>Date: November 23, 2023</CardDescription> */}
                 <CardDescription>
-                  Date: {moment(order.order_date).format('MMMM DD YYYY')}
+                  Date: {moment(order.order_date).format('MMMM DD, YYYY')}
                 </CardDescription>
               </div>
               <div className="ml-auto flex items-center gap-1">
@@ -205,7 +208,7 @@ const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
                   variant="outline"
                   // className="h-8 gap-1 text-blue-400 border-blue-400"
                   className={cn(
-                    '',
+                    'capitalize',
                     order.status === 'pending' &&
                       'text-blue-400 border-blue-400',
                     order.status === 'shipped' &&
@@ -248,8 +251,16 @@ const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
                       className="flex items-center justify-between"
                     >
                       <span className="text-muted-foreground">
-                        {order_item.product.product_name} x{' '}
-                        <span>{order_item.quantity}</span>
+                        <div className="grid gap-1">
+                          <span className="font-semibold">
+                            {order_item.product.product_name}
+                          </span>
+                          <span className="text-xs">
+                            Quantity: {order_item.quantity}
+                          </span>
+                        </div>
+                        {/* {order_item.product.product_name} x{' '}
+                        <span>{order_item.quantity}</span> */}
                       </span>
                       <span>{`₦${getIndividualItemTotal(order_item).toFixed(2)}`}</span>
                     </li>
@@ -306,11 +317,13 @@ const OrderDetailsPage: FC<Props> = ({ params: { orderId } }) => {
                 <dl className="grid gap-3">
                   <div className="flex items-center justify-between">
                     <dt className="text-muted-foreground">Customer</dt>
-                    <dd>Liam Johnson</dd>
+                    <dd>
+                      {user?.first_name} {user?.last_name}
+                    </dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-muted-foreground">Email</dt>
-                    <dd>{<a href="mailto:">liam@acme.com</a>}</dd>
+                    <dd>{user?.email}</dd>
                   </div>
                   {/* <div className="flex items-center justify-between">
                     <dt className="text-muted-foreground">Phone</dt>

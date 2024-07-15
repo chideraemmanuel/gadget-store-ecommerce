@@ -32,7 +32,7 @@ const OrdersListItem: FC<Props> = ({ order }) => {
 
   return (
     <>
-      <Link href={'#'}>
+      <Link href={`/orders/${_id}`}>
         <Card className="dark:bg-slate-900 hover:bg-accent dark:hover:bg-accent transition-colors">
           <CardHeader className="flex flex-row justify-between items-start gap-7 p-3 md:p-4">
             <CardTitle className="flex flex-wrap items-center gap-1 text-lg md:text-xl">

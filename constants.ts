@@ -1,3 +1,11 @@
+import homeDeliveryImage from '@/assets/home-delivery.jpg';
+import homeDeliveryImage2 from '@/assets/home-delivery-2.jpg';
+import homeDeliveryImage3 from '@/assets/home-delivery-3.jpg';
+import homeDeliveryImage4 from '@/assets/home-delivery-4.jpg';
+
+import onlinePaymentImage from '@/assets/online-payment.jpg';
+import onlinePaymentImage2 from '@/assets/online-payment-2.jpg';
+
 export const SERVER_QUERY_KEYS = {
   'get-brands': 'get brands',
   'get-categories': 'get categories',
@@ -15,3 +23,21 @@ export const SERVER_QUERY_KEYS = {
 // export const SERVER_MUTATION_KEYS = {
 
 // };
+
+export const SERVICES = [
+  {
+    title: 'Online Payment Process',
+    // description: 'Updates on safe shoppig in our stores',
+    description:
+      'claws till positive catch wild sister early enemy inch base modern wait can bat thou taken victory main today hay next grass arrange grain',
+    href: '#',
+    image: onlinePaymentImage,
+  },
+  {
+    title: 'Home Delivery Options',
+    description:
+      'castle dark tax wash noted possibly parallel burst date mostly hundred way clay sell ten south route beneath differ bad typical ear sunlight headed',
+    href: '#',
+    image: homeDeliveryImage,
+  },
+];

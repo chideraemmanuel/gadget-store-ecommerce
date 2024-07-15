@@ -29,7 +29,10 @@ const ProductDetailsPage: FC<Props> = ({ params: { productId } }) => {
     isLoading: isFetchingSimilarProducts,
     isError: isErrorFetchingSimilarProducts,
     error: errorFetchingSimilarProducts,
-  } = useGetRandomProducts({ category: product?.category._id });
+  } = useGetRandomProducts({
+    category: product?.category._id,
+    exclude: productId,
+  });
 
   const error = errorFetchingProduct || errorFetchingSimilarProducts;
 

@@ -80,7 +80,7 @@ const RouteGuard: FC<Props> = ({ children }) => {
     !(error?.response?.status > 400 && error?.response?.status < 500)
   ) {
     // @ts-ignore
-    return <Error message={error.message} />;
+    return <Error message={error?.response?.data?.error || error.message} />;
   }
 
   // RENDER CHILDREN ONLY WHEN FETCH IS SUCCESSFUL
