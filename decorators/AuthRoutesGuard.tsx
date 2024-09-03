@@ -1,12 +1,12 @@
 'use client';
 
 import SplashScreen from '@/components/SplashScreen';
-import Error from '@/containers/error/Error';
-import GlobalError from '@/containers/error/GlobalError';
-import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
-import NetworkError from '@/containers/network-error/NetworkError';
-import GlobalServerError from '@/containers/server-error/GlobalServerError';
-import ServerError from '@/containers/server-error/ServerError';
+import Error from '@/components/error/Error';
+import GlobalError from '@/components/error/GlobalError';
+import GlobalNetworkError from '@/components/network-error/GlobalNetworkError';
+import NetworkError from '@/components/network-error/NetworkError';
+import GlobalServerError from '@/components/server-error/GlobalServerError';
+import ServerError from '@/components/server-error/ServerError';
 import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
 import {
   redirect,

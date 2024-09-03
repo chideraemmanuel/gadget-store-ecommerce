@@ -25,9 +25,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import Error from '@/containers/error/Error';
-import NetworkError from '@/containers/network-error/NetworkError';
-import ServerError from '@/containers/server-error/ServerError';
+import Error from '@/components/error/Error';
+import NetworkError from '@/components/network-error/NetworkError';
+import ServerError from '@/components/server-error/ServerError';
 import {
   getIndividualItemTotal,
   getSubTotal,

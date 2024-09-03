@@ -1,10 +1,10 @@
 'use client';
 
-import Error from '@/containers/error/Error';
-import NetworkError from '@/containers/network-error/NetworkError';
+import Error from '@/components/error/Error';
+import NetworkError from '@/components/network-error/NetworkError';
 import ProductDetails from '@/containers/product-details/ProductDetails';
 import ProductsCarousel from '@/containers/products-carousel/ProductsCarousel';
-import ServerError from '@/containers/server-error/ServerError';
+import ServerError from '@/components/server-error/ServerError';
 import Services from '@/containers/services/Services';
 import useGetProductById from '@/lib/hooks/useGetProductById';
 import useGetRandomProducts from '@/lib/hooks/useGetRandomProducts';

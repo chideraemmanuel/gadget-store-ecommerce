@@ -20,9 +20,16 @@ import iphoneXR from '@/assets/iphone-xr.png';
 import test from '@/assets/test.png';
 import billboard_image from '@/assets/blob-scatter-haikei.svg';
 import { Button } from '@/components/ui/button';
-import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
-import GlobalServerError from '@/containers/server-error/GlobalServerError';
+import GlobalNetworkError from '@/components/network-error/GlobalNetworkError';
+import GlobalServerError from '@/components/server-error/GlobalServerError';
 import useGetRandomProducts from '@/lib/hooks/useGetRandomProducts';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import SectionHeader from '@/components/SectionHeader';
 
 export default function Home() {
   const {
@@ -193,6 +200,33 @@ export default function Home() {
         isLoading={isFetchingRandomProducts}
       />
       <Services />
+
+      <section className="container mx-auto py-7">
+        <SectionHeader>FAQs</SectionHeader>
+
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Is it styled?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It comes with default styles that matches the other
+              components&apos; aesthetic.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Is it animated?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It&apos;s animated by default, but you can disable it if you
+              prefer.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
       {/* <Products products={productss} /> */}
       {/* ************************* */}
       {/* ************************* */}

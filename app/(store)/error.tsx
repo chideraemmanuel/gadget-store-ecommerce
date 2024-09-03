@@ -1,10 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
-import NetworkError from '@/containers/network-error/NetworkError';
-import GlobalServerError from '@/containers/server-error/GlobalServerError';
-import ServerError from '@/containers/server-error/ServerError';
+import GlobalNetworkError from '@/components/network-error/GlobalNetworkError';
+import NetworkError from '@/components/network-error/NetworkError';
+import GlobalServerError from '@/components/server-error/GlobalServerError';
+import ServerError from '@/components/server-error/ServerError';
 import { ErrorPageProps } from '@/types';
 import { FC } from 'react';
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import NetworkError from '@/containers/network-error/NetworkError';
-import ServerError from '@/containers/server-error/ServerError';
+import NetworkError from '@/components/network-error/NetworkError';
+import ServerError from '@/components/server-error/ServerError';
 import { ErrorPageProps } from '@/types';
 import { FC } from 'react';
 

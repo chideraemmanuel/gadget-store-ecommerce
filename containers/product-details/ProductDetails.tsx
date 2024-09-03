@@ -14,12 +14,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import useRemoveItemFromCart from '@/lib/hooks/cart/useRemoveItemFromCart';
 import useIncrementItemQuantity from '@/lib/hooks/cart/useIncrementItemQuantity';
 import useDecrementItemQuantity from '@/lib/hooks/cart/useDecrementItemQuantity';
-import GlobalNetworkError from '../network-error/GlobalNetworkError';
-import GlobalServerError from '../server-error/GlobalServerError';
-import GlobalError from '../error/GlobalError';
-import ServerError from '../server-error/ServerError';
-import Error from '../error/Error';
-import NetworkError from '../network-error/NetworkError';
+import GlobalNetworkError from '../../components/network-error/GlobalNetworkError';
+import GlobalServerError from '../../components/server-error/GlobalServerError';
+import GlobalError from '../../components/error/GlobalError';
+import ServerError from '../../components/server-error/ServerError';
+import Error from '../../components/error/Error';
+import NetworkError from '../../components/network-error/NetworkError';
 
 interface Props {
   // productId: string;

@@ -1,8 +1,8 @@
 'use client';
 
-import Error from '@/containers/error/Error';
-import NetworkError from '@/containers/network-error/NetworkError';
-import ServerError from '@/containers/server-error/ServerError';
+import Error from '@/components/error/Error';
+import NetworkError from '@/components/network-error/NetworkError';
+import ServerError from '@/components/server-error/ServerError';
 import useGetCurrentUser from '@/lib/hooks/auth/useGetCurrentUser';
 import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect } from 'react';

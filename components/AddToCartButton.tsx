@@ -11,9 +11,9 @@ import useDecrementItemQuantity from '@/lib/hooks/cart/useDecrementItemQuantity'
 import { ProductTypes } from '@/types';
 import { usePathname, useRouter } from 'next/navigation';
 import useRemoveItemFromCart from '@/lib/hooks/cart/useRemoveItemFromCart';
-import GlobalNetworkError from '@/containers/network-error/GlobalNetworkError';
-import GlobalServerError from '@/containers/server-error/GlobalServerError';
-import GlobalError from '@/containers/error/GlobalError';
+import GlobalNetworkError from '@/components/network-error/GlobalNetworkError';
+import GlobalServerError from '@/components/server-error/GlobalServerError';
+import GlobalError from '@/components/error/GlobalError';
 
 interface Props {
   //   productId: string;
