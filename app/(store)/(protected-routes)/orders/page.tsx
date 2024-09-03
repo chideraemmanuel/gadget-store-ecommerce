@@ -51,7 +51,8 @@ const OrdersPage: FC<Props> = () => {
           <SectionHeader>Orders</SectionHeader>
         </div>
 
-        <span className="sm:px-5 pb-5 inline-block">filters go here</span>
+        {/* <span className="sm:px-5 pb-5 inline-block">filters go here</span> */}
+        {/* TODO: add filter for orders, and sort by latest in API */}
 
         <div className="flex flex-col gap-5 sm:px-5 pb-5">
           {isLoading && (

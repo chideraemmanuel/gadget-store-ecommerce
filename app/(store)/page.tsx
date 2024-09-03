@@ -205,24 +205,42 @@ export default function Home() {
         <SectionHeader>FAQs</SectionHeader>
 
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+          <AccordionItem value="faq-1">
+            <AccordionTrigger>
+              than almost planet fruit sand pen blew industrial bear each least
+              scared canal must victory?
+            </AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+              nihil omnis optio tenetur, odit fugiat aliquam dolores praesentium
+              dignissimos ipsum accusantium. Tempora, beatae? Error, sunt
+              debitis! At aliquid quasi in velit mollitia aperiam quaerat sed!
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>Is it styled?</AccordionTrigger>
+          <AccordionItem value="faq-2">
+            <AccordionTrigger>
+              edge carefully moving someone trouble fly swimming art hidden noun
+              round?
+            </AccordionTrigger>
             <AccordionContent>
-              Yes. It comes with default styles that matches the other
-              components&apos; aesthetic.
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
+              repellendus ea excepturi nesciunt non doloremque, vel ipsum
+              ratione. Praesentium odit cumque at aliquid laboriosam placeat
+              soluta temporibus, voluptatibus magni vitae?
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>Is it animated?</AccordionTrigger>
+          <AccordionItem value="faq-3">
+            <AccordionTrigger>
+              structure stomach teeth shirt directly construction burn accurate
+              jump younger hit over easier?
+            </AccordionTrigger>
             <AccordionContent>
-              Yes. It&apos;s animated by default, but you can disable it if you
-              prefer.
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Assumenda nisi inventore minus odit officiis natus vero!
+              Cupiditate sed officiis accusamus dignissimos soluta corrupti,
+              magni earum blanditiis doloribus reiciendis consequuntur totam
+              perspiciatis eaque. Nam laboriosam omnis, delectus minus dolore
+              corrupti eum.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

@@ -59,7 +59,8 @@ const ProductDetailsPage: FC<Props> = ({ params: { productId } }) => {
 
   return (
     <>
-      <span>Bread crumb goes here</span>
+      {/* <span>Bread crumb goes here</span> */}
+      {/* TODO: add breadcrumb */}
 
       <ProductDetails
         product={product}

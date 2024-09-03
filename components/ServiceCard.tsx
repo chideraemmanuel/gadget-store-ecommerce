@@ -22,8 +22,8 @@ const ServiceCard: FC<Props> = ({ title, description, href, image }) => {
     <>
       {/* <Card className="overflow-hidden grid grid-rows-2 max-h-[350px] max-w-none md:max-w-[300px] dark:bg-slate-900"> */}
       <Link href={href}>
-        <Card className="overflow-hidden grid grid-rows-2 max-h-[350px] max-w-none md:max-w-[400px] bg-accent dark:bg-slate-900">
-          <CardHeader className=" flex flex-col justify-center">
+        <Card className="overflow-hidden grid grid-rows-2 h-[370px] max-w-none md:max-w-[400px] bg-accent dark:bg-slate-900">
+          <CardHeader className="flex flex-col justify-center">
             <CardTitle>{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </CardHeader>

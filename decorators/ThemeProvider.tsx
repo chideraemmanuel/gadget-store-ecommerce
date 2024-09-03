@@ -52,6 +52,8 @@ export function ThemeProvider({
     root.classList.add(theme);
   }, [theme]);
 
+  // TODO: change theme automatically when window theme changes
+
   const value = {
     theme,
     setTheme: (theme: Theme) => {

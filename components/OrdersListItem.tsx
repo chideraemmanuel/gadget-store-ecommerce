@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { OrderTypes } from '@/types';
 import moment from 'moment';
+import { cn } from '@/lib/utils';
 
 interface Props {
   order: OrderTypes;
@@ -42,7 +43,14 @@ const OrdersListItem: FC<Props> = ({ order }) => {
 
             <Badge
               variant={'outline'}
-              className="border-primary text-primary capitalize"
+              className={cn(
+                'border-primary text-primary capitalize',
+                order.status === 'pending' && 'text-blue-400 border-blue-400',
+                order.status === 'shipped' &&
+                  'text-orange-400 border-orange-400',
+                order.status === 'delivered' &&
+                  'text-green-400 border-green-400'
+              )}
             >
               {status}
             </Badge>

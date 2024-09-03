@@ -29,14 +29,14 @@ export const SERVICES = [
     title: 'Online Payment Process',
     // description: 'Updates on safe shoppig in our stores',
     description:
-      'claws till positive catch wild sister early enemy inch base modern wait can bat thou taken victory main today hay next grass arrange grain',
+      'claws till positive catch wild sister early enemy inch base modern wait can bat thou',
     href: '#',
     image: onlinePaymentImage,
   },
   {
     title: 'Home Delivery Options',
     description:
-      'castle dark tax wash noted possibly parallel burst date mostly hundred way clay sell ten south route beneath differ bad typical ear sunlight headed',
+      'castle dark tax wash noted possibly parallel burst date mostly hundred way clay sell ten',
     href: '#',
     image: homeDeliveryImage,
   },
