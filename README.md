@@ -61,9 +61,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Environment variables
 
-- NEXT_PUBLIC_API_BASE_URL: The base URL for the backend API
-- NEXT_PUBLIC_API_PROTOCOL: The HTTP protocol for the backend API
-- NEXT_PUBLIC_API_HOST_NAME: The host name of the backend API
-- NEXT_PUBLIC_API_PORT: The port on which the backend API runs
-- NEXT_PUBLIC_PROJECT_BASE_URL: The URL for this project
-- NEXT_PUBLIC_GOOGLE_CLIENT_ID: Google Client ID, used for OAUTH authentication. Should be gotten from the [Google console](https://console.google.com)
+- **NEXT_PUBLIC_API_BASE_URL**: The base URL for the backend API
+- **NEXT_PUBLIC_API_PROTOCOL**: The HTTP protocol for the backend API
+- **NEXT_PUBLIC_API_HOST_NAME**: The host name of the backend API
+- **NEXT_PUBLIC_API_PORT**: The port on which the backend API runs
+- **NEXT_PUBLIC_PROJECT_BASE_URL**: The URL for this project
+- **NEXT_PUBLIC_GOOGLE_CLIENT_ID**: Google Client ID, used for OAUTH authentication. Should be gotten from the [Google console](https://console.google.com)
