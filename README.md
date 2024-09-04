@@ -6,8 +6,8 @@ Gadget Store is a fake e-commerce site built for demonstration purposes. It show
 
 This repository contains the code for Gadget Store, a fake e-commerce web application. It interacts with two other components of the project:
 
-- [Backend API](https://github.com/chideraemmanuel/gadget-store-api): Responsible for handling product data retrieval and user session management.
-- [Admin Dashboard](https://github.com/chideraemmanuel/gadget-store-admin): Allows administrators to manage products, orders, and user data.
+- [Gadget Store API](https://github.com/chideraemmanuel/gadget-store-api): Responsible for handling product data retrieval and user session management.
+- [Gadget Store Admin Dashboard](https://github.com/chideraemmanuel/gadget-store-admin): Allows administrators to manage products, orders, and user data.
 
 This document is intended to provide an overview of the project, the technologies used, and brief explanations of the major features of the application.
 
@@ -21,10 +21,10 @@ This document is intended to provide an overview of the project, the technologie
 
 ## Features
 
-The web application inncludes all the basic features of a typical web application, such as;
+The web application includes all the basic features of a typical e-commerce web application, such as;
 
-- **Product listing**: Users can seamlessly browse products, and view their details. The added search and filtering options makes the process much easier and intuitive.
-- Shopping cart management: The application also enables users to perform typical shopping cart functions, like adding and/or deleting items from cart, incrementing item quantity, and all that good stuff!
+- **Product listing**: Users can seamlessly browse products, and view their details. The added search, filtering options, and pagination makes the process much easier and intuitive.
+- **Shopping cart management**: The application also enables users to perform typical shopping cart functions, like adding and/or deleting items from cart, incrementing item quantity, and all that good stuff!
 - **Checkout and orders management**: Though no payment gateway was integrated, the application provides an option to checkout the items in a user's cart, and also properly manages the orders that have been made!
 - **User authentication**: Users also have the option to create an account, or login if they previously signed up! The account creation process includes email validation, and users can also reset their password.
   Note that for features like cart management, orders management and the likes, an account is required.
